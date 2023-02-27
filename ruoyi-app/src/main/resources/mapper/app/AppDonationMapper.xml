@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppDonationMapper">
+    
+    <resultMap type="AppDonation" id="AppDonationResult">
+        <result property="id"    column="id"    />
+        <result property="uid"    column="uid"    />
+        <result property="toUid"    column="to_uid"    />
+        <result property="amount"    column="amount"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="title"    column="title"    />
+    </resultMap>
+
+    <sql id="selectAppDonationVo">
+        select id, uid, to_uid, amount, create_date, title from app_donation
+    </sql>
+
+    <select id="selectAppDonationList" parameterType="AppDonation" resultMap="AppDonationResult">
+        <include refid="selectAppDonationVo"/>
+        <where>  
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="toUid != null "> and to_uid = #{toUid}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppDonationById" parameterType="Long" resultMap="AppDonationResult">
+        <include refid="selectAppDonationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppDonation" parameterType="AppDonation" useGeneratedKeys="true" keyProperty="id">
+        insert into app_donation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="toUid != null">to_uid,</if>
+            <if test="amount != null">amount,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="title != null">title,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid},</if>
+            <if test="toUid != null">#{toUid},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="title != null">#{title},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppDonation" parameterType="AppDonation">
+        update app_donation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="toUid != null">to_uid = #{toUid},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="title != null">title = #{title},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppDonationById" parameterType="Long">
+        delete from app_donation where id = #{id}
+    </delete>
+
+    <delete id="deleteAppDonationByIds" parameterType="String">
+        delete from app_donation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

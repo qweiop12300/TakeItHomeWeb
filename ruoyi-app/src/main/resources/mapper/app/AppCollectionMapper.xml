@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppCollectionMapper">
+    
+    <resultMap type="AppCollection" id="AppCollectionResult">
+        <result property="uid"    column="uid"    />
+        <result property="pid"    column="pid"    />
+        <result property="createDate"    column="create_date"    />
+    </resultMap>
+
+    <sql id="selectAppCollectionVo">
+        select uid, pid, create_date from app_collection
+    </sql>
+
+    <select id="selectAppCollectionList" parameterType="AppCollection" resultMap="AppCollectionResult">
+        <include refid="selectAppCollectionVo"/>
+        <where>  
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppCollectionByUid" parameterType="Long" resultMap="AppCollectionResult">
+        <include refid="selectAppCollectionVo"/>
+        where uid = #{uid}
+    </select>
+        
+    <insert id="insertAppCollection" parameterType="AppCollection">
+        insert into app_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="pid != null">pid,</if>
+            <if test="createDate != null">create_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid},</if>
+            <if test="pid != null">#{pid},</if>
+            <if test="createDate != null">#{createDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppCollection" parameterType="AppCollection">
+        update app_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null">pid = #{pid},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+        </trim>
+        where uid = #{uid}
+    </update>
+
+    <delete id="deleteAppCollectionByUid" parameterType="Long">
+        delete from app_collection where uid = #{uid}
+    </delete>
+
+    <delete id="deleteAppCollectionByUids" parameterType="String">
+        delete from app_collection where uid in 
+        <foreach item="uid" collection="array" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppAnimalStateMapper">
+    
+    <resultMap type="AppAnimalState" id="AppAnimalStateResult">
+        <result property="aid"    column="aid"    />
+        <result property="sid"    column="sid"    />
+        <result property="uid"    column="uid"    />
+        <result property="bid"    column="bid"    />
+        <result property="hid"    column="hid"    />
+        <result property="s1"    column="s1"    />
+    </resultMap>
+
+    <sql id="selectAppAnimalStateVo">
+        select aid, sid, uid, bid, hid, s1 from app_animal_state
+    </sql>
+
+    <select id="selectAppAnimalStateList" parameterType="AppAnimalState" resultMap="AppAnimalStateResult">
+        <include refid="selectAppAnimalStateVo"/>
+        <where>  
+            <if test="aid != null "> and aid = #{aid}</if>
+            <if test="sid != null "> and sid = #{sid}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="bid != null "> and bid = #{bid}</if>
+            <if test="hid != null "> and hid = #{hid}</if>
+            <if test="s1 != null  and s1 != ''"> and s1 = #{s1}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppAnimalStateByAid" parameterType="Long" resultMap="AppAnimalStateResult">
+        <include refid="selectAppAnimalStateVo"/>
+        where aid = #{aid}
+    </select>
+        
+    <insert id="insertAppAnimalState" parameterType="AppAnimalState">
+        insert into app_animal_state
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="aid != null">aid,</if>
+            <if test="sid != null">sid,</if>
+            <if test="uid != null">uid,</if>
+            <if test="bid != null">bid,</if>
+            <if test="hid != null">hid,</if>
+            <if test="s1 != null">s1,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="aid != null">#{aid},</if>
+            <if test="sid != null">#{sid},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="bid != null">#{bid},</if>
+            <if test="hid != null">#{hid},</if>
+            <if test="s1 != null">#{s1},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppAnimalState" parameterType="AppAnimalState">
+        update app_animal_state
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sid != null">sid = #{sid},</if>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="bid != null">bid = #{bid},</if>
+            <if test="hid != null">hid = #{hid},</if>
+            <if test="s1 != null">s1 = #{s1},</if>
+        </trim>
+        where aid = #{aid}
+    </update>
+
+    <delete id="deleteAppAnimalStateByAid" parameterType="Long">
+        delete from app_animal_state where aid = #{aid}
+    </delete>
+
+    <delete id="deleteAppAnimalStateByAids" parameterType="String">
+        delete from app_animal_state where aid in 
+        <foreach item="aid" collection="array" open="(" separator="," close=")">
+            #{aid}
+        </foreach>
+    </delete>
+</mapper>

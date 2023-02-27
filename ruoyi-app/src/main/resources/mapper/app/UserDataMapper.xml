@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.UserDataMapper">
+    
+    <resultMap type="UserData" id="UserDataResult">
+        <result property="uid"    column="uid"    />
+        <result property="desc"    column="desc"    />
+        <result property="year"    column="year"    />
+        <result property="toUid"    column="to_uid"    />
+        <result property="s1"    column="s1"    />
+        <result property="s2"    column="s2"    />
+    </resultMap>
+
+    <sql id="selectUserDataVo">
+        select uid, desc, year, to_uid, s1, s2 from user_data
+    </sql>
+
+    <select id="selectUserDataList" parameterType="UserData" resultMap="UserDataResult">
+        <include refid="selectUserDataVo"/>
+        <where>  
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="desc != null  and desc != ''"> and desc = #{desc}</if>
+            <if test="year != null "> and year = #{year}</if>
+            <if test="toUid != null "> and to_uid = #{toUid}</if>
+            <if test="s1 != null  and s1 != ''"> and s1 = #{s1}</if>
+            <if test="s2 != null  and s2 != ''"> and s2 = #{s2}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserDataByUid" parameterType="Long" resultMap="UserDataResult">
+        <include refid="selectUserDataVo"/>
+        where uid = #{uid}
+    </select>
+        
+    <insert id="insertUserData" parameterType="UserData">
+        insert into user_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="desc != null">desc,</if>
+            <if test="year != null">year,</if>
+            <if test="toUid != null">to_uid,</if>
+            <if test="s1 != null">s1,</if>
+            <if test="s2 != null">s2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid},</if>
+            <if test="desc != null">#{desc},</if>
+            <if test="year != null">#{year},</if>
+            <if test="toUid != null">#{toUid},</if>
+            <if test="s1 != null">#{s1},</if>
+            <if test="s2 != null">#{s2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserData" parameterType="UserData">
+        update user_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="desc != null">desc = #{desc},</if>
+            <if test="year != null">year = #{year},</if>
+            <if test="toUid != null">to_uid = #{toUid},</if>
+            <if test="s1 != null">s1 = #{s1},</if>
+            <if test="s2 != null">s2 = #{s2},</if>
+        </trim>
+        where uid = #{uid}
+    </update>
+
+    <delete id="deleteUserDataByUid" parameterType="Long">
+        delete from user_data where uid = #{uid}
+    </delete>
+
+    <delete id="deleteUserDataByUids" parameterType="String">
+        delete from user_data where uid in 
+        <foreach item="uid" collection="array" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </delete>
+</mapper>

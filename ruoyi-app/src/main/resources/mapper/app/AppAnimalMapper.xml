@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppAnimalMapper">
+    
+    <resultMap type="AppAnimal" id="AppAnimalResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="icon"    column="icon"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="year"    column="year"    />
+        <result property="s1"    column="s1"    />
+        <result property="s2"    column="s2"    />
+        <association property="appAnimalState" column="AppAnimalStateResult"/>
+    </resultMap>
+
+    <resultMap type="AppAnimalState" id="AppAnimalStateResult">
+        <result property="aid"    column="aid"    />
+        <result property="sid"    column="sid"    />
+        <result property="uid"    column="uid"    />
+        <result property="bid"    column="bid"    />
+        <result property="hid"    column="hid"    />
+        <result property="s1"    column="s1"    />
+    </resultMap>
+
+    <sql id="selectAppAnimalVo">
+        select id, name, sex, icon, create_date, year, s1, s2 from app_animal
+
+    </sql>
+
+    <select id="selectAppAnimalList" parameterType="AppAnimal" resultMap="AppAnimalResult">
+        <include refid="selectAppAnimalVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="sex != null "> and sex = #{sex}</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="year != null "> and year = #{year}</if>
+            <if test="s1 != null  and s1 != ''"> and s1 = #{s1}</if>
+            <if test="s2 != null  and s2 != ''"> and s2 = #{s2}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppAnimalById" parameterType="Long" resultMap="AppAnimalResult">
+        <include refid="selectAppAnimalVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppAnimal" parameterType="AppAnimal" useGeneratedKeys="true" keyProperty="id">
+        insert into app_animal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="sex != null">sex,</if>
+            <if test="icon != null">icon,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="year != null">year,</if>
+            <if test="s1 != null">s1,</if>
+            <if test="s2 != null">s2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="year != null">#{year},</if>
+            <if test="s1 != null">#{s1},</if>
+            <if test="s2 != null">#{s2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppAnimal" parameterType="AppAnimal">
+        update app_animal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="year != null">year = #{year},</if>
+            <if test="s1 != null">s1 = #{s1},</if>
+            <if test="s2 != null">s2 = #{s2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppAnimalById" parameterType="Long">
+        delete from app_animal where id = #{id}
+    </delete>
+
+    <delete id="deleteAppAnimalByIds" parameterType="String">
+        delete from app_animal where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

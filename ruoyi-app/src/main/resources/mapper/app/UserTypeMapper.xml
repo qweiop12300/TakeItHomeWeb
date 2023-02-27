@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.UserTypeMapper">
+    
+    <resultMap type="UserType" id="UserTypeResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+    </resultMap>
+
+    <sql id="selectUserTypeVo">
+        select id, title from user_type
+    </sql>
+
+    <select id="selectUserTypeList" parameterType="UserType" resultMap="UserTypeResult">
+        <include refid="selectUserTypeVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserTypeById" parameterType="Long" resultMap="UserTypeResult">
+        <include refid="selectUserTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertUserType" parameterType="UserType">
+        insert into user_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null">#{title},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserType" parameterType="UserType">
+        update user_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserTypeById" parameterType="Long">
+        delete from user_type where id = #{id}
+    </delete>
+
+    <delete id="deleteUserTypeByIds" parameterType="String">
+        delete from user_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

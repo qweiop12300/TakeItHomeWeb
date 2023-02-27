@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppTopicMapper">
+    
+    <resultMap type="AppTopic" id="AppTopicResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+    </resultMap>
+
+    <sql id="selectAppTopicVo">
+        select id, title from app_topic
+    </sql>
+
+    <select id="selectAppTopicList" parameterType="AppTopic" resultMap="AppTopicResult">
+        <include refid="selectAppTopicVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppTopicById" parameterType="Long" resultMap="AppTopicResult">
+        <include refid="selectAppTopicVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppTopic" parameterType="AppTopic" useGeneratedKeys="true" keyProperty="id">
+        insert into app_topic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppTopic" parameterType="AppTopic">
+        update app_topic
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppTopicById" parameterType="Long">
+        delete from app_topic where id = #{id}
+    </delete>
+
+    <delete id="deleteAppTopicByIds" parameterType="String">
+        delete from app_topic where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

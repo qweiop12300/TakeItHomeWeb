@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppMessageMapper">
+    
+    <resultMap type="AppMessage" id="AppMessageResult">
+        <result property="id"    column="id"    />
+        <result property="uid"    column="uid"    />
+        <result property="toUid"    column="to_uid"    />
+        <result property="content"    column="content"    />
+        <result property="pid"    column="pid"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="createDate"    column="create_date"    />
+    </resultMap>
+
+    <sql id="selectAppMessageVo">
+        select id, uid, to_uid, content, pid, type_id, create_date from app_message
+    </sql>
+
+    <select id="selectAppMessageList" parameterType="AppMessage" resultMap="AppMessageResult">
+        <include refid="selectAppMessageVo"/>
+        <where>  
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="toUid != null "> and to_uid = #{toUid}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="typeId != null "> and type_id = #{typeId}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppMessageById" parameterType="Long" resultMap="AppMessageResult">
+        <include refid="selectAppMessageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppMessage" parameterType="AppMessage">
+        insert into app_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="uid != null">uid,</if>
+            <if test="toUid != null">to_uid,</if>
+            <if test="content != null">content,</if>
+            <if test="pid != null">pid,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="createDate != null">create_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="toUid != null">#{toUid},</if>
+            <if test="content != null">#{content},</if>
+            <if test="pid != null">#{pid},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="createDate != null">#{createDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppMessage" parameterType="AppMessage">
+        update app_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="toUid != null">to_uid = #{toUid},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="pid != null">pid = #{pid},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppMessageById" parameterType="Long">
+        delete from app_message where id = #{id}
+    </delete>
+
+    <delete id="deleteAppMessageByIds" parameterType="String">
+        delete from app_message where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

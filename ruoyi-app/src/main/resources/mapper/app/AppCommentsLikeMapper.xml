@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppCommentsLikeMapper">
+    
+    <resultMap type="AppCommentsLike" id="AppCommentsLikeResult">
+        <result property="id"    column="id"    />
+        <result property="cid"    column="cid"    />
+        <result property="uid"    column="uid"    />
+    </resultMap>
+
+    <sql id="selectAppCommentsLikeVo">
+        select id, cid, uid from app_comments_like
+    </sql>
+
+    <select id="selectAppCommentsLikeList" parameterType="AppCommentsLike" resultMap="AppCommentsLikeResult">
+        <include refid="selectAppCommentsLikeVo"/>
+        <where>  
+            <if test="cid != null "> and cid = #{cid}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppCommentsLikeById" parameterType="Long" resultMap="AppCommentsLikeResult">
+        <include refid="selectAppCommentsLikeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppCommentsLike" parameterType="AppCommentsLike" useGeneratedKeys="true" keyProperty="id">
+        insert into app_comments_like
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cid != null">cid,</if>
+            <if test="uid != null">uid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cid != null">#{cid},</if>
+            <if test="uid != null">#{uid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppCommentsLike" parameterType="AppCommentsLike">
+        update app_comments_like
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cid != null">cid = #{cid},</if>
+            <if test="uid != null">uid = #{uid},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppCommentsLikeById" parameterType="Long">
+        delete from app_comments_like where id = #{id}
+    </delete>
+
+    <delete id="deleteAppCommentsLikeByIds" parameterType="String">
+        delete from app_comments_like where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

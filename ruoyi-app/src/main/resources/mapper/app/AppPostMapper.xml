@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppPostMapper">
+    
+    <resultMap type="AppPost" id="AppPostResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="image"    column="image"    />
+        <result property="video"    column="video"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="updateDate"    column="update_date"    />
+        <result property="uid"    column="uid"    />
+        <result property="tid"    column="tid"    />
+        <result property="aid"    column="aid"    />
+        <result property="location"    column="location"    />
+        <result property="city"    column="city"    />
+        <result property="urgent"    column="urgent"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="likeNumber"    column="like_number"    />
+        <result property="collectionNumber"    column="collection_number"    />
+        <result property="commentsNumber"    column="comments_number"    />
+        <result property="url"    column="url"    />
+        <result property="s1"    column="s1"    />
+    </resultMap>
+
+    <sql id="selectAppPostVo">
+        select id, title, content, image, video, create_date, update_date, uid, tid, aid, location, city, urgent, type_id, like_number, collection_number, comments_number, url, s1 from app_post
+    </sql>
+
+    <select id="selectAppPostList" parameterType="AppPost" resultMap="AppPostResult">
+        <include refid="selectAppPostVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+            <if test="video != null  and video != ''"> and video = #{video}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="updateDate != null "> and update_date = #{updateDate}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="tid != null "> and tid = #{tid}</if>
+            <if test="aid != null "> and aid = #{aid}</if>
+            <if test="location != null  and location != ''"> and location = #{location}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="urgent != null "> and urgent = #{urgent}</if>
+            <if test="typeId != null "> and type_id = #{typeId}</if>
+            <if test="likeNumber != null "> and like_number = #{likeNumber}</if>
+            <if test="collectionNumber != null "> and collection_number = #{collectionNumber}</if>
+            <if test="commentsNumber != null "> and comments_number = #{commentsNumber}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="s1 != null  and s1 != ''"> and s1 = #{s1}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppPostById" parameterType="Long" resultMap="AppPostResult">
+        <include refid="selectAppPostVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppPost" parameterType="AppPost" useGeneratedKeys="true" keyProperty="id">
+        insert into app_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="image != null">image,</if>
+            <if test="video != null">video,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="updateDate != null">update_date,</if>
+            <if test="uid != null">uid,</if>
+            <if test="tid != null">tid,</if>
+            <if test="aid != null">aid,</if>
+            <if test="location != null">location,</if>
+            <if test="city != null">city,</if>
+            <if test="urgent != null">urgent,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="likeNumber != null">like_number,</if>
+            <if test="collectionNumber != null">collection_number,</if>
+            <if test="commentsNumber != null">comments_number,</if>
+            <if test="url != null">url,</if>
+            <if test="s1 != null">s1,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="image != null">#{image},</if>
+            <if test="video != null">#{video},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="updateDate != null">#{updateDate},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="tid != null">#{tid},</if>
+            <if test="aid != null">#{aid},</if>
+            <if test="location != null">#{location},</if>
+            <if test="city != null">#{city},</if>
+            <if test="urgent != null">#{urgent},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="likeNumber != null">#{likeNumber},</if>
+            <if test="collectionNumber != null">#{collectionNumber},</if>
+            <if test="commentsNumber != null">#{commentsNumber},</if>
+            <if test="url != null">#{url},</if>
+            <if test="s1 != null">#{s1},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppPost" parameterType="AppPost">
+        update app_post
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="video != null">video = #{video},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="updateDate != null">update_date = #{updateDate},</if>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="tid != null">tid = #{tid},</if>
+            <if test="aid != null">aid = #{aid},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="urgent != null">urgent = #{urgent},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="likeNumber != null">like_number = #{likeNumber},</if>
+            <if test="collectionNumber != null">collection_number = #{collectionNumber},</if>
+            <if test="commentsNumber != null">comments_number = #{commentsNumber},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="s1 != null">s1 = #{s1},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppPostById" parameterType="Long">
+        delete from app_post where id = #{id}
+    </delete>
+
+    <delete id="deleteAppPostByIds" parameterType="String">
+        delete from app_post where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppCommentsMapper">
+    
+    <resultMap type="AppComments" id="AppCommentsResult">
+        <result property="id"    column="id"    />
+        <result property="toId"    column="to_id"    />
+        <result property="pid"    column="pid"    />
+        <result property="content"    column="content"    />
+        <result property="image"    column="image"    />
+        <result property="uid"    column="uid"    />
+        <result property="aid"    column="aid"    />
+        <result property="likeNumber"    column="like_number"    />
+        <result property="createDate"    column="create_date"    />
+    </resultMap>
+
+    <sql id="selectAppCommentsVo">
+        select id, to_id, pid, content, image, uid, aid, like_number, create_date from app_comments
+    </sql>
+
+    <select id="selectAppCommentsList" parameterType="AppComments" resultMap="AppCommentsResult">
+        <include refid="selectAppCommentsVo"/>
+        <where>  
+            <if test="toId != null "> and to_id = #{toId}</if>
+            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="aid != null "> and aid = #{aid}</if>
+            <if test="likeNumber != null "> and like_number = #{likeNumber}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppCommentsById" parameterType="Long" resultMap="AppCommentsResult">
+        <include refid="selectAppCommentsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppComments" parameterType="AppComments" useGeneratedKeys="true" keyProperty="id">
+        insert into app_comments
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="toId != null">to_id,</if>
+            <if test="pid != null">pid,</if>
+            <if test="content != null">content,</if>
+            <if test="image != null">image,</if>
+            <if test="uid != null">uid,</if>
+            <if test="aid != null">aid,</if>
+            <if test="likeNumber != null">like_number,</if>
+            <if test="createDate != null">create_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="toId != null">#{toId},</if>
+            <if test="pid != null">#{pid},</if>
+            <if test="content != null">#{content},</if>
+            <if test="image != null">#{image},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="aid != null">#{aid},</if>
+            <if test="likeNumber != null">#{likeNumber},</if>
+            <if test="createDate != null">#{createDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppComments" parameterType="AppComments">
+        update app_comments
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="toId != null">to_id = #{toId},</if>
+            <if test="pid != null">pid = #{pid},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="aid != null">aid = #{aid},</if>
+            <if test="likeNumber != null">like_number = #{likeNumber},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppCommentsById" parameterType="Long">
+        delete from app_comments where id = #{id}
+    </delete>
+
+    <delete id="deleteAppCommentsByIds" parameterType="String">
+        delete from app_comments where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
