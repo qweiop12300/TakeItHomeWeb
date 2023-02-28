@@ -5,29 +5,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.app.mapper.AppAnimalMapper">
     
     <resultMap type="AppAnimal" id="AppAnimalResult">
-        <result property="id"    column="id"    />
+        <result property="id"    column="aaid"    />
         <result property="name"    column="name"    />
         <result property="sex"    column="sex"    />
         <result property="icon"    column="icon"    />
         <result property="createDate"    column="create_date"    />
         <result property="year"    column="year"    />
-        <result property="s1"    column="s1"    />
-        <result property="s2"    column="s2"    />
-        <association property="appAnimalState" column="AppAnimalStateResult"/>
+        <result property="s1"    column="aas1"    />
+        <result property="s2"    column="aas2"    />
+        <association property="appAnimalState" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.AppAnimalStateResult"/>
     </resultMap>
 
-    <resultMap type="AppAnimalState" id="AppAnimalStateResult">
-        <result property="aid"    column="aid"    />
-        <result property="sid"    column="sid"    />
-        <result property="uid"    column="uid"    />
-        <result property="bid"    column="bid"    />
-        <result property="hid"    column="hid"    />
-        <result property="s1"    column="s1"    />
-    </resultMap>
 
     <sql id="selectAppAnimalVo">
-        select id, name, sex, icon, create_date, year, s1, s2 from app_animal
-
+        select
+            aa.id aaid, name, aa.sex, icon, create_date, year, aa.s1 aas1, aa.s2 aas2,
+            aid, sid, uid, bid, hid, aas.s1 aas_s1,
+               usu.user_id u_user_id, usu.dept_id u_dept_id, usu.user_name u_user_name, usu.nick_name u_nick_name, usu.email u_email, usu.avatar u_avatar, usu.phonenumber u_phonenumber,  usu.sex u_sex, usu.status u_status, usu.del_flag u_del_flag, usu.login_ip u_login_ip , usu.login_date u_login_date, usu.create_by u_create_by, usu.create_time u_create_time, usu.remark u_remark,
+               hsu.user_id h_user_id, hsu.dept_id h_dept_id, hsu.user_name h_user_name, hsu.nick_name h_nick_name, hsu.email h_email, hsu.avatar h_avatar, hsu.phonenumber h_phonenumber,  hsu.sex h_sex, hsu.status h_status, hsu.del_flag h_del_flag, hsu.login_ip h_login_ip, hsu.login_date h_login_date, hsu.create_by h_create_by, hsu.create_time h_create_time, hsu.remark h_remark,
+               bsu.user_id b_user_id, bsu.dept_id b_dept_id, bsu.user_name b_user_name, bsu.nick_name b_nick_name, bsu.email b_email, bsu.avatar b_avatar, bsu.phonenumber b_phonenumber,  bsu.sex b_sex, bsu.status b_status, bsu.del_flag b_del_flag, bsu.login_ip b_login_ip, bsu.login_date b_login_date, bsu.create_by b_create_by, bsu.create_time b_create_time, bsu.remark b_remark,
+               aasd.id,aasd.title,aasd.s1
+        from app_animal aa
+        left join app_animal_state aas on aa.id = aid
+        left join app_animal_state_data aasd on aasd.id = sid
+        left join sys_user usu on usu.user_id = uid
+        left join sys_user hsu on hsu.user_id = hid
+        left join sys_user bsu on bsu.user_id = bid
     </sql>
 
     <select id="selectAppAnimalList" parameterType="AppAnimal" resultMap="AppAnimalResult">
@@ -45,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectAppAnimalById" parameterType="Long" resultMap="AppAnimalResult">
         <include refid="selectAppAnimalVo"/>
-        where id = #{id}
+        where aaid = #{id}
     </select>
         
     <insert id="insertAppAnimal" parameterType="AppAnimal" useGeneratedKeys="true" keyProperty="id">

@@ -1,5 +1,6 @@
 package com.ruoyi.app.domain;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -19,21 +20,31 @@ public class AppAnimalState extends BaseEntity
     @Excel(name = "动物id")
     private Long aid;
 
+    private AppAnimal appAnimal;
+
     /** 动物状态 */
     @Excel(name = "动物状态")
     private Integer sid;
+
+    private AppAnimalStateData appAnimalStateData;
 
     /** 动物领养人id */
     @Excel(name = "动物领养人id")
     private Long uid;
 
+    private SysUser usysUser;
+
     /** 救助基地id */
     @Excel(name = "救助基地id")
     private Long bid;
 
+    private SysUser bsysUser;
+
     /** 动物医院id */
     @Excel(name = "动物医院id")
     private Long hid;
+
+    private SysUser hsysUser;
 
     /** 扩展1 */
     @Excel(name = "扩展1")
@@ -92,6 +103,46 @@ public class AppAnimalState extends BaseEntity
     public String getS1() 
     {
         return s1;
+    }
+
+    public AppAnimal getAppAnimal() {
+        return appAnimal;
+    }
+
+    public AppAnimalStateData getAppAnimalStateData() {
+        return appAnimalStateData;
+    }
+
+    public SysUser getBsysUser() {
+        return bsysUser;
+    }
+
+    public SysUser getUsysUser() {
+        return usysUser;
+    }
+
+    public SysUser getHsysUser() {
+        return hsysUser;
+    }
+
+    public void setAppAnimal(AppAnimal appAnimal) {
+        this.appAnimal = appAnimal;
+    }
+
+    public void setAppAnimalStateData(AppAnimalStateData appAnimalStateData) {
+        this.appAnimalStateData = appAnimalStateData;
+    }
+
+    public void setBsysUser(SysUser bsysUser) {
+        this.bsysUser = bsysUser;
+    }
+
+    public void setUsysUser(SysUser usysUser) {
+        this.usysUser = usysUser;
+    }
+
+    public void setHsysUser(SysUser hsysUser) {
+        this.hsysUser = hsysUser;
     }
 
     @Override

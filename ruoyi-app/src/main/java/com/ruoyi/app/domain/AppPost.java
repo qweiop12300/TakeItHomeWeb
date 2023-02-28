@@ -57,9 +57,13 @@ public class AppPost extends BaseEntity
     @Excel(name = "话题id")
     private Long tid;
 
+    private AppTopic appTopic;
+
     /** 动物id */
     @Excel(name = "动物id")
     private Long aid;
+
+    private AppAnimal appAnimal;
 
     /** 具体位置 */
     @Excel(name = "具体位置")
@@ -97,7 +101,41 @@ public class AppPost extends BaseEntity
     @Excel(name = "扩展1")
     private String s1;
 
-    public void setId(Long id) 
+    private AppPostType appPostType;
+
+    public SysUser getSysUser() {
+        return sysUser;
+    }
+
+    public AppPostType getAppPostType() {
+        return appPostType;
+    }
+
+    public void setSysUser(SysUser sysUser) {
+        this.sysUser = sysUser;
+    }
+
+    public void setAppPostType(AppPostType appPostType) {
+        this.appPostType = appPostType;
+    }
+
+    public AppAnimal getAppAnimal() {
+        return appAnimal;
+    }
+
+    public AppTopic getAppTopic() {
+        return appTopic;
+    }
+
+    public void setAppAnimal(AppAnimal appAnimal) {
+        this.appAnimal = appAnimal;
+    }
+
+    public void setAppTopic(AppTopic appTopic) {
+        this.appTopic = appTopic;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }

@@ -27,6 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAppCollectionVo"/>
         where uid = #{uid}
     </select>
+
+    <select id="selectAppCollectionByPid" parameterType="Long" resultMap="AppCollectionResult">
+        <include refid="selectAppCollectionVo"/>
+        where pid = #{pid}
+    </select>
         
     <insert id="insertAppCollection" parameterType="AppCollection">
         insert into app_collection
