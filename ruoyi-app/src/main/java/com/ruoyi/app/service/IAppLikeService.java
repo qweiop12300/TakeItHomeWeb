@@ -7,17 +7,17 @@ import com.ruoyi.app.domain.AppLike;
  * 点赞Service接口
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 public interface IAppLikeService 
 {
     /**
      * 查询点赞
      * 
-     * @param uid 点赞主键
+     * @param id 点赞主键
      * @return 点赞
      */
-    public AppLike selectAppLikeByUid(Long uid);
+    public AppLike selectAppLikeById(Long id);
 
     /**
      * 查询点赞列表
@@ -46,16 +46,16 @@ public interface IAppLikeService
     /**
      * 批量删除点赞
      * 
-     * @param uids 需要删除的点赞主键集合
+     * @param ids 需要删除的点赞主键集合
      * @return 结果
      */
-    public int deleteAppLikeByUids(Long[] uids);
+    public int deleteAppLikeByIds(Long[] ids);
 
     /**
      * 删除点赞信息
      * 
-     * @param uid 点赞主键
+     * @param id 点赞主键
      * @return 结果
      */
-    public int deleteAppLikeByUid(Long uid);
+    public int deleteAppLikeById(Long id);
 }

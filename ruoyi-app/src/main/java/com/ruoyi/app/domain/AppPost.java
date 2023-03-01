@@ -2,7 +2,6 @@ package com.ruoyi.app.domain;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -12,9 +11,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 动态对象 app_post
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
-public class AppPost extends BaseEntity
+public class AppPost
 {
     private static final long serialVersionUID = 1L;
 
@@ -51,19 +50,13 @@ public class AppPost extends BaseEntity
     @Excel(name = "用户id")
     private Long uid;
 
-    private SysUser sysUser;
-
     /** 话题id */
     @Excel(name = "话题id")
     private Long tid;
 
-    private AppTopic appTopic;
-
     /** 动物id */
     @Excel(name = "动物id")
     private Long aid;
-
-    private AppAnimal appAnimal;
 
     /** 具体位置 */
     @Excel(name = "具体位置")
@@ -101,41 +94,7 @@ public class AppPost extends BaseEntity
     @Excel(name = "扩展1")
     private String s1;
 
-    private AppPostType appPostType;
-
-    public SysUser getSysUser() {
-        return sysUser;
-    }
-
-    public AppPostType getAppPostType() {
-        return appPostType;
-    }
-
-    public void setSysUser(SysUser sysUser) {
-        this.sysUser = sysUser;
-    }
-
-    public void setAppPostType(AppPostType appPostType) {
-        this.appPostType = appPostType;
-    }
-
-    public AppAnimal getAppAnimal() {
-        return appAnimal;
-    }
-
-    public AppTopic getAppTopic() {
-        return appTopic;
-    }
-
-    public void setAppAnimal(AppAnimal appAnimal) {
-        this.appAnimal = appAnimal;
-    }
-
-    public void setAppTopic(AppTopic appTopic) {
-        this.appTopic = appTopic;
-    }
-
-    public void setId(Long id)
+    public void setId(Long id) 
     {
         this.id = id;
     }

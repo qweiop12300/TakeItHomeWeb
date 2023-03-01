@@ -7,7 +7,7 @@ import com.ruoyi.app.domain.UserData;
  * 用户数据扩展Mapper接口
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 public interface UserDataMapper 
 {

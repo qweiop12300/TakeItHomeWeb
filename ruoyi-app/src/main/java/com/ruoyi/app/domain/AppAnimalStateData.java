@@ -9,9 +9,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 动物状态信息对象 app_animal_state_data
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
-public class AppAnimalStateData extends BaseEntity
+public class AppAnimalStateData
 {
     private static final long serialVersionUID = 1L;
 

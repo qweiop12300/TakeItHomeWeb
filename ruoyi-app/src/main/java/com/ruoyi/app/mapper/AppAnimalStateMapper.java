@@ -4,58 +4,58 @@ import java.util.List;
 import com.ruoyi.app.domain.AppAnimalState;
 
 /**
- * 动物状态关联管理Mapper接口
+ * 动物状态关联Mapper接口
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-03-01
  */
 public interface AppAnimalStateMapper 
 {
     /**
-     * 查询动物状态关联管理
+     * 查询动物状态关联
      * 
-     * @param aid 动物状态关联管理主键
-     * @return 动物状态关联管理
+     * @param id 动物状态关联主键
+     * @return 动物状态关联
      */
-    public AppAnimalState selectAppAnimalStateByAid(Long aid);
+    public AppAnimalState selectAppAnimalStateById(Long id);
 
     /**
-     * 查询动物状态关联管理列表
+     * 查询动物状态关联列表
      * 
-     * @param appAnimalState 动物状态关联管理
-     * @return 动物状态关联管理集合
+     * @param appAnimalState 动物状态关联
+     * @return 动物状态关联集合
      */
     public List<AppAnimalState> selectAppAnimalStateList(AppAnimalState appAnimalState);
 
     /**
-     * 新增动物状态关联管理
+     * 新增动物状态关联
      * 
-     * @param appAnimalState 动物状态关联管理
+     * @param appAnimalState 动物状态关联
      * @return 结果
      */
     public int insertAppAnimalState(AppAnimalState appAnimalState);
 
     /**
-     * 修改动物状态关联管理
+     * 修改动物状态关联
      * 
-     * @param appAnimalState 动物状态关联管理
+     * @param appAnimalState 动物状态关联
      * @return 结果
      */
     public int updateAppAnimalState(AppAnimalState appAnimalState);
 
     /**
-     * 删除动物状态关联管理
+     * 删除动物状态关联
      * 
-     * @param aid 动物状态关联管理主键
+     * @param id 动物状态关联主键
      * @return 结果
      */
-    public int deleteAppAnimalStateByAid(Long aid);
+    public int deleteAppAnimalStateById(Long id);
 
     /**
-     * 批量删除动物状态关联管理
+     * 批量删除动物状态关联
      * 
-     * @param aids 需要删除的数据主键集合
+     * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAppAnimalStateByAids(Long[] aids);
+    public int deleteAppAnimalStateByIds(Long[] ids);
 }

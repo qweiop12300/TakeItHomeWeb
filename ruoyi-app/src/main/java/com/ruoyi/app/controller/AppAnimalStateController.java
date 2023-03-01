@@ -22,22 +22,22 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 动物状态关联管理Controller
+ * 动物状态关联Controller
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-03-01
  */
 @RestController
-@RequestMapping("/app/animl_state")
+@RequestMapping("/app/animal_state")
 public class AppAnimalStateController extends BaseController
 {
     @Autowired
     private IAppAnimalStateService appAnimalStateService;
 
     /**
-     * 查询动物状态关联管理列表
+     * 查询动物状态关联列表
      */
-    @PreAuthorize("@ss.hasPermi('app:animl_state:list')")
+    @PreAuthorize("@ss.hasPermi('app:animal_state:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppAnimalState appAnimalState)
     {
@@ -47,33 +47,33 @@ public class AppAnimalStateController extends BaseController
     }
 
     /**
-     * 导出动物状态关联管理列表
+     * 导出动物状态关联列表
      */
-    @PreAuthorize("@ss.hasPermi('app:animl_state:export')")
-    @Log(title = "动物状态关联管理", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ss.hasPermi('app:animal_state:export')")
+    @Log(title = "动物状态关联", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, AppAnimalState appAnimalState)
     {
         List<AppAnimalState> list = appAnimalStateService.selectAppAnimalStateList(appAnimalState);
         ExcelUtil<AppAnimalState> util = new ExcelUtil<AppAnimalState>(AppAnimalState.class);
-        util.exportExcel(response, list, "动物状态关联管理数据");
+        util.exportExcel(response, list, "动物状态关联数据");
     }
 
     /**
-     * 获取动物状态关联管理详细信息
+     * 获取动物状态关联详细信息
      */
-    @PreAuthorize("@ss.hasPermi('app:animl_state:query')")
-    @GetMapping(value = "/{aid}")
-    public AjaxResult getInfo(@PathVariable("aid") Long aid)
+    @PreAuthorize("@ss.hasPermi('app:animal_state:query')")
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(appAnimalStateService.selectAppAnimalStateByAid(aid));
+        return success(appAnimalStateService.selectAppAnimalStateById(id));
     }
 
     /**
-     * 新增动物状态关联管理
+     * 新增动物状态关联
      */
-    @PreAuthorize("@ss.hasPermi('app:animl_state:add')")
-    @Log(title = "动物状态关联管理", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermi('app:animal_state:add')")
+    @Log(title = "动物状态关联", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody AppAnimalState appAnimalState)
     {
@@ -81,10 +81,10 @@ public class AppAnimalStateController extends BaseController
     }
 
     /**
-     * 修改动物状态关联管理
+     * 修改动物状态关联
      */
-    @PreAuthorize("@ss.hasPermi('app:animl_state:edit')")
-    @Log(title = "动物状态关联管理", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('app:animal_state:edit')")
+    @Log(title = "动物状态关联", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody AppAnimalState appAnimalState)
     {
@@ -92,13 +92,13 @@ public class AppAnimalStateController extends BaseController
     }
 
     /**
-     * 删除动物状态关联管理
+     * 删除动物状态关联
      */
-    @PreAuthorize("@ss.hasPermi('app:animl_state:remove')")
-    @Log(title = "动物状态关联管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{aids}")
-    public AjaxResult remove(@PathVariable Long[] aids)
+    @PreAuthorize("@ss.hasPermi('app:animal_state:remove')")
+    @Log(title = "动物状态关联", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(appAnimalStateService.deleteAppAnimalStateByAids(aids));
+        return toAjax(appAnimalStateService.deleteAppAnimalStateByIds(ids));
     }
 }

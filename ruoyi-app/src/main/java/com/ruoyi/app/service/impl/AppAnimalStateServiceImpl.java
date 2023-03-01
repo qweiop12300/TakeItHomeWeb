@@ -8,10 +8,10 @@ import com.ruoyi.app.domain.AppAnimalState;
 import com.ruoyi.app.service.IAppAnimalStateService;
 
 /**
- * 动物状态关联管理Service业务层处理
+ * 动物状态关联Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-03-01
  */
 @Service
 public class AppAnimalStateServiceImpl implements IAppAnimalStateService 
@@ -20,22 +20,22 @@ public class AppAnimalStateServiceImpl implements IAppAnimalStateService
     private AppAnimalStateMapper appAnimalStateMapper;
 
     /**
-     * 查询动物状态关联管理
+     * 查询动物状态关联
      * 
-     * @param aid 动物状态关联管理主键
-     * @return 动物状态关联管理
+     * @param id 动物状态关联主键
+     * @return 动物状态关联
      */
     @Override
-    public AppAnimalState selectAppAnimalStateByAid(Long aid)
+    public AppAnimalState selectAppAnimalStateById(Long id)
     {
-        return appAnimalStateMapper.selectAppAnimalStateByAid(aid);
+        return appAnimalStateMapper.selectAppAnimalStateById(id);
     }
 
     /**
-     * 查询动物状态关联管理列表
+     * 查询动物状态关联列表
      * 
-     * @param appAnimalState 动物状态关联管理
-     * @return 动物状态关联管理
+     * @param appAnimalState 动物状态关联
+     * @return 动物状态关联
      */
     @Override
     public List<AppAnimalState> selectAppAnimalStateList(AppAnimalState appAnimalState)
@@ -44,9 +44,9 @@ public class AppAnimalStateServiceImpl implements IAppAnimalStateService
     }
 
     /**
-     * 新增动物状态关联管理
+     * 新增动物状态关联
      * 
-     * @param appAnimalState 动物状态关联管理
+     * @param appAnimalState 动物状态关联
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class AppAnimalStateServiceImpl implements IAppAnimalStateService
     }
 
     /**
-     * 修改动物状态关联管理
+     * 修改动物状态关联
      * 
-     * @param appAnimalState 动物状态关联管理
+     * @param appAnimalState 动物状态关联
      * @return 结果
      */
     @Override
@@ -68,26 +68,26 @@ public class AppAnimalStateServiceImpl implements IAppAnimalStateService
     }
 
     /**
-     * 批量删除动物状态关联管理
+     * 批量删除动物状态关联
      * 
-     * @param aids 需要删除的动物状态关联管理主键
+     * @param ids 需要删除的动物状态关联主键
      * @return 结果
      */
     @Override
-    public int deleteAppAnimalStateByAids(Long[] aids)
+    public int deleteAppAnimalStateByIds(Long[] ids)
     {
-        return appAnimalStateMapper.deleteAppAnimalStateByAids(aids);
+        return appAnimalStateMapper.deleteAppAnimalStateByIds(ids);
     }
 
     /**
-     * 删除动物状态关联管理信息
+     * 删除动物状态关联信息
      * 
-     * @param aid 动物状态关联管理主键
+     * @param id 动物状态关联主键
      * @return 结果
      */
     @Override
-    public int deleteAppAnimalStateByAid(Long aid)
+    public int deleteAppAnimalStateById(Long id)
     {
-        return appAnimalStateMapper.deleteAppAnimalStateByAid(aid);
+        return appAnimalStateMapper.deleteAppAnimalStateById(id);
     }
 }

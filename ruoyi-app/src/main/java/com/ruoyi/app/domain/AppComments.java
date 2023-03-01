@@ -11,9 +11,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 评论对象 app_comments
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
-public class AppComments extends BaseEntity
+public class AppComments
 {
     private static final long serialVersionUID = 1L;
 

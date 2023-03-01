@@ -9,9 +9,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 用户类型对象 user_type
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
-public class UserType extends BaseEntity
+public class UserType
 {
     private static final long serialVersionUID = 1L;
 

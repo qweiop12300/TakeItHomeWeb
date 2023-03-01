@@ -5,13 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.app.mapper.AppLikeMapper">
     
     <resultMap type="AppLike" id="AppLikeResult">
+        <result property="id"    column="id"    />
         <result property="uid"    column="uid"    />
         <result property="pid"    column="pid"    />
         <result property="createDate"    column="create_date"    />
     </resultMap>
 
     <sql id="selectAppLikeVo">
-        select uid, pid, create_date from app_like
+        select id, uid, pid, create_date from app_like
     </sql>
 
     <select id="selectAppLikeList" parameterType="AppLike" resultMap="AppLikeResult">
@@ -23,12 +24,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectAppLikeByUid" parameterType="Long" resultMap="AppLikeResult">
+    <select id="selectAppLikeById" parameterType="Long" resultMap="AppLikeResult">
         <include refid="selectAppLikeVo"/>
-        where uid = #{uid}
+        where id = #{id}
     </select>
         
-    <insert id="insertAppLike" parameterType="AppLike">
+    <insert id="insertAppLike" parameterType="AppLike" useGeneratedKeys="true" keyProperty="id">
         insert into app_like
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="uid != null">uid,</if>
@@ -45,20 +46,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateAppLike" parameterType="AppLike">
         update app_like
         <trim prefix="SET" suffixOverrides=",">
+            <if test="uid != null">uid = #{uid},</if>
             <if test="pid != null">pid = #{pid},</if>
             <if test="createDate != null">create_date = #{createDate},</if>
         </trim>
-        where uid = #{uid}
+        where id = #{id}
     </update>
 
-    <delete id="deleteAppLikeByUid" parameterType="Long">
-        delete from app_like where uid = #{uid}
+    <delete id="deleteAppLikeById" parameterType="Long">
+        delete from app_like where id = #{id}
     </delete>
 
-    <delete id="deleteAppLikeByUids" parameterType="String">
-        delete from app_like where uid in 
-        <foreach item="uid" collection="array" open="(" separator="," close=")">
-            #{uid}
+    <delete id="deleteAppLikeByIds" parameterType="String">
+        delete from app_like where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 </mapper>

@@ -7,14 +7,17 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 动物状态关联管理对象 app_animal_state
+ * 动物状态关联对象 app_animal_state
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-03-01
  */
-public class AppAnimalState extends BaseEntity
+public class AppAnimalState
 {
     private static final long serialVersionUID = 1L;
+
+    /** id */
+    private Long id;
 
     /** 动物id */
     @Excel(name = "动物id")
@@ -22,34 +25,70 @@ public class AppAnimalState extends BaseEntity
 
     private AppAnimal appAnimal;
 
-    /** 动物状态 */
-    @Excel(name = "动物状态")
-    private Integer sid;
-
-    private AppAnimalStateData appAnimalStateData;
-
     /** 动物领养人id */
     @Excel(name = "动物领养人id")
     private Long uid;
 
-    private SysUser usysUser;
+    private SysUserE usysUser;
 
     /** 救助基地id */
     @Excel(name = "救助基地id")
     private Long bid;
 
-    private SysUser bsysUser;
+    private SysUserE bsysUser;
 
     /** 动物医院id */
     @Excel(name = "动物医院id")
     private Long hid;
 
-    private SysUser hsysUser;
+    private SysUserE hsysUser;
 
     /** 扩展1 */
     @Excel(name = "扩展1")
     private String s1;
 
+    public AppAnimal getAppAnimal() {
+        return appAnimal;
+    }
+
+    public void setAppAnimal(AppAnimal appAnimal) {
+        this.appAnimal = appAnimal;
+    }
+
+    public SysUserE getBsysUser() {
+        return bsysUser;
+    }
+
+    public SysUserE getHsysUser() {
+        return hsysUser;
+    }
+
+
+    public SysUserE getUsysUser() {
+        return usysUser;
+    }
+
+    public void setBsysUser(SysUserE bsysUser) {
+        this.bsysUser = bsysUser;
+    }
+
+    public void setUsysUser(SysUserE usysUser) {
+        this.usysUser = usysUser;
+    }
+
+    public void setHsysUser(SysUserE hsysUser) {
+        this.hsysUser = hsysUser;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public Long getId() 
+    {
+        return id;
+    }
     public void setAid(Long aid) 
     {
         this.aid = aid;
@@ -58,15 +97,6 @@ public class AppAnimalState extends BaseEntity
     public Long getAid() 
     {
         return aid;
-    }
-    public void setSid(Integer sid) 
-    {
-        this.sid = sid;
-    }
-
-    public Integer getSid() 
-    {
-        return sid;
     }
     public void setUid(Long uid) 
     {
@@ -105,51 +135,11 @@ public class AppAnimalState extends BaseEntity
         return s1;
     }
 
-    public AppAnimal getAppAnimal() {
-        return appAnimal;
-    }
-
-    public AppAnimalStateData getAppAnimalStateData() {
-        return appAnimalStateData;
-    }
-
-    public SysUser getBsysUser() {
-        return bsysUser;
-    }
-
-    public SysUser getUsysUser() {
-        return usysUser;
-    }
-
-    public SysUser getHsysUser() {
-        return hsysUser;
-    }
-
-    public void setAppAnimal(AppAnimal appAnimal) {
-        this.appAnimal = appAnimal;
-    }
-
-    public void setAppAnimalStateData(AppAnimalStateData appAnimalStateData) {
-        this.appAnimalStateData = appAnimalStateData;
-    }
-
-    public void setBsysUser(SysUser bsysUser) {
-        this.bsysUser = bsysUser;
-    }
-
-    public void setUsysUser(SysUser usysUser) {
-        this.usysUser = usysUser;
-    }
-
-    public void setHsysUser(SysUser hsysUser) {
-        this.hsysUser = hsysUser;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
             .append("aid", getAid())
-            .append("sid", getSid())
             .append("uid", getUid())
             .append("bid", getBid())
             .append("hid", getHid())

@@ -22,10 +22,10 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 动物信息管理Controller
+ * 动物信息Controller
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-03-01
  */
 @RestController
 @RequestMapping("/app/animal")
@@ -35,7 +35,7 @@ public class AppAnimalController extends BaseController
     private IAppAnimalService appAnimalService;
 
     /**
-     * 查询动物信息管理列表
+     * 查询动物信息列表
      */
     @PreAuthorize("@ss.hasPermi('app:animal:list')")
     @GetMapping("/list")
@@ -47,20 +47,20 @@ public class AppAnimalController extends BaseController
     }
 
     /**
-     * 导出动物信息管理列表
+     * 导出动物信息列表
      */
     @PreAuthorize("@ss.hasPermi('app:animal:export')")
-    @Log(title = "动物信息管理", businessType = BusinessType.EXPORT)
+    @Log(title = "动物信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, AppAnimal appAnimal)
     {
         List<AppAnimal> list = appAnimalService.selectAppAnimalList(appAnimal);
         ExcelUtil<AppAnimal> util = new ExcelUtil<AppAnimal>(AppAnimal.class);
-        util.exportExcel(response, list, "动物信息管理数据");
+        util.exportExcel(response, list, "动物信息数据");
     }
 
     /**
-     * 获取动物信息管理详细信息
+     * 获取动物信息详细信息
      */
     @PreAuthorize("@ss.hasPermi('app:animal:query')")
     @GetMapping(value = "/{id}")
@@ -70,10 +70,10 @@ public class AppAnimalController extends BaseController
     }
 
     /**
-     * 新增动物信息管理
+     * 新增动物信息
      */
     @PreAuthorize("@ss.hasPermi('app:animal:add')")
-    @Log(title = "动物信息管理", businessType = BusinessType.INSERT)
+    @Log(title = "动物信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody AppAnimal appAnimal)
     {
@@ -81,10 +81,10 @@ public class AppAnimalController extends BaseController
     }
 
     /**
-     * 修改动物信息管理
+     * 修改动物信息
      */
     @PreAuthorize("@ss.hasPermi('app:animal:edit')")
-    @Log(title = "动物信息管理", businessType = BusinessType.UPDATE)
+    @Log(title = "动物信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody AppAnimal appAnimal)
     {
@@ -92,10 +92,10 @@ public class AppAnimalController extends BaseController
     }
 
     /**
-     * 删除动物信息管理
+     * 删除动物信息
      */
     @PreAuthorize("@ss.hasPermi('app:animal:remove')")
-    @Log(title = "动物信息管理", businessType = BusinessType.DELETE)
+    @Log(title = "动物信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {

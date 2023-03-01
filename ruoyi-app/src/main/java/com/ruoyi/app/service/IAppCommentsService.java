@@ -7,7 +7,7 @@ import com.ruoyi.app.domain.AppComments;
  * 评论Service接口
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 public interface IAppCommentsService 
 {

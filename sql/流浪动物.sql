@@ -32,12 +32,14 @@ CREATE TABLE `app_animal`  (
 ) COMMENT = '动物信息表';
 
 CREATE TABLE `app_animal_state`  (
+  `id` bigint(20) NOT NULL COMMENT 'id',
   `aid` bigint(20) NOT NULL COMMENT '动物id',
   `sid` int(2) NOT NULL DEFAULT 0 COMMENT '动物状态',
   `uid` bigint(20) NULL COMMENT '动物领养人id',
   `bid` bigint(20) NULL COMMENT '救助基地id',
   `hid` bigint(20) NULL COMMENT '动物医院id',
-  `s1` varchar(255) NULL COMMENT '扩展1'
+  `s1` varchar(255) NULL COMMENT '扩展1',
+  PRIMARY KEY (`id`)
 ) COMMENT = '动物状态关联表';
 
 CREATE TABLE `app_animal_state_data`  (
@@ -48,9 +50,11 @@ CREATE TABLE `app_animal_state_data`  (
 ) COMMENT = '动物状态信息表';
 
 CREATE TABLE `app_collection`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `uid` bigint(20) NOT NULL COMMENT '用户id',
   `pid` bigint(20) NOT NULL COMMENT '帖子id',
-  `create_date` datetime NULL COMMENT '创建时间'
+  `create_date` datetime NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
 ) COMMENT = '收藏表';
 
 CREATE TABLE `app_comments`  (
@@ -94,9 +98,11 @@ CREATE TABLE `app_donation`  (
 ) COMMENT = '捐赠表';
 
 CREATE TABLE `app_like`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `uid` bigint(20) NOT NULL COMMENT '用户id',
   `pid` bigint(20) NOT NULL COMMENT '动态id',
-  `create_date` datetime NULL COMMENT '点赞时间'
+  `create_date` datetime NULL COMMENT '点赞时间',
+  PRIMARY KEY (`id`)
 ) COMMENT = '点赞表';
 
 CREATE TABLE `app_message`  (
@@ -152,7 +158,7 @@ CREATE TABLE `app_topic`  (
 ) COMMENT = '话题表';
 
 CREATE TABLE `user_data`  (
-  `uid` bigint(20) NULL COMMENT 'user_id',
+  `uid` bigint(20) NOT NULL COMMENT 'user_id',
   `desc` varchar(255) NULL COMMENT '描述',
   `year` int(2) NULL COMMENT '年龄',
   `to_uid` int NULL COMMENT '属于某用户',

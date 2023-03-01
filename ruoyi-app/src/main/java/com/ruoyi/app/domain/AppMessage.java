@@ -11,9 +11,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 消息对象 app_message
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
-public class AppMessage extends BaseEntity
+public class AppMessage
 {
     private static final long serialVersionUID = 1L;
 

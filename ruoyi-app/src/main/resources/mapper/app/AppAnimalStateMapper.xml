@@ -5,84 +5,73 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.app.mapper.AppAnimalStateMapper">
     
     <resultMap type="AppAnimalState" id="AppAnimalStateResult">
+        <result property="id"    column="aasid"    />
         <result property="aid"    column="aid"    />
-        <result property="sid"    column="sid"    />
         <result property="uid"    column="uid"    />
         <result property="bid"    column="bid"    />
         <result property="hid"    column="hid"    />
-        <result property="s1"    column="aas_s1"    />
-        <association property="appAnimalStateData" resultMap="com.ruoyi.app.mapper.AppAnimalStateDataMapper.AppAnimalStateDataResult"/>
-        <association property="usysUser" javaType="SysUser" columnPrefix="u_" resultMap="SysUserResult"/>
-        <association property="bsysUser" javaType="SysUser" columnPrefix="b_" resultMap="SysUserResult"/>
-        <association property="hsysUser" javaType="SysUser" columnPrefix="h_" resultMap="SysUserResult"/>
+        <result property="s1"    column="aass1"    />
+        <association property="usysUser" resultMap="SysUserResult" columnPrefix="u_"/>
+        <association property="bsysUser" resultMap="SysUserResult" columnPrefix="b_"/>
+        <association property="hsysUser" resultMap="SysUserResult" columnPrefix="h_"/>
     </resultMap>
 
+    <resultMap type="AppAnimalState" id="AppAnimalStateResult2" extends="AppAnimalStateResult">
+        <association property="appAnimal" resultMap="com.ruoyi.app.mapper.AppAnimalMapper.AppAnimalResult"/>
+    </resultMap>
 
-    <resultMap type="SysUser" id="SysUserResult" >
+    <resultMap type="SysUserE" id="SysUserResult">
         <id     property="userId"       column="user_id"      />
-        <result property="deptId"       column="dept_id"      />
-        <result property="userName"     column="user_name"    />
         <result property="nickName"     column="nick_name"    />
-        <result property="email"        column="email"        />
-        <result property="phonenumber"  column="phonenumber"  />
         <result property="sex"          column="sex"          />
         <result property="avatar"       column="avatar"       />
-        <result property="status"       column="status"       />
-        <result property="delFlag"      column="del_flag"     />
-        <result property="loginIp"      column="login_ip"     />
-        <result property="loginDate"    column="login_date"   />
-        <result property="createBy"     column="create_by"    />
-        <result property="createTime"   column="create_time"  />
-        <result property="updateBy"     column="update_by"    />
-        <result property="updateTime"   column="update_time"  />
         <result property="remark"       column="remark"       />
     </resultMap>
 
-
-
     <sql id="selectAppAnimalStateVo">
-        select aid, sid, uid, bid, hid, aas.s1 aas_s1,
-        usu.user_id u_user_id, usu.dept_id u_dept_id, usu.user_name u_user_name, usu.nick_name u_nick_name, usu.email u_email, usu.avatar u_avatar, usu.phonenumber u_phonenumber,  usu.sex u_sex, usu.status u_status, usu.del_flag u_del_flag, usu.login_ip u_login_ip , usu.login_date u_login_date, usu.create_by u_create_by, usu.create_time u_create_time, usu.remark u_remark,
-        hsu.user_id h_user_id, hsu.dept_id h_dept_id, hsu.user_name h_user_name, hsu.nick_name h_nick_name, hsu.email h_email, hsu.avatar h_avatar, hsu.phonenumber h_phonenumber,  hsu.sex h_sex, hsu.status h_status, hsu.del_flag h_del_flag, hsu.login_ip h_login_ip, hsu.login_date h_login_date, hsu.create_by h_create_by, hsu.create_time h_create_time, hsu.remark h_remark,
-        bsu.user_id b_user_id, bsu.dept_id b_dept_id, bsu.user_name b_user_name, bsu.nick_name b_nick_name, bsu.email b_email, bsu.avatar b_avatar, bsu.phonenumber b_phonenumber,  bsu.sex b_sex, bsu.status b_status, bsu.del_flag b_del_flag, bsu.login_ip b_login_ip, bsu.login_date b_login_date, bsu.create_by b_create_by, bsu.create_time b_create_time, bsu.remark b_remark,
-        aasd.id,aasd.title,aasd.s1
+        select aa.id, sid, name, aa.sex, icon, create_date, year, aa.s1, s2,
+            aasd.id aasdid, aasd.title aasdtitle, aasd.s1 aasds1,
+            aas.id aasid, aid, uid, bid, hid, aas.s1 aass1,
+            usu.user_id u_user_id,  usu.nick_name u_nick_name,  usu.sex u_sex, usu.avatar u_avatar,usu.remark u_remark,
+            bsu.user_id b_user_id,  bsu.nick_name b_nick_name,  bsu.sex b_sex, bsu.avatar b_avatar,bsu.remark b_remark,
+            hsu.user_id h_user_id,  hsu.nick_name h_nick_name,  hsu.sex h_sex, hsu.avatar h_avatar,hsu.remark h_remark
         from app_animal_state aas
-        left join app_animal_state_data aasd on aasd.id = sid
-        left join sys_user usu on usu.user_id = uid
-        left join sys_user hsu on hsu.user_id = hid
-        left join sys_user bsu on bsu.user_id = bid
+            left join sys_user usu on aas.uid = usu.user_id
+            left join sys_user bsu on aas.bid = bsu.user_id
+            left join sys_user hsu on aas.hid = hsu.user_id
+            left join app_animal aa on aa.id = aid
+            left join app_animal_state_data aasd on aa.sid = aasd.id
     </sql>
 
-    <select id="selectAppAnimalStateList" parameterType="AppAnimalState" resultMap="AppAnimalStateResult">
+    <select id="selectAppAnimalStateList" parameterType="AppAnimalState" resultMap="AppAnimalStateResult2">
         <include refid="selectAppAnimalStateVo"/>
         <where>  
             <if test="aid != null "> and aid = #{aid}</if>
-            <if test="sid != null "> and sid = #{sid}</if>
             <if test="uid != null "> and uid = #{uid}</if>
             <if test="bid != null "> and bid = #{bid}</if>
             <if test="hid != null "> and hid = #{hid}</if>
-            <if test="s1 != null  and s1 != ''"> and s1 = #{s1}</if>
+            <if test="s1 != null  and s1 != ''"> and aas.s1 = #{s1}</if>
         </where>
     </select>
     
-    <select id="selectAppAnimalStateByAid" parameterType="Long" resultMap="AppAnimalStateResult">
+    <select id="selectAppAnimalStateById" parameterType="Long" resultMap="AppAnimalStateResult2">
         <include refid="selectAppAnimalStateVo"/>
-        where aid = #{aid}
+        where aas.id = #{id}
     </select>
         
     <insert id="insertAppAnimalState" parameterType="AppAnimalState">
         insert into app_animal_state
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
             <if test="aid != null">aid,</if>
-            <if test="sid != null">sid,</if>
             <if test="uid != null">uid,</if>
             <if test="bid != null">bid,</if>
             <if test="hid != null">hid,</if>
             <if test="s1 != null">s1,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
             <if test="aid != null">#{aid},</if>
-            <if test="sid != null">#{sid},</if>
             <if test="uid != null">#{uid},</if>
             <if test="bid != null">#{bid},</if>
             <if test="hid != null">#{hid},</if>
@@ -93,23 +82,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateAppAnimalState" parameterType="AppAnimalState">
         update app_animal_state
         <trim prefix="SET" suffixOverrides=",">
-            <if test="sid != null">sid = #{sid},</if>
+            <if test="aid != null">aid = #{aid},</if>
             <if test="uid != null">uid = #{uid},</if>
             <if test="bid != null">bid = #{bid},</if>
             <if test="hid != null">hid = #{hid},</if>
             <if test="s1 != null">s1 = #{s1},</if>
         </trim>
-        where aid = #{aid}
+        where id = #{id}
     </update>
 
-    <delete id="deleteAppAnimalStateByAid" parameterType="Long">
-        delete from app_animal_state where aid = #{aid}
+    <delete id="deleteAppAnimalStateById" parameterType="Long">
+        delete from app_animal_state where id = #{id}
     </delete>
 
-    <delete id="deleteAppAnimalStateByAids" parameterType="String">
-        delete from app_animal_state where aid in 
-        <foreach item="aid" collection="array" open="(" separator="," close=")">
-            #{aid}
+    <delete id="deleteAppAnimalStateByIds" parameterType="String">
+        delete from app_animal_state where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 </mapper>

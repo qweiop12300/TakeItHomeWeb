@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 收藏Controller
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @RestController
 @RequestMapping("/app/collection")
@@ -63,10 +63,10 @@ public class AppCollectionController extends BaseController
      * 获取收藏详细信息
      */
     @PreAuthorize("@ss.hasPermi('app:collection:query')")
-    @GetMapping(value = "/{uid}")
-    public AjaxResult getInfo(@PathVariable("uid") Long uid)
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(appCollectionService.selectAppCollectionByUid(uid));
+        return success(appCollectionService.selectAppCollectionById(id));
     }
 
     /**
@@ -96,9 +96,9 @@ public class AppCollectionController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('app:collection:remove')")
     @Log(title = "收藏", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{uids}")
-    public AjaxResult remove(@PathVariable Long[] uids)
+	@DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(appCollectionService.deleteAppCollectionByUids(uids));
+        return toAjax(appCollectionService.deleteAppCollectionByIds(ids));
     }
 }

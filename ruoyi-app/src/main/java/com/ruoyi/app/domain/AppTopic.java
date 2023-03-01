@@ -9,9 +9,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 话题对象 app_topic
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
-public class AppTopic extends BaseEntity
+public class AppTopic
 {
     private static final long serialVersionUID = 1L;
 

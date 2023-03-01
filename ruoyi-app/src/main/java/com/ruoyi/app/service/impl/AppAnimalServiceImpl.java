@@ -8,10 +8,10 @@ import com.ruoyi.app.domain.AppAnimal;
 import com.ruoyi.app.service.IAppAnimalService;
 
 /**
- * 动物信息管理Service业务层处理
+ * 动物信息Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-03-01
  */
 @Service
 public class AppAnimalServiceImpl implements IAppAnimalService 
@@ -20,10 +20,10 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     private AppAnimalMapper appAnimalMapper;
 
     /**
-     * 查询动物信息管理
+     * 查询动物信息
      * 
-     * @param id 动物信息管理主键
-     * @return 动物信息管理
+     * @param id 动物信息主键
+     * @return 动物信息
      */
     @Override
     public AppAnimal selectAppAnimalById(Long id)
@@ -32,10 +32,10 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     }
 
     /**
-     * 查询动物信息管理列表
+     * 查询动物信息列表
      * 
-     * @param appAnimal 动物信息管理
-     * @return 动物信息管理
+     * @param appAnimal 动物信息
+     * @return 动物信息
      */
     @Override
     public List<AppAnimal> selectAppAnimalList(AppAnimal appAnimal)
@@ -44,9 +44,9 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     }
 
     /**
-     * 新增动物信息管理
+     * 新增动物信息
      * 
-     * @param appAnimal 动物信息管理
+     * @param appAnimal 动物信息
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     }
 
     /**
-     * 修改动物信息管理
+     * 修改动物信息
      * 
-     * @param appAnimal 动物信息管理
+     * @param appAnimal 动物信息
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     }
 
     /**
-     * 批量删除动物信息管理
+     * 批量删除动物信息
      * 
-     * @param ids 需要删除的动物信息管理主键
+     * @param ids 需要删除的动物信息主键
      * @return 结果
      */
     @Override
@@ -80,9 +80,9 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     }
 
     /**
-     * 删除动物信息管理信息
+     * 删除动物信息信息
      * 
-     * @param id 动物信息管理主键
+     * @param id 动物信息主键
      * @return 结果
      */
     @Override

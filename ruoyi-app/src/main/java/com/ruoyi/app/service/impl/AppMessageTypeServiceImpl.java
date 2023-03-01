@@ -11,7 +11,7 @@ import com.ruoyi.app.service.IAppMessageTypeService;
  * 信息类型Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @Service
 public class AppMessageTypeServiceImpl implements IAppMessageTypeService 

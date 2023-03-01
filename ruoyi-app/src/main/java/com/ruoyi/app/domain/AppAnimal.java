@@ -8,17 +8,23 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 动物信息管理对象 app_animal
+ * 动物信息对象 app_animal
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-03-01
  */
-public class AppAnimal extends BaseEntity
+public class AppAnimal
 {
     private static final long serialVersionUID = 1L;
 
     /** 动物id */
     private Long id;
+
+    /** 动物状态id */
+    @Excel(name = "动物状态id")
+    private Long sid;
+
+    private AppAnimalStateData appAnimalStateData;
 
     /** 动物名字 */
     @Excel(name = "动物名字")
@@ -51,12 +57,21 @@ public class AppAnimal extends BaseEntity
 
     private AppAnimalState appAnimalState;
 
+
     public AppAnimalState getAppAnimalState() {
         return appAnimalState;
     }
 
     public void setAppAnimalState(AppAnimalState appAnimalState) {
         this.appAnimalState = appAnimalState;
+    }
+
+    public AppAnimalStateData getAppAnimalStateData() {
+        return appAnimalStateData;
+    }
+
+    public void setAppAnimalStateData(AppAnimalStateData appAnimalStateData) {
+        this.appAnimalStateData = appAnimalStateData;
     }
 
     public void setId(Long id)
@@ -67,6 +82,15 @@ public class AppAnimal extends BaseEntity
     public Long getId() 
     {
         return id;
+    }
+    public void setSid(Long sid) 
+    {
+        this.sid = sid;
+    }
+
+    public Long getSid() 
+    {
+        return sid;
     }
     public void setName(String name) 
     {
@@ -136,6 +160,7 @@ public class AppAnimal extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("sid", getSid())
             .append("name", getName())
             .append("sex", getSex())
             .append("icon", getIcon())

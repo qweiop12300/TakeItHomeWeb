@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 用户数据扩展Controller
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @RestController
 @RequestMapping("/app/user_data")

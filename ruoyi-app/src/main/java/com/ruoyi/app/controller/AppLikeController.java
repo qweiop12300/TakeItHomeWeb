@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 点赞Controller
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @RestController
 @RequestMapping("/app/like")
@@ -63,10 +63,10 @@ public class AppLikeController extends BaseController
      * 获取点赞详细信息
      */
     @PreAuthorize("@ss.hasPermi('app:like:query')")
-    @GetMapping(value = "/{uid}")
-    public AjaxResult getInfo(@PathVariable("uid") Long uid)
+    @GetMapping(value = "/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id)
     {
-        return success(appLikeService.selectAppLikeByUid(uid));
+        return success(appLikeService.selectAppLikeById(id));
     }
 
     /**
@@ -96,9 +96,9 @@ public class AppLikeController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('app:like:remove')")
     @Log(title = "点赞", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{uids}")
-    public AjaxResult remove(@PathVariable Long[] uids)
+	@DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids)
     {
-        return toAjax(appLikeService.deleteAppLikeByUids(uids));
+        return toAjax(appLikeService.deleteAppLikeByIds(ids));
     }
 }

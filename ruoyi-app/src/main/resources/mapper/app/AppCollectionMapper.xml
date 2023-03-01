@@ -5,13 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.app.mapper.AppCollectionMapper">
     
     <resultMap type="AppCollection" id="AppCollectionResult">
+        <result property="id"    column="id"    />
         <result property="uid"    column="uid"    />
         <result property="pid"    column="pid"    />
         <result property="createDate"    column="create_date"    />
     </resultMap>
 
     <sql id="selectAppCollectionVo">
-        select uid, pid, create_date from app_collection
+        select id, uid, pid, create_date from app_collection
     </sql>
 
     <select id="selectAppCollectionList" parameterType="AppCollection" resultMap="AppCollectionResult">
@@ -23,17 +24,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectAppCollectionByUid" parameterType="Long" resultMap="AppCollectionResult">
+    <select id="selectAppCollectionById" parameterType="Long" resultMap="AppCollectionResult">
         <include refid="selectAppCollectionVo"/>
-        where uid = #{uid}
-    </select>
-
-    <select id="selectAppCollectionByPid" parameterType="Long" resultMap="AppCollectionResult">
-        <include refid="selectAppCollectionVo"/>
-        where pid = #{pid}
+        where id = #{id}
     </select>
         
-    <insert id="insertAppCollection" parameterType="AppCollection">
+    <insert id="insertAppCollection" parameterType="AppCollection" useGeneratedKeys="true" keyProperty="id">
         insert into app_collection
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="uid != null">uid,</if>
@@ -50,20 +46,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateAppCollection" parameterType="AppCollection">
         update app_collection
         <trim prefix="SET" suffixOverrides=",">
+            <if test="uid != null">uid = #{uid},</if>
             <if test="pid != null">pid = #{pid},</if>
             <if test="createDate != null">create_date = #{createDate},</if>
         </trim>
-        where uid = #{uid}
+        where id = #{id}
     </update>
 
-    <delete id="deleteAppCollectionByUid" parameterType="Long">
-        delete from app_collection where uid = #{uid}
+    <delete id="deleteAppCollectionById" parameterType="Long">
+        delete from app_collection where id = #{id}
     </delete>
 
-    <delete id="deleteAppCollectionByUids" parameterType="String">
-        delete from app_collection where uid in 
-        <foreach item="uid" collection="array" open="(" separator="," close=")">
-            #{uid}
+    <delete id="deleteAppCollectionByIds" parameterType="String">
+        delete from app_collection where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 </mapper>

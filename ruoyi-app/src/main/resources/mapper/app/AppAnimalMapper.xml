@@ -5,55 +5,69 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.app.mapper.AppAnimalMapper">
     
     <resultMap type="AppAnimal" id="AppAnimalResult">
-        <result property="id"    column="aaid"    />
+        <result property="id"    column="id"    />
+        <result property="sid"    column="sid"    />
         <result property="name"    column="name"    />
         <result property="sex"    column="sex"    />
         <result property="icon"    column="icon"    />
         <result property="createDate"    column="create_date"    />
         <result property="year"    column="year"    />
-        <result property="s1"    column="aas1"    />
-        <result property="s2"    column="aas2"    />
+        <result property="s1"    column="s1"    />
+        <result property="s2"    column="s2"    />
+        <association property="appAnimalStateData" resultMap="com.ruoyi.app.mapper.AppAnimalStateDataMapper.AppAnimalStateDataResult"/>
+    </resultMap>
+
+    <resultMap type="AppAnimal" id="AppAnimalResult2" extends="AppAnimalResult">
         <association property="appAnimalState" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.AppAnimalStateResult"/>
     </resultMap>
 
 
+
     <sql id="selectAppAnimalVo">
-        select
-            aa.id aaid, name, aa.sex, icon, create_date, year, aa.s1 aas1, aa.s2 aas2,
-            aid, sid, uid, bid, hid, aas.s1 aas_s1,
-               usu.user_id u_user_id, usu.dept_id u_dept_id, usu.user_name u_user_name, usu.nick_name u_nick_name, usu.email u_email, usu.avatar u_avatar, usu.phonenumber u_phonenumber,  usu.sex u_sex, usu.status u_status, usu.del_flag u_del_flag, usu.login_ip u_login_ip , usu.login_date u_login_date, usu.create_by u_create_by, usu.create_time u_create_time, usu.remark u_remark,
-               hsu.user_id h_user_id, hsu.dept_id h_dept_id, hsu.user_name h_user_name, hsu.nick_name h_nick_name, hsu.email h_email, hsu.avatar h_avatar, hsu.phonenumber h_phonenumber,  hsu.sex h_sex, hsu.status h_status, hsu.del_flag h_del_flag, hsu.login_ip h_login_ip, hsu.login_date h_login_date, hsu.create_by h_create_by, hsu.create_time h_create_time, hsu.remark h_remark,
-               bsu.user_id b_user_id, bsu.dept_id b_dept_id, bsu.user_name b_user_name, bsu.nick_name b_nick_name, bsu.email b_email, bsu.avatar b_avatar, bsu.phonenumber b_phonenumber,  bsu.sex b_sex, bsu.status b_status, bsu.del_flag b_del_flag, bsu.login_ip b_login_ip, bsu.login_date b_login_date, bsu.create_by b_create_by, bsu.create_time b_create_time, bsu.remark b_remark,
-               aasd.id,aasd.title,aasd.s1
+        select aa.id, sid, name, sex, icon, create_date, year, aa.s1, s2,
+            aasd.id aasdid, aasd.title aasdtitle, aasd.s1 aasds1
         from app_animal aa
-        left join app_animal_state aas on aa.id = aid
         left join app_animal_state_data aasd on aasd.id = sid
-        left join sys_user usu on usu.user_id = uid
-        left join sys_user hsu on hsu.user_id = hid
-        left join sys_user bsu on bsu.user_id = bid
+    </sql>
+
+    <sql id="selectAppAnimalVoBy">
+        select aa.id, sid, name, aa.sex, icon, create_date, year, aa.s1, s2,
+            aasd.id aasdid, aasd.title aasdtitle, aasd.s1 aasds1,
+            aas.id aasid, aid, uid, bid, hid, aas.s1 aass1,
+            usu.user_id u_user_id,  usu.nick_name u_nick_name,  usu.sex u_sex, usu.avatar u_avatar,usu.remark u_remark,
+            bsu.user_id b_user_id,  bsu.nick_name b_nick_name,  bsu.sex b_sex, bsu.avatar b_avatar,bsu.remark b_remark,
+            hsu.user_id h_user_id,  hsu.nick_name h_nick_name,  hsu.sex h_sex, hsu.avatar h_avatar,hsu.remark h_remark
+        from app_animal aa
+            left join app_animal_state_data aasd on aasd.id = sid
+            left join app_animal_state aas on aa.id = aas.aid
+            left join sys_user usu on aas.uid = usu.user_id
+            left join sys_user bsu on aas.bid = bsu.user_id
+            left join sys_user hsu on aas.hid = hsu.user_id
     </sql>
 
     <select id="selectAppAnimalList" parameterType="AppAnimal" resultMap="AppAnimalResult">
         <include refid="selectAppAnimalVo"/>
         <where>  
+            <if test="sid != null "> and sid = #{sid}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="sex != null "> and sex = #{sex}</if>
             <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
             <if test="createDate != null "> and create_date = #{createDate}</if>
             <if test="year != null "> and year = #{year}</if>
-            <if test="s1 != null  and s1 != ''"> and s1 = #{s1}</if>
+            <if test="s1 != null  and s1 != ''"> and aa.s1 = #{s1}</if>
             <if test="s2 != null  and s2 != ''"> and s2 = #{s2}</if>
         </where>
     </select>
     
-    <select id="selectAppAnimalById" parameterType="Long" resultMap="AppAnimalResult">
-        <include refid="selectAppAnimalVo"/>
-        where aaid = #{id}
+    <select id="selectAppAnimalById" parameterType="Long" resultMap="AppAnimalResult2">
+        <include refid="selectAppAnimalVoBy"/>
+        where aa.id = #{id}
     </select>
         
     <insert id="insertAppAnimal" parameterType="AppAnimal" useGeneratedKeys="true" keyProperty="id">
         insert into app_animal
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sid != null">sid,</if>
             <if test="name != null and name != ''">name,</if>
             <if test="sex != null">sex,</if>
             <if test="icon != null">icon,</if>
@@ -63,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="s2 != null">s2,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sid != null">#{sid},</if>
             <if test="name != null and name != ''">#{name},</if>
             <if test="sex != null">#{sex},</if>
             <if test="icon != null">#{icon},</if>
@@ -76,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateAppAnimal" parameterType="AppAnimal">
         update app_animal
         <trim prefix="SET" suffixOverrides=",">
+            <if test="sid != null">sid = #{sid},</if>
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="sex != null">sex = #{sex},</if>
             <if test="icon != null">icon = #{icon},</if>

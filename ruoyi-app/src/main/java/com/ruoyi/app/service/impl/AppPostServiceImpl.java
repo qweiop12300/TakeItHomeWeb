@@ -1,8 +1,6 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
-
-import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppPostMapper;
@@ -13,7 +11,7 @@ import com.ruoyi.app.service.IAppPostService;
  * 动态Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @Service
 public class AppPostServiceImpl implements IAppPostService 

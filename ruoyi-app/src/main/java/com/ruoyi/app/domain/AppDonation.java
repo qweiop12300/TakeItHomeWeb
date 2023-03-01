@@ -11,9 +11,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 捐赠对象 app_donation
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
-public class AppDonation extends BaseEntity
+public class AppDonation
 {
     private static final long serialVersionUID = 1L;
 

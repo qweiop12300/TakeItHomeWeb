@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 动物状态信息Controller
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @RestController
 @RequestMapping("/app/animal_state_data")

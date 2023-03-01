@@ -11,7 +11,7 @@ import com.ruoyi.app.service.IUserTypeService;
  * 用户类型Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @Service
 public class UserTypeServiceImpl implements IUserTypeService 

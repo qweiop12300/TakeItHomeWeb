@@ -11,7 +11,7 @@ import com.ruoyi.app.service.IAppLikeService;
  * 点赞Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @Service
 public class AppLikeServiceImpl implements IAppLikeService 
@@ -22,13 +22,13 @@ public class AppLikeServiceImpl implements IAppLikeService
     /**
      * 查询点赞
      * 
-     * @param uid 点赞主键
+     * @param id 点赞主键
      * @return 点赞
      */
     @Override
-    public AppLike selectAppLikeByUid(Long uid)
+    public AppLike selectAppLikeById(Long id)
     {
-        return appLikeMapper.selectAppLikeByUid(uid);
+        return appLikeMapper.selectAppLikeById(id);
     }
 
     /**
@@ -70,24 +70,24 @@ public class AppLikeServiceImpl implements IAppLikeService
     /**
      * 批量删除点赞
      * 
-     * @param uids 需要删除的点赞主键
+     * @param ids 需要删除的点赞主键
      * @return 结果
      */
     @Override
-    public int deleteAppLikeByUids(Long[] uids)
+    public int deleteAppLikeByIds(Long[] ids)
     {
-        return appLikeMapper.deleteAppLikeByUids(uids);
+        return appLikeMapper.deleteAppLikeByIds(ids);
     }
 
     /**
      * 删除点赞信息
      * 
-     * @param uid 点赞主键
+     * @param id 点赞主键
      * @return 结果
      */
     @Override
-    public int deleteAppLikeByUid(Long uid)
+    public int deleteAppLikeById(Long id)
     {
-        return appLikeMapper.deleteAppLikeByUid(uid);
+        return appLikeMapper.deleteAppLikeById(id);
     }
 }

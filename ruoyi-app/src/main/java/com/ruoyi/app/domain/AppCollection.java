@@ -11,11 +11,14 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 收藏对象 app_collection
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
-public class AppCollection extends BaseEntity
+public class AppCollection
 {
     private static final long serialVersionUID = 1L;
+
+    /** id */
+    private Long id;
 
     /** 用户id */
     @Excel(name = "用户id")
@@ -30,6 +33,15 @@ public class AppCollection extends BaseEntity
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date createDate;
 
+    public void setId(Long id) 
+    {
+        this.id = id;
+    }
+
+    public Long getId() 
+    {
+        return id;
+    }
     public void setUid(Long uid) 
     {
         this.uid = uid;
@@ -61,6 +73,7 @@ public class AppCollection extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
             .append("uid", getUid())
             .append("pid", getPid())
             .append("createDate", getCreateDate())

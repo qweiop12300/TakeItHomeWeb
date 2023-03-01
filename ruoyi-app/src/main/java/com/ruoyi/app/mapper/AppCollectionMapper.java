@@ -7,17 +7,17 @@ import com.ruoyi.app.domain.AppCollection;
  * 收藏Mapper接口
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 public interface AppCollectionMapper 
 {
     /**
      * 查询收藏
      * 
-     * @param uid 收藏主键
+     * @param id 收藏主键
      * @return 收藏
      */
-    public AppCollection selectAppCollectionByUid(Long uid);
+    public AppCollection selectAppCollectionById(Long id);
 
     /**
      * 查询收藏列表
@@ -46,16 +46,16 @@ public interface AppCollectionMapper
     /**
      * 删除收藏
      * 
-     * @param uid 收藏主键
+     * @param id 收藏主键
      * @return 结果
      */
-    public int deleteAppCollectionByUid(Long uid);
+    public int deleteAppCollectionById(Long id);
 
     /**
      * 批量删除收藏
      * 
-     * @param uids 需要删除的数据主键集合
+     * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAppCollectionByUids(Long[] uids);
+    public int deleteAppCollectionByIds(Long[] ids);
 }

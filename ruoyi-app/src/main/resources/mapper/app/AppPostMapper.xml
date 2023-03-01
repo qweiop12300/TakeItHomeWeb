@@ -5,12 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.app.mapper.AppPostMapper">
     
     <resultMap type="AppPost" id="AppPostResult">
-        <result property="id"    column="apid"    />
+        <result property="id"    column="id"    />
         <result property="title"    column="title"    />
         <result property="content"    column="content"    />
         <result property="image"    column="image"    />
         <result property="video"    column="video"    />
-        <result property="createDate"    column="ap.create_date"    />
+        <result property="createDate"    column="create_date"    />
         <result property="updateDate"    column="update_date"    />
         <result property="uid"    column="uid"    />
         <result property="tid"    column="tid"    />
@@ -24,44 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="commentsNumber"    column="comments_number"    />
         <result property="url"    column="url"    />
         <result property="s1"    column="s1"    />
-        <association property="appPostType" resultMap="AppPostTypeResult"/>
-        <association property="sysUser" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.SysUserResult" columnPrefix="u_"/>
-        <association property="appTopic" resultMap="AppTopicResult"/>
-        <association property="appAnimal" resultMap="AppAnimalResult"/>
-    </resultMap>
-
-    <resultMap type="AppAnimal" id="AppAnimalResult">
-        <result property="id"    column="aa.id"    />
-        <result property="name"    column="aa.name"    />
-        <result property="sex"    column="sex"    />
-        <result property="icon"    column="icon"    />
-        <result property="createDate"    column="aa.create_date"    />
-        <result property="year"    column="year"    />
-        <result property="s1"    column="aas1"    />
-        <result property="s2"    column="aas2"    />
-    </resultMap>
-
-    <resultMap type="AppTopic" id="AppTopicResult">
-        <result property="id"    column="atcid"    />
-        <result property="title"    column="atctitle"    />
-    </resultMap>
-
-    <resultMap type="AppPostType" id="AppPostTypeResult">
-        <result property="id"    column="apt.id"    />
-        <result property="name"    column="apt.name"    />
     </resultMap>
 
     <sql id="selectAppPostVo">
-        select ap.id apid, ap.title, content, image, video, ap.create_date, update_date, uid, tid, aid, location, city, urgent, type_id, like_number, collection_number, comments_number, url, ap.s1,
-               apt.id ,apt.name,
-               atc.id atcid,atc.title atctitle,
-               aa.id, aa.name, aa.sex, icon, aa.create_date, year, aa.s1 aas1, aa.s2 aas2,
-            usu.user_id u_user_id, usu.dept_id u_dept_id, usu.user_name u_user_name, usu.nick_name u_nick_name, usu.email u_email, usu.avatar u_avatar, usu.phonenumber u_phonenumber,  usu.sex u_sex, usu.status u_status, usu.del_flag u_del_flag, usu.login_ip u_login_ip , usu.login_date u_login_date, usu.create_by u_create_by, usu.create_time u_create_time, usu.remark u_remark
-        from app_post ap
-            left join app_animal aa on aa.id = aid
-            left join sys_user usu on usu.user_id = uid
-            left join app_post_type apt on apt.id = type_id
-            left join app_topic atc on atc.id = tid
+        select id, title, content, image, video, create_date, update_date, uid, tid, aid, location, city, urgent, type_id, like_number, collection_number, comments_number, url, s1 from app_post
     </sql>
 
     <select id="selectAppPostList" parameterType="AppPost" resultMap="AppPostResult">
@@ -71,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="image != null  and image != ''"> and image = #{image}</if>
             <if test="video != null  and video != ''"> and video = #{video}</if>
-            <if test="createDate != null "> and ap.create_date = #{createDate}</if>
+            <if test="createDate != null "> and create_date = #{createDate}</if>
             <if test="updateDate != null "> and update_date = #{updateDate}</if>
             <if test="uid != null "> and uid = #{uid}</if>
             <if test="tid != null "> and tid = #{tid}</if>
@@ -90,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectAppPostById" parameterType="Long" resultMap="AppPostResult">
         <include refid="selectAppPostVo"/>
-        where apid = #{id}
+        where id = #{id}
     </select>
         
     <insert id="insertAppPost" parameterType="AppPost" useGeneratedKeys="true" keyProperty="id">

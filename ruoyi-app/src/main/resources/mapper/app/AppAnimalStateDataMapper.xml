@@ -5,13 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.app.mapper.AppAnimalStateDataMapper">
     
     <resultMap type="AppAnimalStateData" id="AppAnimalStateDataResult">
-        <result property="id"    column="id"    />
-        <result property="title"    column="title"    />
-        <result property="s1"    column="s1"    />
+        <result property="id"    column="aasdid"    />
+        <result property="title"    column="aasdtitle"    />
+        <result property="s1"    column="aasds1"    />
     </resultMap>
 
     <sql id="selectAppAnimalStateDataVo">
-        select id, title, s1 from app_animal_state_data
+        select id aasdid, title aasdtitle, s1 aasds1 from app_animal_state_data
     </sql>
 
     <select id="selectAppAnimalStateDataList" parameterType="AppAnimalStateData" resultMap="AppAnimalStateDataResult">

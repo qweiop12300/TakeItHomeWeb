@@ -11,7 +11,7 @@ import com.ruoyi.app.service.IAppCollectionService;
  * 收藏Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-27
+ * @date 2023-02-28
  */
 @Service
 public class AppCollectionServiceImpl implements IAppCollectionService 
@@ -22,13 +22,13 @@ public class AppCollectionServiceImpl implements IAppCollectionService
     /**
      * 查询收藏
      * 
-     * @param uid 收藏主键
+     * @param id 收藏主键
      * @return 收藏
      */
     @Override
-    public AppCollection selectAppCollectionByUid(Long uid)
+    public AppCollection selectAppCollectionById(Long id)
     {
-        return appCollectionMapper.selectAppCollectionByUid(uid);
+        return appCollectionMapper.selectAppCollectionById(id);
     }
 
     /**
@@ -70,24 +70,24 @@ public class AppCollectionServiceImpl implements IAppCollectionService
     /**
      * 批量删除收藏
      * 
-     * @param uids 需要删除的收藏主键
+     * @param ids 需要删除的收藏主键
      * @return 结果
      */
     @Override
-    public int deleteAppCollectionByUids(Long[] uids)
+    public int deleteAppCollectionByIds(Long[] ids)
     {
-        return appCollectionMapper.deleteAppCollectionByUids(uids);
+        return appCollectionMapper.deleteAppCollectionByIds(ids);
     }
 
     /**
      * 删除收藏信息
      * 
-     * @param uid 收藏主键
+     * @param id 收藏主键
      * @return 结果
      */
     @Override
-    public int deleteAppCollectionByUid(Long uid)
+    public int deleteAppCollectionById(Long id)
     {
-        return appCollectionMapper.deleteAppCollectionByUid(uid);
+        return appCollectionMapper.deleteAppCollectionById(id);
     }
 }
