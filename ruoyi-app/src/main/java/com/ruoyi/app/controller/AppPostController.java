@@ -37,7 +37,6 @@ public class AppPostController extends BaseController
     /**
      * 查询动态列表
      */
-    @PreAuthorize("@ss.hasPermi('app:post:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppPost appPost)
     {

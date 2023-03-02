@@ -1,6 +1,8 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppCommentsMapper;
@@ -52,6 +54,7 @@ public class AppCommentsServiceImpl implements IAppCommentsService
     @Override
     public int insertAppComments(AppComments appComments)
     {
+        appComments.setUid(SecurityUtils.getUserId());
         return appCommentsMapper.insertAppComments(appComments);
     }
 
@@ -64,7 +67,12 @@ public class AppCommentsServiceImpl implements IAppCommentsService
     @Override
     public int updateAppComments(AppComments appComments)
     {
-        return appCommentsMapper.updateAppComments(appComments);
+        appComments.setUid(SecurityUtils.getUserId());
+        AppComments old = appCommentsMapper.selectAppCommentsById(appComments.getId());
+        if (old!=null&&old.getUid().equals(SecurityUtils.getUserId())){
+            return appCommentsMapper.updateAppComments(appComments);
+        }
+        return 0;
     }
 
     /**
@@ -88,6 +96,10 @@ public class AppCommentsServiceImpl implements IAppCommentsService
     @Override
     public int deleteAppCommentsById(Long id)
     {
-        return appCommentsMapper.deleteAppCommentsById(id);
+        AppComments old = appCommentsMapper.selectAppCommentsById(id);
+        if (old!=null&&old.getUid().equals(SecurityUtils.getUserId())){
+            return appCommentsMapper.deleteAppCommentsById(id);
+        }
+        return 0;
     }
 }

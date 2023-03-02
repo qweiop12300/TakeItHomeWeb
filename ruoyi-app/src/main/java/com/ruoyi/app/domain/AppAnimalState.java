@@ -1,6 +1,7 @@
 package com.ruoyi.app.domain;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -14,6 +15,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
  */
 public class AppAnimalState
 {
+
+
     private static final long serialVersionUID = 1L;
 
     /** id */
@@ -46,6 +49,10 @@ public class AppAnimalState
     /** 扩展1 */
     @Excel(name = "扩展1")
     private String s1;
+
+    public AppAnimalState(){
+
+    }
 
     public AppAnimal getAppAnimal() {
         return appAnimal;

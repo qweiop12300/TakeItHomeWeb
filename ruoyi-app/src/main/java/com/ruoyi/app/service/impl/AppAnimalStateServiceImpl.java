@@ -1,6 +1,8 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppAnimalStateMapper;
@@ -64,7 +66,13 @@ public class AppAnimalStateServiceImpl implements IAppAnimalStateService
     @Override
     public int updateAppAnimalState(AppAnimalState appAnimalState)
     {
-        return appAnimalStateMapper.updateAppAnimalState(appAnimalState);
+        AppAnimalState old = selectAppAnimalStateById(appAnimalState.getId());
+        if (old!=null&&(old.getUid().equals(SecurityUtils.getUserId())||old.getBid().equals(SecurityUtils.getUserId())||old.getUid().equals(SecurityUtils.getUserId()))){
+            return appAnimalStateMapper.updateAppAnimalState(appAnimalState);
+        }
+
+        return 0;
+
     }
 
     /**

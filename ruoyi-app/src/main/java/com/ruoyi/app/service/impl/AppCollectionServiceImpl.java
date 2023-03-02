@@ -1,6 +1,8 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppCollectionMapper;
@@ -52,7 +54,15 @@ public class AppCollectionServiceImpl implements IAppCollectionService
     @Override
     public int insertAppCollection(AppCollection appCollection)
     {
-        return appCollectionMapper.insertAppCollection(appCollection);
+        appCollection.setUid(SecurityUtils.getUserId());
+        List<AppCollection> list = appCollectionMapper.selectAppCollectionList(appCollection);
+        if (list.size()==0){
+            return appCollectionMapper.insertAppCollection(appCollection);
+        }else{
+            AppCollection appCollection1 = list.get(0);
+            appCollectionMapper.deleteAppCollectionById(appCollection1.getId());
+        }
+        return 0;
     }
 
     /**

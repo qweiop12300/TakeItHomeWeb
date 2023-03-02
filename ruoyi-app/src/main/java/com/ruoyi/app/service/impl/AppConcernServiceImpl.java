@@ -1,6 +1,8 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppConcernMapper;
@@ -52,7 +54,14 @@ public class AppConcernServiceImpl implements IAppConcernService
     @Override
     public int insertAppConcern(AppConcern appConcern)
     {
-        return appConcernMapper.insertAppConcern(appConcern);
+        appConcern.setUid(SecurityUtils.getUserId());
+        List<AppConcern> list = appConcernMapper.selectAppConcernList(appConcern);
+        if (list.size()==0){
+            return appConcernMapper.insertAppConcern(appConcern);
+        }else {
+            appConcernMapper.deleteAppConcernById(list.get(0).getId());
+        }
+        return 0;
     }
 
     /**
@@ -76,6 +85,7 @@ public class AppConcernServiceImpl implements IAppConcernService
     @Override
     public int deleteAppConcernByIds(Long[] ids)
     {
+
         return appConcernMapper.deleteAppConcernByIds(ids);
     }
 

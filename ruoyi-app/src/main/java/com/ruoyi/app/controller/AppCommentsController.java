@@ -37,7 +37,6 @@ public class AppCommentsController extends BaseController
     /**
      * 查询评论列表
      */
-    @PreAuthorize("@ss.hasPermi('app:comments:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppComments appComments)
     {

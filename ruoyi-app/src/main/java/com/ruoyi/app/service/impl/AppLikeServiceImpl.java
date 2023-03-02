@@ -1,6 +1,9 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.app.domain.AppConcern;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppLikeMapper;
@@ -52,7 +55,14 @@ public class AppLikeServiceImpl implements IAppLikeService
     @Override
     public int insertAppLike(AppLike appLike)
     {
-        return appLikeMapper.insertAppLike(appLike);
+        appLike.setUid(SecurityUtils.getUserId());
+        List<AppLike> list = appLikeMapper.selectAppLikeList(appLike);
+        if (list.size()==0){
+            return appLikeMapper.insertAppLike(appLike);
+        }else {
+            appLikeMapper.deleteAppLikeById(list.get(0).getId());
+        }
+        return 0;
     }
 
     /**

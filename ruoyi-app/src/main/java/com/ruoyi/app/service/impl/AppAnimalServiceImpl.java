@@ -1,6 +1,10 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.app.domain.AppAnimalState;
+import com.ruoyi.app.mapper.AppAnimalStateMapper;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppAnimalMapper;
@@ -18,6 +22,9 @@ public class AppAnimalServiceImpl implements IAppAnimalService
 {
     @Autowired
     private AppAnimalMapper appAnimalMapper;
+
+    @Autowired
+    private AppAnimalStateMapper appAnimalStateMapper;
 
     /**
      * 查询动物信息
@@ -52,7 +59,19 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     @Override
     public int insertAppAnimal(AppAnimal appAnimal)
     {
-        return appAnimalMapper.insertAppAnimal(appAnimal);
+        long ys = SecurityUtils.getLoginUser().getDeptId()%110;
+        AppAnimalState appAnimalState = new AppAnimalState();
+        if (ys==0){
+            appAnimalState.setBid(SecurityUtils.getUserId());
+        }else if (ys==1){
+            appAnimalState.setHid(SecurityUtils.getUserId());
+        }else {
+            appAnimalState.setUid(SecurityUtils.getUserId());
+        }
+        int res = appAnimalMapper.insertAppAnimal(appAnimal);
+        appAnimalState.setAid(appAnimal.getId());
+        appAnimalStateMapper.insertAppAnimalState(appAnimalState);
+        return res;
     }
 
     /**
@@ -64,7 +83,14 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     @Override
     public int updateAppAnimal(AppAnimal appAnimal)
     {
-        return appAnimalMapper.updateAppAnimal(appAnimal);
+        Long userId = SecurityUtils.getUserId();
+        AppAnimalState appAnimalState = new AppAnimalState();
+        appAnimalState.setAid(appAnimal.getId());
+        List<AppAnimalState> list = appAnimalStateMapper.selectAppAnimalStateList(appAnimalState);
+        if (list.size()!=0&&(list.get(0).getUid().equals(userId)||list.get(0).getHid().equals(userId)||list.get(0).getBid().equals(userId))){
+            return appAnimalMapper.updateAppAnimal(appAnimal);
+        }
+        return 0;
     }
 
     /**
@@ -88,6 +114,7 @@ public class AppAnimalServiceImpl implements IAppAnimalService
     @Override
     public int deleteAppAnimalById(Long id)
     {
-        return appAnimalMapper.deleteAppAnimalById(id);
+        return 0;
+//        return appAnimalMapper.deleteAppAnimalById(id);
     }
 }

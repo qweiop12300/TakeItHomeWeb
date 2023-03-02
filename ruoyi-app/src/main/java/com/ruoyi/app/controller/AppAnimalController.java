@@ -1,6 +1,7 @@
 package com.ruoyi.app.controller;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 动物信息Controller
  * 
  * @author ruoyi
- * @date 2023-03-01
+ * @date 2023-03-0
  */
 @RestController
 @RequestMapping("/app/animal")
@@ -37,7 +38,6 @@ public class AppAnimalController extends BaseController
     /**
      * 查询动物信息列表
      */
-    @PreAuthorize("@ss.hasPermi('app:animal:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppAnimal appAnimal)
     {

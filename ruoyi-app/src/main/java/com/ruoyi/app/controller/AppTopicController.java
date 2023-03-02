@@ -37,7 +37,6 @@ public class AppTopicController extends BaseController
     /**
      * 查询话题列表
      */
-    @PreAuthorize("@ss.hasPermi('app:topic:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppTopic appTopic)
     {

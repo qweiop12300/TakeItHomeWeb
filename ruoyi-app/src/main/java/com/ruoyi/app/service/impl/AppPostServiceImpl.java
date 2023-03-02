@@ -1,6 +1,8 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppPostMapper;
@@ -52,6 +54,7 @@ public class AppPostServiceImpl implements IAppPostService
     @Override
     public int insertAppPost(AppPost appPost)
     {
+        appPost.setUid(SecurityUtils.getUserId());
         return appPostMapper.insertAppPost(appPost);
     }
 
@@ -64,7 +67,12 @@ public class AppPostServiceImpl implements IAppPostService
     @Override
     public int updateAppPost(AppPost appPost)
     {
-        return appPostMapper.updateAppPost(appPost);
+        appPost.setUid(SecurityUtils.getUserId());
+        AppPost old = appPostMapper.selectAppPostById(appPost.getId());
+        if (old.getUid().equals(appPost.getUid())){
+            return appPostMapper.updateAppPost(appPost);
+        }
+        return 0;
     }
 
     /**
@@ -88,6 +96,10 @@ public class AppPostServiceImpl implements IAppPostService
     @Override
     public int deleteAppPostById(Long id)
     {
-        return appPostMapper.deleteAppPostById(id);
+        AppPost old = selectAppPostById(id);
+        if (old!=null && old.getUid().equals(SecurityUtils.getUserId())){
+            return appPostMapper.deleteAppPostById(id);
+        }
+        return 0;
     }
 }

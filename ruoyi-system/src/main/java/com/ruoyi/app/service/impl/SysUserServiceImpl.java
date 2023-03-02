@@ -68,7 +68,6 @@ public class SysUserServiceImpl implements ISysUserService
      * @return 用户信息集合信息
      */
     @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserList(SysUser user)
     {
         return userMapper.selectUserList(user);
@@ -274,7 +273,11 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public boolean registerUser(SysUser user)
     {
-        return userMapper.insertUser(user) > 0;
+        boolean is = userMapper.insertUser(user) > 0;
+        if (is){
+            insertUserRole(user);
+        }
+        return is;
     }
 
     /**
@@ -288,10 +291,10 @@ public class SysUserServiceImpl implements ISysUserService
     public int updateUser(SysUser user)
     {
         Long userId = user.getUserId();
-        // 删除用户与角色关联
-        userRoleMapper.deleteUserRoleByUserId(userId);
-        // 新增用户与角色管理
-        insertUserRole(user);
+//        // 删除用户与角色关联
+//        userRoleMapper.deleteUserRoleByUserId(userId);
+//        // 新增用户与角色管理
+//        insertUserRole(user);
         // 删除用户与岗位关联
         userPostMapper.deleteUserPostByUserId(userId);
         // 新增用户与岗位管理

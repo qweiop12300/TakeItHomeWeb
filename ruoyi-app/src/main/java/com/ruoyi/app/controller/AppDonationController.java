@@ -37,7 +37,6 @@ public class AppDonationController extends BaseController
     /**
      * 查询捐赠列表
      */
-    @PreAuthorize("@ss.hasPermi('app:donation:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppDonation appDonation)
     {

@@ -18,6 +18,8 @@ import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.app.service.ISysConfigService;
 import com.ruoyi.app.service.ISysUserService;
 
+import java.util.List;
+
 /**
  * 注册校验方法
  * 
@@ -34,6 +36,21 @@ public class SysRegisterService
 
     @Autowired
     private RedisCache redisCache;
+
+    public String code(String phone,String code){
+        SysUser sysUser = userService.selectUserByUserName(phone);
+        if (sysUser==null){
+            return "未知错误";
+        }else {
+            if (sysUser.getRemark().equals(code)){
+                sysUser.setStatus("0");
+                userService.updateUser(sysUser);
+                return "注册成功";
+            }else {
+                return "验证码错误";
+            }
+        }
+    }
 
     /**
      * 注册
@@ -75,7 +92,15 @@ public class SysRegisterService
         }
         else
         {
-            sysUser.setNickName(username);
+            sysUser.setUserName(username);
+
+            sysUser.setNickName("用户"+StringUtils.getRandomString(10));
+            sysUser.setPhonenumber(username);
+            sysUser.setDeptId(111L);
+            sysUser.setRoleId(100L);
+            sysUser.setRoleIds(new Long[]{100L});
+            sysUser.setStatus("1");
+            sysUser.setRemark("code");
             sysUser.setPassword(SecurityUtils.encryptPassword(password));
             boolean regFlag = userService.registerUser(sysUser);
             if (!regFlag)

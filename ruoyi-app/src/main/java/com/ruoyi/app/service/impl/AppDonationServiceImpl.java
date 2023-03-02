@@ -1,6 +1,8 @@
 package com.ruoyi.app.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.AppDonationMapper;
@@ -52,6 +54,7 @@ public class AppDonationServiceImpl implements IAppDonationService
     @Override
     public int insertAppDonation(AppDonation appDonation)
     {
+        appDonation.setUid(SecurityUtils.getUserId());
         return appDonationMapper.insertAppDonation(appDonation);
     }
 
