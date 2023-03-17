@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 动态类型Controller
  * 
  * @author ruoyi
- * @date 2023-02-28
+ * @date 2023-03-14
  */
 @RestController
 @RequestMapping("/app/post_type")
@@ -37,7 +37,6 @@ public class AppPostTypeController extends BaseController
     /**
      * 查询动态类型列表
      */
-    @PreAuthorize("@ss.hasPermi('app:post_type:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppPostType appPostType)
     {

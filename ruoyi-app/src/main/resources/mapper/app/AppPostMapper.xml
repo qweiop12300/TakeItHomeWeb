@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="title != null  and title != ''"> and title = #{title}</if>
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="image != null  and image != ''"> and image = #{image}</if>
-            <if test="video != null  and video != ''"> and video = #{video}</if>
+            <if test="video != null  and video != ''"> and video like concat('%', #{video}, '%')</if>
             <if test="createDate != null "> and create_date = #{createDate}</if>
             <if test="updateDate != null "> and update_date = #{updateDate}</if>
             <if test="uid != null "> and uid = #{uid}</if>

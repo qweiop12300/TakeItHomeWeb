@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppHeadMapper">
+    
+    <resultMap type="AppHead" id="AppHeadResult">
+        <result property="id"    column="ahid"    />
+        <result property="pid"    column="pid"    />
+        <association property="post" resultMap="com.ruoyi.app.mapper.AppPostMapper.AppPostResult"/>
+    </resultMap>
+
+    <sql id="selectAppHeadVo">
+        select ah.id ahid,pid,ap.id id, title, content, image, video, create_date, update_date, uid, tid, aid, location, city, urgent, type_id, like_number, collection_number, comments_number, url, s1 from app_head ah
+        left join app_post ap on pid = ap.id
+    </sql>
+
+    <select id="selectAppHeadList" parameterType="AppHead" resultMap="AppHeadResult">
+        <include refid="selectAppHeadVo"/>
+        <where>  
+            <if test="pid != null "> and pid = #{pid}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppHeadById" parameterType="Long" resultMap="AppHeadResult">
+        <include refid="selectAppHeadVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppHead" parameterType="AppHead" useGeneratedKeys="true" keyProperty="id">
+        insert into app_head
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">pid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">#{pid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppHead" parameterType="AppHead">
+        update app_head
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null">pid = #{pid},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppHeadById" parameterType="Long">
+        delete from app_head where id = #{id}
+    </delete>
+
+    <delete id="deleteAppHeadByIds" parameterType="String">
+        delete from app_head where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

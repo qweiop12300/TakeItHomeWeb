@@ -5,18 +5,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.app.mapper.AppPostTypeMapper">
     
     <resultMap type="AppPostType" id="AppPostTypeResult">
-        <result property="id"    column="id"    />
         <result property="name"    column="name"    />
+        <result property="id"    column="id"    />
+        <result property="icon"    column="icon"    />
     </resultMap>
 
     <sql id="selectAppPostTypeVo">
-        select id, name from app_post_type
+        select name, id, icon from app_post_type
     </sql>
 
     <select id="selectAppPostTypeList" parameterType="AppPostType" resultMap="AppPostTypeResult">
         <include refid="selectAppPostTypeVo"/>
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
         </where>
     </select>
     
@@ -29,9 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into app_post_type
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">name,</if>
+            <if test="icon != null">icon,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null">#{name},</if>
+            <if test="icon != null">#{icon},</if>
          </trim>
     </insert>
 
@@ -39,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update app_post_type
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null">name = #{name},</if>
+            <if test="icon != null">icon = #{icon},</if>
         </trim>
         where id = #{id}
     </update>

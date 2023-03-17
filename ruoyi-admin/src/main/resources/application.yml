@@ -19,6 +19,10 @@ ruoyi:
 server:
   # 服务器的HTTP端口，默认为8080
   port: 8080
+#  ssl:
+#    key-store: classpath:test.pfx
+#    key-store-password: 12345678
+#    key-store-type: PKCS12
   servlet:
     # 应用的访问路径
     context-path: /

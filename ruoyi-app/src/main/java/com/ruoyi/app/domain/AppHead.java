@@ -6,36 +6,33 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 动态类型对象 app_post_type
+ * 公告对象 app_head
  * 
  * @author ruoyi
- * @date 2023-03-14
+ * @date 2023-03-16
  */
-public class AppPostType extends BaseEntity
+public class AppHead
 {
     private static final long serialVersionUID = 1L;
 
-    /** 动态类型名字 */
-    @Excel(name = "动态类型名字")
-    private String name;
-
-    /** 动态类型id */
+    /** id */
     private Long id;
 
-    /** 头像 */
-    @Excel(name = "头像")
-    private String icon;
+    /** postid */
+    @Excel(name = "postid")
+    private Long pid;
 
-    public void setName(String name) 
-    {
-        this.name = name;
+    private AppPost post;
+
+    public AppPost getPost() {
+        return post;
     }
 
-    public String getName() 
-    {
-        return name;
+    public void setPost(AppPost post) {
+        this.post = post;
     }
-    public void setId(Long id) 
+
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -44,22 +41,21 @@ public class AppPostType extends BaseEntity
     {
         return id;
     }
-    public void setIcon(String icon) 
+    public void setPid(Long pid) 
     {
-        this.icon = icon;
+        this.pid = pid;
     }
 
-    public String getIcon() 
+    public Long getPid() 
     {
-        return icon;
+        return pid;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("name", getName())
             .append("id", getId())
-            .append("icon", getIcon())
+            .append("pid", getPid())
             .toString();
     }
 }

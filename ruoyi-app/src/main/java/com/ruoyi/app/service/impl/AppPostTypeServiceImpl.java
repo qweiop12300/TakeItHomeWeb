@@ -11,7 +11,7 @@ import com.ruoyi.app.service.IAppPostTypeService;
  * 动态类型Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-28
+ * @date 2023-03-14
  */
 @Service
 public class AppPostTypeServiceImpl implements IAppPostTypeService 

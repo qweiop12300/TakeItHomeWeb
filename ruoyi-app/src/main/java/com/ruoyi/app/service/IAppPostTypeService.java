@@ -7,7 +7,7 @@ import com.ruoyi.app.domain.AppPostType;
  * 动态类型Service接口
  * 
  * @author ruoyi
- * @date 2023-02-28
+ * @date 2023-03-14
  */
 public interface IAppPostTypeService 
 {
