@@ -3,6 +3,8 @@ package com.ruoyi.app.service.impl;
 import java.util.List;
 
 import com.ruoyi.app.domain.AppCollection;
+import com.ruoyi.app.domain.AppComments;
+import com.ruoyi.app.mapper.AppCommentsMapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,10 @@ public class AppCommentsLikeServiceImpl implements IAppCommentsLikeService
 {
     @Autowired
     private AppCommentsLikeMapper appCommentsLikeMapper;
+
+
+    @Autowired
+    private AppCommentsMapper appCommentsMapper;
 
     /**
      * 查询评论点赞
@@ -57,7 +63,12 @@ public class AppCommentsLikeServiceImpl implements IAppCommentsLikeService
     {
         appCommentsLike.setUid(SecurityUtils.getUserId());
         List<AppCommentsLike> list = appCommentsLikeMapper.selectAppCommentsLikeList(appCommentsLike);
+        AppComments appComments = appCommentsMapper.selectAppCommentsById(appCommentsLike.getCid());
+
         if (list.size()==0){
+            appComments.setLikeNumber(appComments.getLikeNumber()+1);
+            appCommentsMapper.updateAppComments(appComments);
+
             return appCommentsLikeMapper.insertAppCommentsLike(appCommentsLike);
         }else{
             AppCommentsLike appCommentsLike1 = list.get(0);

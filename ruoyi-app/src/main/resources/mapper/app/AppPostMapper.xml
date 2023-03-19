@@ -24,11 +24,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="commentsNumber"    column="comments_number"    />
         <result property="url"    column="url"    />
         <result property="s1"    column="s1"    />
+        <association property="user" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.SysUserResult" columnPrefix="u_"/>
+        <association property="appAnimal" resultMap="com.ruoyi.app.mapper.AppAnimalMapper.AppAnimalResult" columnPrefix="aa_"/>
+        <association property="appTopic" resultMap="com.ruoyi.app.mapper.AppTopicMapper.AppTopicResult" columnPrefix="at_"/>
+        <association property="isLike" resultMap="com.ruoyi.app.mapper.AppLikeMapper.AppLikeResult" columnPrefix="al_"/>
+        <association property="isCollection" resultMap="com.ruoyi.app.mapper.AppCollectionMapper.AppCollectionResult" columnPrefix="ac_"/>
+        <association property="isConcern" resultMap="com.ruoyi.app.mapper.AppConcernMapper.AppConcernResult" columnPrefix="aco_"/>
     </resultMap>
 
     <sql id="selectAppPostVo">
-        select id, title, content, image, video, create_date, update_date, uid, tid, aid, location, city, urgent, type_id, like_number, collection_number, comments_number, url, s1 from app_post
+        select
+        ap.id, ap.title, ap.content, ap.image, ap.video, ap.create_date, ap.update_date, ap.uid, ap.tid, ap.aid, ap.location, ap.city, ap.urgent, ap.type_id, ap.like_number, ap.collection_number, ap.comments_number, ap.url, ap.s1,
+        aa.id aa_id, aa.sid aa_sd, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,
+        su.user_id u_user_id,  su.nick_name u_nick_name,  su.sex u_sex, su.avatar u_avatar,su.remark u_remark,
+        at.id at_id, at.title at_title
+        <if test="nowUserId!=null">
+            ,
+            ac.id ac_id,ac.uid ac_uid,ac.pid ac_pid,ac.create_date ac_create_date,
+            al.id al_id,al.uid al_uid,al.pid al_pid,al.create_date al_create_date,
+            aco.id aco_id,aco.uid aco_uid,aco.to_uid aco_to_uid,aco.to_aid aco_to_aid,aco.to_tid aco_to_tid,aco.create_date aco_create_date
+        </if>
+        from app_post ap
+        left join app_animal aa on aa.id = aid
+        left join sys_user su on su.user_id = uid
+        left join app_topic at on at.id = tid
+        <if test="nowUserId!=null">
+            left join app_collection ac on ac.pid = ap.id and ac.uid = #{nowUserId}
+            left join app_like al on al.pid = ap.id and al.uid = #{nowUserId}
+            left join app_concern aco on aco.uid = #{nowUserId} and aco.to_uid = ap.uid
+        </if>
     </sql>
+
 
     <select id="selectAppPostList" parameterType="AppPost" resultMap="AppPostResult">
         <include refid="selectAppPostVo"/>
@@ -56,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectAppPostById" parameterType="Long" resultMap="AppPostResult">
         <include refid="selectAppPostVo"/>
-        where id = #{id}
+        where ap.id = #{id}
     </select>
         
     <insert id="insertAppPost" parameterType="AppPost" useGeneratedKeys="true" keyProperty="id">

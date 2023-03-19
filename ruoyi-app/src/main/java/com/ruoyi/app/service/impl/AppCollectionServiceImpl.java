@@ -1,7 +1,10 @@
 package com.ruoyi.app.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.app.domain.AppPost;
+import com.ruoyi.app.mapper.AppPostMapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ public class AppCollectionServiceImpl implements IAppCollectionService
 {
     @Autowired
     private AppCollectionMapper appCollectionMapper;
+
+    @Autowired
+    private AppPostMapper appPostMapper;
 
     /**
      * 查询收藏
@@ -56,10 +62,16 @@ public class AppCollectionServiceImpl implements IAppCollectionService
     {
         appCollection.setUid(SecurityUtils.getUserId());
         List<AppCollection> list = appCollectionMapper.selectAppCollectionList(appCollection);
+        AppPost appPost = appPostMapper.selectAppPostById(appCollection.getPid());
         if (list.size()==0){
+            appCollection.setCreateDate(new Date());
+            appPost.setCollectionNumber(appPost.getCollectionNumber()+1);
+            appPostMapper.updateAppPost(appPost);
             return appCollectionMapper.insertAppCollection(appCollection);
         }else{
             AppCollection appCollection1 = list.get(0);
+            appPost.setCollectionNumber(appPost.getCollectionNumber()-1);
+            appPostMapper.updateAppPost(appPost);
             appCollectionMapper.deleteAppCollectionById(appCollection1.getId());
         }
         return 0;

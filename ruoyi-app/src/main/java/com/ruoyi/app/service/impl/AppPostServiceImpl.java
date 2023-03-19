@@ -1,5 +1,6 @@
 package com.ruoyi.app.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.utils.SecurityUtils;
@@ -42,6 +43,11 @@ public class AppPostServiceImpl implements IAppPostService
     @Override
     public List<AppPost> selectAppPostList(AppPost appPost)
     {
+        try {
+            appPost.setNowUserId(SecurityUtils.getUserId());
+        }catch (Exception e){
+            System.out.println("没登录");
+        }
         return appPostMapper.selectAppPostList(appPost);
     }
 
@@ -54,6 +60,7 @@ public class AppPostServiceImpl implements IAppPostService
     @Override
     public int insertAppPost(AppPost appPost)
     {
+        appPost.setCreateDate(new Date());
         appPost.setUid(SecurityUtils.getUserId());
         return appPostMapper.insertAppPost(appPost);
     }
@@ -70,6 +77,7 @@ public class AppPostServiceImpl implements IAppPostService
         appPost.setUid(SecurityUtils.getUserId());
         AppPost old = appPostMapper.selectAppPostById(appPost.getId());
         if (old.getUid().equals(appPost.getUid())){
+            appPost.setUpdateDate(new Date());
             return appPostMapper.updateAppPost(appPost);
         }
         return 0;

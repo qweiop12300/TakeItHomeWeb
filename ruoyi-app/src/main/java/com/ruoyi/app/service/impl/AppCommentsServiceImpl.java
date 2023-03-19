@@ -1,7 +1,10 @@
 package com.ruoyi.app.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.app.domain.AppPost;
+import com.ruoyi.app.mapper.AppPostMapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ public class AppCommentsServiceImpl implements IAppCommentsService
 {
     @Autowired
     private AppCommentsMapper appCommentsMapper;
+
+    @Autowired
+    private AppPostMapper appPostMapper;
 
     /**
      * 查询评论
@@ -54,7 +60,12 @@ public class AppCommentsServiceImpl implements IAppCommentsService
     @Override
     public int insertAppComments(AppComments appComments)
     {
+        AppPost appPost = appPostMapper.selectAppPostById(appComments.getPid());
+        appPost.setCommentsNumber(appPost.getCommentsNumber()+1);
+        appPostMapper.updateAppPost(appPost);
+
         appComments.setUid(SecurityUtils.getUserId());
+        appComments.setCreateDate(new Date());
         return appCommentsMapper.insertAppComments(appComments);
     }
 
@@ -98,6 +109,11 @@ public class AppCommentsServiceImpl implements IAppCommentsService
     {
         AppComments old = appCommentsMapper.selectAppCommentsById(id);
         if (old!=null&&old.getUid().equals(SecurityUtils.getUserId())){
+
+            AppPost appPost = appPostMapper.selectAppPostById(id);
+            appPost.setCommentsNumber(appPost.getCommentsNumber()-1);
+            appPostMapper.updateAppPost(appPost);
+
             return appCommentsMapper.deleteAppCommentsById(id);
         }
         return 0;

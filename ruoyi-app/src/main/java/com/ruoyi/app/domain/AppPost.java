@@ -50,13 +50,19 @@ public class AppPost
     @Excel(name = "用户id")
     private Long uid;
 
+    private SysUserE user;
+
     /** 话题id */
     @Excel(name = "话题id")
     private Long tid;
 
+    private AppTopic appTopic;
+
     /** 动物id */
     @Excel(name = "动物id")
     private Long aid;
+
+    private AppAnimal appAnimal;
 
     /** 具体位置 */
     @Excel(name = "具体位置")
@@ -94,7 +100,71 @@ public class AppPost
     @Excel(name = "扩展1")
     private String s1;
 
-    public void setId(Long id) 
+    private Long nowUserId;
+
+    private AppLike isLike;
+
+    private AppCollection isCollection;
+
+    private AppConcern isConcern;
+
+    public AppConcern getIsConcern() {
+        return isConcern;
+    }
+
+    public void setIsConcern(AppConcern isConcern) {
+        this.isConcern = isConcern;
+    }
+
+    public Long getNowUserId() {
+        return nowUserId;
+    }
+
+    public void setNowUserId(Long nowUserId) {
+        this.nowUserId = nowUserId;
+    }
+
+    public AppAnimal getAppAnimal() {
+        return appAnimal;
+    }
+
+    public AppTopic getAppTopic() {
+        return appTopic;
+    }
+
+    public SysUserE getUser() {
+        return user;
+    }
+
+    public AppCollection getIsCollection() {
+        return isCollection;
+    }
+
+    public AppLike getIsLike() {
+        return isLike;
+    }
+
+    public void setAppAnimal(AppAnimal appAnimal) {
+        this.appAnimal = appAnimal;
+    }
+
+    public void setAppTopic(AppTopic appTopic) {
+        this.appTopic = appTopic;
+    }
+
+    public void setUser(SysUserE user) {
+        this.user = user;
+    }
+
+    public void setIsCollection(AppCollection isCollection) {
+        this.isCollection = isCollection;
+    }
+
+    public void setIsLike(AppLike isLike) {
+        this.isLike = isLike;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }

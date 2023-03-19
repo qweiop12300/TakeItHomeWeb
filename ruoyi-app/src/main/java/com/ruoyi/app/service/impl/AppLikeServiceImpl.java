@@ -1,8 +1,11 @@
 package com.ruoyi.app.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.app.domain.AppConcern;
+import com.ruoyi.app.domain.AppPost;
+import com.ruoyi.app.mapper.AppPostMapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,9 @@ public class AppLikeServiceImpl implements IAppLikeService
 {
     @Autowired
     private AppLikeMapper appLikeMapper;
+
+    @Autowired
+    private AppPostMapper appPostMapper;
 
     /**
      * 查询点赞
@@ -57,9 +63,15 @@ public class AppLikeServiceImpl implements IAppLikeService
     {
         appLike.setUid(SecurityUtils.getUserId());
         List<AppLike> list = appLikeMapper.selectAppLikeList(appLike);
+        AppPost appPost = appPostMapper.selectAppPostById(appLike.getPid());
         if (list.size()==0){
+            appLike.setCreateDate(new Date());
+            appPost.setLikeNumber(appPost.getLikeNumber()+1);
+            appPostMapper.updateAppPost(appPost);
             return appLikeMapper.insertAppLike(appLike);
         }else {
+            appPost.setLikeNumber(appPost.getLikeNumber()-1);
+            appPostMapper.updateAppPost(appPost);
             appLikeMapper.deleteAppLikeById(list.get(0).getId());
         }
         return 0;

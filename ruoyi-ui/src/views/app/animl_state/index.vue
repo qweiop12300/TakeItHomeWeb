@@ -1,0 +1,319 @@
+<template>
+  <div class="app-container">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="动物id" prop="aid">
+        <el-input
+          v-model="queryParams.aid"
+          placeholder="请输入动物id"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="动物状态" prop="sid">
+        <el-input
+          v-model="queryParams.sid"
+          placeholder="请输入动物状态"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="动物领养人id" prop="uid">
+        <el-input
+          v-model="queryParams.uid"
+          placeholder="请输入动物领养人id"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="救助基地id" prop="bid">
+        <el-input
+          v-model="queryParams.bid"
+          placeholder="请输入救助基地id"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="动物医院id" prop="hid">
+        <el-input
+          v-model="queryParams.hid"
+          placeholder="请输入动物医院id"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="扩展1" prop="s1">
+        <el-input
+          v-model="queryParams.s1"
+          placeholder="请输入扩展1"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['app:animl_state:add']"
+        >新增</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="success"
+          plain
+          icon="el-icon-edit"
+          size="mini"
+          :disabled="single"
+          @click="handleUpdate"
+          v-hasPermi="['app:animl_state:edit']"
+        >修改</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          icon="el-icon-delete"
+          size="mini"
+          :disabled="multiple"
+          @click="handleDelete"
+          v-hasPermi="['app:animl_state:remove']"
+        >删除</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['app:animl_state:export']"
+        >导出</el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
+    <el-table v-loading="loading" :data="animl_stateList" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="动物id" align="center" prop="aid" />
+      <el-table-column label="动物状态" align="center" prop="sid" />
+      <el-table-column label="动物领养人id" align="center" prop="uid" />
+      <el-table-column label="救助基地id" align="center" prop="bid" />
+      <el-table-column label="动物医院id" align="center" prop="hid" />
+      <el-table-column label="扩展1" align="center" prop="s1" />
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['app:animl_state:edit']"
+          >修改</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['app:animl_state:remove']"
+          >删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+
+    <!-- 添加或修改动物状态关联管理对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="动物id" prop="aid">
+          <el-input v-model="form.aid" placeholder="请输入动物id" />
+        </el-form-item>
+        <el-form-item label="动物状态" prop="sid">
+          <el-input v-model="form.sid" placeholder="请输入动物状态" />
+        </el-form-item>
+        <el-form-item label="动物领养人id" prop="uid">
+          <el-input v-model="form.uid" placeholder="请输入动物领养人id" />
+        </el-form-item>
+        <el-form-item label="救助基地id" prop="bid">
+          <el-input v-model="form.bid" placeholder="请输入救助基地id" />
+        </el-form-item>
+        <el-form-item label="动物医院id" prop="hid">
+          <el-input v-model="form.hid" placeholder="请输入动物医院id" />
+        </el-form-item>
+        <el-form-item label="扩展1" prop="s1">
+          <el-input v-model="form.s1" placeholder="请输入扩展1" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { listAniml_state, getAniml_state, delAniml_state, addAniml_state, updateAniml_state } from "@/api/app/animl_state";
+
+export default {
+  name: "Animl_state",
+  data() {
+    return {
+      // 遮罩层
+      loading: true,
+      // 选中数组
+      ids: [],
+      // 非单个禁用
+      single: true,
+      // 非多个禁用
+      multiple: true,
+      // 显示搜索条件
+      showSearch: true,
+      // 总条数
+      total: 0,
+      // 动物状态关联管理表格数据
+      animl_stateList: [],
+      // 弹出层标题
+      title: "",
+      // 是否显示弹出层
+      open: false,
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        aid: null,
+        sid: null,
+        uid: null,
+        bid: null,
+        hid: null,
+        s1: null
+      },
+      // 表单参数
+      form: {},
+      // 表单校验
+      rules: {
+        aid: [
+          { required: true, message: "动物id不能为空", trigger: "blur" }
+        ],
+        sid: [
+          { required: true, message: "动物状态不能为空", trigger: "blur" }
+        ],
+      }
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    /** 查询动物状态关联管理列表 */
+    getList() {
+      this.loading = true;
+      listAniml_state(this.queryParams).then(response => {
+        this.animl_stateList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
+    // 取消按钮
+    cancel() {
+      this.open = false;
+      this.reset();
+    },
+    // 表单重置
+    reset() {
+      this.form = {
+        aid: null,
+        sid: null,
+        uid: null,
+        bid: null,
+        hid: null,
+        s1: null
+      };
+      this.resetForm("form");
+    },
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.resetForm("queryForm");
+      this.handleQuery();
+    },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+      this.ids = selection.map(item => item.aid)
+      this.single = selection.length!==1
+      this.multiple = !selection.length
+    },
+    /** 新增按钮操作 */
+    handleAdd() {
+      this.reset();
+      this.open = true;
+      this.title = "添加动物状态关联管理";
+    },
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset();
+      const aid = row.aid || this.ids
+      getAniml_state(aid).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "修改动物状态关联管理";
+      });
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.aid != null) {
+            updateAniml_state(this.form).then(response => {
+              this.$modal.msgSuccess("修改成功");
+              this.open = false;
+              this.getList();
+            });
+          } else {
+            addAniml_state(this.form).then(response => {
+              this.$modal.msgSuccess("新增成功");
+              this.open = false;
+              this.getList();
+            });
+          }
+        }
+      });
+    },
+    /** 删除按钮操作 */
+    handleDelete(row) {
+      const aids = row.aid || this.ids;
+      this.$modal.confirm('是否确认删除动物状态关联管理编号为"' + aids + '"的数据项？').then(function() {
+        return delAniml_state(aids);
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("删除成功");
+      }).catch(() => {});
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      this.download('app/animl_state/export', {
+        ...this.queryParams
+      }, `animl_state_${new Date().getTime()}.xlsx`)
+    }
+  }
+};
+</script>

@@ -14,10 +14,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="aid"    column="aid"    />
         <result property="likeNumber"    column="like_number"    />
         <result property="createDate"    column="create_date"    />
+        <association property="appAnimal" resultMap="com.ruoyi.app.mapper.AppAnimalMapper.AppAnimalResult" columnPrefix="aa_"/>
+        <association property="user" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.SysUserResult" columnPrefix="su_"/>
     </resultMap>
 
+
+
     <sql id="selectAppCommentsVo">
-        select id, to_id, pid, content, image, uid, aid, like_number, create_date from app_comments
+        select
+            ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,
+            aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,
+            su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark
+        from app_comments ac
+                 left join app_animal aa on ac.aid = aa.id
+                 left join sys_user su on ac.uid = su.user_id
     </sql>
 
     <select id="selectAppCommentsList" parameterType="AppComments" resultMap="AppCommentsResult">

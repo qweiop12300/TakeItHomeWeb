@@ -40,9 +40,13 @@ public class AppComments
     @Excel(name = "用户id")
     private Long uid;
 
+    private SysUserE user;
+
     /** 动物id */
     @Excel(name = "动物id")
     private Long aid;
+
+    private AppAnimal appAnimal;
 
     /** 点赞数量 */
     @Excel(name = "点赞数量")
@@ -53,7 +57,23 @@ public class AppComments
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date createDate;
 
-    public void setId(Long id) 
+    public SysUserE getUser() {
+        return user;
+    }
+
+    public void setUser(SysUserE user) {
+        this.user = user;
+    }
+
+    public AppAnimal getAppAnimal() {
+        return appAnimal;
+    }
+
+    public void setAppAnimal(AppAnimal appAnimal) {
+        this.appAnimal = appAnimal;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }
