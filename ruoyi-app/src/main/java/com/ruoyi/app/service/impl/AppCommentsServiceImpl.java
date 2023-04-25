@@ -3,7 +3,9 @@ package com.ruoyi.app.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.app.domain.AppMessage;
 import com.ruoyi.app.domain.AppPost;
+import com.ruoyi.app.mapper.AppMessageMapper;
 import com.ruoyi.app.mapper.AppPostMapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class AppCommentsServiceImpl implements IAppCommentsService
 
     @Autowired
     private AppPostMapper appPostMapper;
+
+    @Autowired
+    private AppMessageMapper appMessageMapper;
 
     /**
      * 查询评论
@@ -66,6 +71,8 @@ public class AppCommentsServiceImpl implements IAppCommentsService
 
         appComments.setUid(SecurityUtils.getUserId());
         appComments.setCreateDate(new Date());
+
+        appMessageMapper.insertNewAppMessage(new AppMessage(SecurityUtils.getUserId(),appPost.getUid(),"评论", appPost.getId(),1L,new Date()));
         return appCommentsMapper.insertAppComments(appComments);
     }
 

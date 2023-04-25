@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Validator;
+
+import com.ruoyi.app.mapper.*;
+import com.ruoyi.common.core.domain.entity.UserData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +25,6 @@ import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.app.domain.SysPost;
 import com.ruoyi.app.domain.SysUserPost;
 import com.ruoyi.app.domain.SysUserRole;
-import com.ruoyi.app.mapper.SysPostMapper;
-import com.ruoyi.app.mapper.SysRoleMapper;
-import com.ruoyi.app.mapper.SysUserMapper;
-import com.ruoyi.app.mapper.SysUserPostMapper;
-import com.ruoyi.app.mapper.SysUserRoleMapper;
 import com.ruoyi.app.service.ISysConfigService;
 import com.ruoyi.app.service.ISysUserService;
 
@@ -42,6 +40,9 @@ public class SysUserServiceImpl implements ISysUserService
 
     @Autowired
     private SysUserMapper userMapper;
+
+    @Autowired
+    private UserDataMapper userDataMapper;
 
     @Autowired
     private SysRoleMapper roleMapper;
@@ -233,7 +234,7 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public void checkUserDataScope(Long userId)
     {
-        if (!SysUser.isAdmin(SecurityUtils.getUserId()))
+        if (SecurityUtils.getUserId().equals(userId)||!SysUser.isAdmin(SecurityUtils.getUserId()))
         {
             SysUser user = new SysUser();
             user.setUserId(userId);
@@ -275,6 +276,9 @@ public class SysUserServiceImpl implements ISysUserService
     {
         boolean is = userMapper.insertUser(user) > 0;
         if (is){
+            UserData userData = new UserData();
+            userData.setUid(user.getUserId());
+            userDataMapper.insertUserData(userData);
             insertUserRole(user);
         }
         return is;

@@ -71,6 +71,9 @@ public class AppCommentsLikeServiceImpl implements IAppCommentsLikeService
 
             return appCommentsLikeMapper.insertAppCommentsLike(appCommentsLike);
         }else{
+            appComments.setLikeNumber(appComments.getLikeNumber()-1);
+            appCommentsMapper.updateAppComments(appComments);
+
             AppCommentsLike appCommentsLike1 = list.get(0);
             appCommentsLikeMapper.deleteAppCommentsLikeById(appCommentsLike1.getId());
         }

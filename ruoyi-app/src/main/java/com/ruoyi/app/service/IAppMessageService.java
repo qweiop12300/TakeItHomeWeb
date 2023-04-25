@@ -2,6 +2,7 @@ package com.ruoyi.app.service;
 
 import java.util.List;
 import com.ruoyi.app.domain.AppMessage;
+import com.ruoyi.app.domain.SysUserE;
 
 /**
  * 消息Service接口
@@ -27,6 +28,10 @@ public interface IAppMessageService
      */
     public List<AppMessage> selectAppMessageList(AppMessage appMessage);
 
+    public List<SysUserE> selectUserList(Long userId);
+
+    public List<AppMessage> selectNewAppMessageList(AppMessage appMessage);
+
     /**
      * 新增消息
      * 
@@ -34,6 +39,8 @@ public interface IAppMessageService
      * @return 结果
      */
     public int insertAppMessage(AppMessage appMessage);
+
+    public int insertNewAppMessage(AppMessage appMessage);
 
     /**
      * 修改消息

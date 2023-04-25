@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectAppCommentsById" parameterType="Long" resultMap="AppCommentsResult">
         <include refid="selectAppCommentsVo"/>
-        where id = #{id}
+        where ac.id = #{id}
     </select>
         
     <insert id="insertAppComments" parameterType="AppComments" useGeneratedKeys="true" keyProperty="id">

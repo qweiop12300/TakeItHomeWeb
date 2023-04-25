@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ap.id, ap.title, ap.content, ap.image, ap.video, ap.create_date, ap.update_date, ap.uid, ap.tid, ap.aid, ap.location, ap.city, ap.urgent, ap.type_id, ap.like_number, ap.collection_number, ap.comments_number, ap.url, ap.s1,
         aa.id aa_id, aa.sid aa_sd, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,
         su.user_id u_user_id,  su.nick_name u_nick_name,  su.sex u_sex, su.avatar u_avatar,su.remark u_remark,
-        at.id at_id, at.title at_title
+        at.id at_id, at.title at_title,at.image at_image
         <if test="nowUserId!=null">
             ,
             ac.id ac_id,ac.uid ac_uid,ac.pid ac_pid,ac.create_date ac_create_date,
@@ -59,15 +59,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectAppPostList" parameterType="AppPost" resultMap="AppPostResult">
         <include refid="selectAppPostVo"/>
         <where>  
-            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="title != null  and title != ''"> and ap.title like CONCAT('%',#{title},'%')</if>
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="image != null  and image != ''"> and image = #{image}</if>
             <if test="video != null  and video != ''"> and video like concat('%', #{video}, '%')</if>
             <if test="createDate != null "> and create_date = #{createDate}</if>
             <if test="updateDate != null "> and update_date = #{updateDate}</if>
-            <if test="uid != null "> and uid = #{uid}</if>
-            <if test="tid != null "> and tid = #{tid}</if>
-            <if test="aid != null "> and aid = #{aid}</if>
+            <if test="uid != null "> and ap.uid = #{uid}</if>
+            <if test="tid != null "> and ap.tid = #{tid}</if>
+            <if test="aid != null "> and ap.aid = #{aid}</if>
             <if test="location != null  and location != ''"> and location = #{location}</if>
             <if test="city != null  and city != ''"> and city = #{city}</if>
             <if test="urgent != null "> and urgent = #{urgent}</if>

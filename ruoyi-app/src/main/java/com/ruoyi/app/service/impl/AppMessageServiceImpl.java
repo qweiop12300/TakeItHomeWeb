@@ -2,6 +2,7 @@ package com.ruoyi.app.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.app.domain.SysUserE;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,25 @@ public class AppMessageServiceImpl implements IAppMessageService
     public List<AppMessage> selectAppMessageList(AppMessage appMessage)
     {
         return appMessageMapper.selectAppMessageList(appMessage);
+    }
+
+    @Override
+    public List<SysUserE> selectUserList(Long userId) {
+        return appMessageMapper.selectUserList(userId);
+    }
+
+    public void setAppMessageMapper(AppMessageMapper appMessageMapper) {
+        this.appMessageMapper = appMessageMapper;
+    }
+
+    @Override
+    public List<AppMessage> selectNewAppMessageList(AppMessage appMessage) {
+        return appMessageMapper.selectNewAppMessageList(appMessage);
+    }
+
+    @Override
+    public int insertNewAppMessage(AppMessage appMessage) {
+        return appMessageMapper.insertNewAppMessage(appMessage);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.ruoyi.app.mapper;
 
 import java.util.List;
 import com.ruoyi.app.domain.AppMessage;
+import com.ruoyi.app.domain.SysUserE;
 
 /**
  * 消息Mapper接口
@@ -27,6 +28,8 @@ public interface AppMessageMapper
      */
     public List<AppMessage> selectAppMessageList(AppMessage appMessage);
 
+    public List<AppMessage> selectNewAppMessageList(AppMessage appMessage);
+
     /**
      * 新增消息
      * 
@@ -34,6 +37,10 @@ public interface AppMessageMapper
      * @return 结果
      */
     public int insertAppMessage(AppMessage appMessage);
+
+    public int insertNewAppMessage(AppMessage appMessage);
+
+    public List<SysUserE> selectUserList(Long userId);
 
     /**
      * 修改消息

@@ -7,16 +7,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="AppTopic" id="AppTopicResult">
         <result property="id"    column="id"    />
         <result property="title"    column="title"    />
+        <result property="image"    column="image"    />
     </resultMap>
 
     <sql id="selectAppTopicVo">
-        select id, title from app_topic
+        select id, title,image from app_topic
     </sql>
 
     <select id="selectAppTopicList" parameterType="AppTopic" resultMap="AppTopicResult">
         <include refid="selectAppTopicVo"/>
         <where>  
-            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="title != null  and title != ''"> and title like CONCAT('%',#{title},'%')</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
         </where>
     </select>
     
@@ -29,9 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into app_topic
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="title != null">title,</if>
+            <if test="image != null">image,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null">#{title},</if>
+            <if test="image != null">#{image},</if>
          </trim>
     </insert>
 
@@ -39,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update app_topic
         <trim prefix="SET" suffixOverrides=",">
             <if test="title != null">title = #{title},</if>
+            <if test="image != null">image = #{image},</if>
         </trim>
         where id = #{id}
     </update>

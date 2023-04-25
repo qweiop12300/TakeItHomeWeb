@@ -1,4 +1,4 @@
-package com.ruoyi.app.domain;
+package com.ruoyi.common.core.domain.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 用户数据扩展对象 user_data
  * 
  * @author ruoyi
- * @date 2023-02-28
+ * @date 2023-03-26
  */
 public class UserData
 {

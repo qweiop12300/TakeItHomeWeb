@@ -28,6 +28,16 @@ public class AppLike
     @Excel(name = "动态id")
     private Long pid;
 
+    private AppPost appPost;
+
+    public AppPost getAppPost() {
+        return appPost;
+    }
+
+    public void setAppPost(AppPost appPost) {
+        this.appPost = appPost;
+    }
+
     /** 点赞时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "点赞时间", width = 30, dateFormat = "yyyy-MM-dd")

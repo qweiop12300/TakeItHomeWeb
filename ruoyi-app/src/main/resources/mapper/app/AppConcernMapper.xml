@@ -11,26 +11,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="toAid"    column="to_aid"    />
         <result property="toTid"    column="to_tid"    />
         <result property="createDate"    column="create_date"    />
+        <association property="toUserE" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.SysUserResult" columnPrefix="to_"/>
+        <association property="sysUserE" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.SysUserResult" columnPrefix="u_"/>
+        <association property="appAnimal" resultMap="com.ruoyi.app.mapper.AppAnimalMapper.AppAnimalResult" columnPrefix="aa_"/>
+        <association property="appTopic" resultMap="com.ruoyi.app.mapper.AppTopicMapper.AppTopicResult" columnPrefix="at_"/>
     </resultMap>
 
     <sql id="selectAppConcernVo">
-        select id, uid, to_uid, to_aid, to_tid, create_date from app_concern
+        select ac.id, ac.uid, ac.to_uid, ac.to_aid, ac.to_tid, ac.create_date,
+               tosu.user_id to_user_id,  tosu.nick_name to_nick_name,  tosu.sex to_sex, tosu.avatar to_avatar,tosu.remark to_remark,
+               usu.user_id u_user_id,  usu.nick_name u_nick_name,  usu.sex u_sex, usu.avatar u_avatar,usu.remark u_remark,
+               aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_S1, aa.s2 aa_s2,
+               at.id at_id, at.image at_image,at.title at_title
+        from app_concern ac
+                 left join sys_user usu on usu.user_id = uid
+                 left join sys_user tosu on tosu.user_id = ac.to_uid
+                 left join app_animal aa on aa.id = ac.to_aid
+                 left join app_topic at on at.id = ac.to_tid
     </sql>
 
     <select id="selectAppConcernList" parameterType="AppConcern" resultMap="AppConcernResult">
         <include refid="selectAppConcernVo"/>
         <where>  
-            <if test="uid != null "> and uid = #{uid}</if>
-            <if test="toUid != null "> and to_uid = #{toUid}</if>
-            <if test="toAid != null "> and to_aid = #{toAid}</if>
-            <if test="toTid != null "> and to_tid = #{toTid}</if>
-            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="uid != null "> and ac.uid = #{uid}</if>
+            <if test="toUid != null "> and ac.to_uid = #{toUid}</if>
+            <if test="toAid != null "> and ac.to_aid = #{toAid}</if>
+            <if test="toTid != null "> and ac.to_tid = #{toTid}</if>
+            <if test="createDate != null "> and ac.create_date = #{createDate}</if>
         </where>
     </select>
     
     <select id="selectAppConcernById" parameterType="Long" resultMap="AppConcernResult">
         <include refid="selectAppConcernVo"/>
-        where id = #{id}
+        where ac.id = #{id}
     </select>
         
     <insert id="insertAppConcern" parameterType="AppConcern" useGeneratedKeys="true" keyProperty="id">

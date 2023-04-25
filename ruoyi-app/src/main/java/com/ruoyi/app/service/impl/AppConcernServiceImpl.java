@@ -1,7 +1,11 @@
 package com.ruoyi.app.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.app.domain.AppMessage;
+import com.ruoyi.app.mapper.AppMessageMapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,11 @@ public class AppConcernServiceImpl implements IAppConcernService
 {
     @Autowired
     private AppConcernMapper appConcernMapper;
+
+    @Autowired
+    private AppMessageMapper appMessageMapper;
+
+
 
     /**
      * 查询关注
@@ -42,7 +51,14 @@ public class AppConcernServiceImpl implements IAppConcernService
     @Override
     public List<AppConcern> selectAppConcernList(AppConcern appConcern)
     {
-        return appConcernMapper.selectAppConcernList(appConcern);
+        if (appConcern.getUid()!=null){
+            if (appConcern.getUid()==-1){
+                appConcern.setUid(SecurityUtils.getUserId());
+            }
+
+            return appConcernMapper.selectAppConcernList(appConcern);
+        }
+        return new ArrayList<AppConcern>();
     }
 
     /**
@@ -57,6 +73,9 @@ public class AppConcernServiceImpl implements IAppConcernService
         appConcern.setUid(SecurityUtils.getUserId());
         List<AppConcern> list = appConcernMapper.selectAppConcernList(appConcern);
         if (list.size()==0){
+            if (appConcern.getUid()!=null){
+                appMessageMapper.insertNewAppMessage(new AppMessage(appConcern.getUid(),appConcern.getToUid(),"关注", null,3L,new Date()));
+            }
             return appConcernMapper.insertAppConcern(appConcern);
         }else {
             appConcernMapper.deleteAppConcernById(list.get(0).getId());

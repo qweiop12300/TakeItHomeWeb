@@ -21,6 +21,7 @@ public class AppAnimalStateServiceImpl implements IAppAnimalStateService
     @Autowired
     private AppAnimalStateMapper appAnimalStateMapper;
 
+
     /**
      * 查询动物状态关联
      * 

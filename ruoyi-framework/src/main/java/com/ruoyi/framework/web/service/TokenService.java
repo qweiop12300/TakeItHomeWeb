@@ -4,8 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
@@ -27,7 +31,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * @author ruoyi
  */
 @Component
-public class TokenService
+public class TokenService implements ApplicationContextAware
 {
     // 令牌自定义标识
     @Value("${token.header}")
@@ -49,6 +53,23 @@ public class TokenService
 
     @Autowired
     private RedisCache redisCache;
+
+    protected static ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext app) throws BeansException {
+        if (applicationContext == null) {
+            applicationContext = app;
+        }
+    }
+
+    /**
+     * 通过类的class从容器中手动获取对象
+     */
+    public static <T> T getBean(Class<T> clazz) {
+        return applicationContext.getBean(clazz);
+    }
+
 
     /**
      * 获取用户身份信息
@@ -76,6 +97,30 @@ public class TokenService
         }
         return null;
     }
+
+    public  LoginUser getLoginUser(String token)
+    {
+        if (StringUtils.isNotEmpty(token))
+        {
+            try
+            {
+                Claims claims = parseToken(token);
+                // 解析对应的权限以及用户信息
+                String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
+                String userKey = getTokenKey(uuid);
+                LoginUser user = redisCache.getCacheObject(userKey);
+                return user;
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        return null;
+    }
+
+
+
+
 
     /**
      * 设置用户身份信息

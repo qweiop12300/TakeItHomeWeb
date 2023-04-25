@@ -1,15 +1,16 @@
-package com.ruoyi.app.service;
+package com.ruoyi.app.mapper;
+
+import com.ruoyi.common.core.domain.entity.UserData;
 
 import java.util.List;
-import com.ruoyi.app.domain.UserData;
 
 /**
- * 用户数据扩展Service接口
+ * 用户数据扩展Mapper接口
  * 
  * @author ruoyi
- * @date 2023-02-28
+ * @date 2023-03-26
  */
-public interface IUserDataService 
+public interface UserDataMapper 
 {
     /**
      * 查询用户数据扩展
@@ -44,18 +45,18 @@ public interface IUserDataService
     public int updateUserData(UserData userData);
 
     /**
-     * 批量删除用户数据扩展
-     * 
-     * @param uids 需要删除的用户数据扩展主键集合
-     * @return 结果
-     */
-    public int deleteUserDataByUids(Long[] uids);
-
-    /**
-     * 删除用户数据扩展信息
+     * 删除用户数据扩展
      * 
      * @param uid 用户数据扩展主键
      * @return 结果
      */
     public int deleteUserDataByUid(Long uid);
+
+    /**
+     * 批量删除用户数据扩展
+     * 
+     * @param uids 需要删除的数据主键集合
+     * @return 结果
+     */
+    public int deleteUserDataByUids(Long[] uids);
 }

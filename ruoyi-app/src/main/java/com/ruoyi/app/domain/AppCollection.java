@@ -28,6 +28,16 @@ public class AppCollection
     @Excel(name = "帖子id")
     private Long pid;
 
+    private AppPost appPost;
+
+    public AppPost getAppPost() {
+        return appPost;
+    }
+
+    public void setAppPost(AppPost appPost) {
+        this.appPost = appPost;
+    }
+
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")

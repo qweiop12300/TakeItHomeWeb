@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本地
  Source Server Type    : MySQL
- Source Server Version : 50726
+ Source Server Version : 50726 (5.7.26)
  Source Host           : localhost:3306
  Source Schema         : liulang
 
  Target Server Type    : MySQL
- Target Server Version : 50726
+ Target Server Version : 50726 (5.7.26)
  File Encoding         : 65001
 
- Date: 19/03/2023 16:49:07
+ Date: 23/04/2023 15:33:01
 */
 
 SET NAMES utf8mb4;
@@ -32,12 +32,15 @@ CREATE TABLE `app_animal`  (
   `s1` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '扩展1',
   `s2` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '扩展2',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动物信息表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动物信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_animal
 -- ----------------------------
-INSERT INTO `app_animal` VALUES (4, 1, 'das', b'0', '11', '2023-03-08 00:00:00', NULL, NULL, NULL);
+INSERT INTO `app_animal` VALUES (4, 1, 'das', b'0', '/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg', '2023-03-08 00:00:00', 2, NULL, NULL);
+INSERT INTO `app_animal` VALUES (5, 1, ' 阿德阿是', b'1', '/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg', '2023-03-08 00:00:00', 2, NULL, NULL);
+INSERT INTO `app_animal` VALUES (6, 1, '小杜', b'0', '/profile/upload/2023/04/22/屏幕截图 2023-03-25 190104_20230422211202A001.png', '2023-04-22 21:12:02', 3, NULL, NULL);
+INSERT INTO `app_animal` VALUES (7, 1, '粉丝的', b'0', '/profile/upload/2023/04/22/屏幕截图 2023-03-25 190052_20230422211637A001.png', '2023-04-22 21:16:37', 2, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for app_animal_state
@@ -53,12 +56,14 @@ CREATE TABLE `app_animal_state`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE,
   INDEX `foreign_key_animal_id`(`aid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动物状态关联表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动物状态关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_animal_state
 -- ----------------------------
-INSERT INTO `app_animal_state` VALUES (2, 4, NULL, 1, NULL, NULL);
+INSERT INTO `app_animal_state` VALUES (2, 4, 116, NULL, NULL, NULL);
+INSERT INTO `app_animal_state` VALUES (3, 5, 116, NULL, NULL, NULL);
+INSERT INTO `app_animal_state` VALUES (5, 7, NULL, NULL, 116, NULL);
 
 -- ----------------------------
 -- Table structure for app_animal_state_data
@@ -70,7 +75,7 @@ CREATE TABLE `app_animal_state_data`  (
   `s1` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '扩展1',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动物状态信息表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动物状态信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_animal_state_data
@@ -91,12 +96,13 @@ CREATE TABLE `app_collection`  (
   `pid` bigint(20) NOT NULL COMMENT '帖子id',
   `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '收藏表' ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '收藏表' ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of app_collection
 -- ----------------------------
-INSERT INTO `app_collection` VALUES (3, 1, 5, '2023-03-18 19:42:51');
+INSERT INTO `app_collection` VALUES (8, 100, 20, '2023-03-24 14:57:06');
+INSERT INTO `app_collection` VALUES (10, 100, 18, '2023-03-24 15:21:42');
 
 -- ----------------------------
 -- Table structure for app_comments
@@ -110,17 +116,20 @@ CREATE TABLE `app_comments`  (
   `image` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '图片',
   `uid` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
   `aid` bigint(20) NULL DEFAULT NULL COMMENT '动物id',
-  `like_number` int(11) NULL DEFAULT NULL COMMENT '点赞数量',
+  `like_number` int(11) NULL DEFAULT 0 COMMENT '点赞数量',
   `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE,
   INDEX `fk_post_id`(`pid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_comments
 -- ----------------------------
-INSERT INTO `app_comments` VALUES (1, NULL, 1, '<p>sasas</p>', NULL, 100, NULL, NULL, NULL);
+INSERT INTO `app_comments` VALUES (2, NULL, 23, ' 的阿德 ', NULL, 100, NULL, 1, '2023-04-07 10:53:10');
+INSERT INTO `app_comments` VALUES (27, 26, 23, '打赏大', '/profile/upload/2023/04/21/1_20230421224129A010.jpg', 116, NULL, 0, '2023-04-21 22:41:30');
+INSERT INTO `app_comments` VALUES (25, NULL, 23, '大苏打啊的', NULL, 116, NULL, 0, '2023-04-21 22:39:43');
+INSERT INTO `app_comments` VALUES (26, NULL, 23, '撒旦', NULL, 116, NULL, 0, '2023-04-21 22:40:27');
 
 -- ----------------------------
 -- Table structure for app_comments_like
@@ -131,11 +140,12 @@ CREATE TABLE `app_comments_like`  (
   `cid` bigint(20) NULL DEFAULT NULL COMMENT '评论id',
   `uid` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论点赞表' ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '评论点赞表' ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of app_comments_like
 -- ----------------------------
+INSERT INTO `app_comments_like` VALUES (10, 2, 116);
 
 -- ----------------------------
 -- Table structure for app_concern
@@ -149,13 +159,15 @@ CREATE TABLE `app_concern`  (
   `to_tid` int(11) NULL DEFAULT NULL COMMENT '被关注的话题',
   `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '关注表' ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '关注表' ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of app_concern
 -- ----------------------------
-INSERT INTO `app_concern` VALUES (2, 100, 1, NULL, NULL, '2023-03-17 15:22:54');
+INSERT INTO `app_concern` VALUES (9, 100, 1, NULL, NULL, NULL);
 INSERT INTO `app_concern` VALUES (4, 100, 115, NULL, NULL, NULL);
+INSERT INTO `app_concern` VALUES (18, 116, 1, NULL, NULL, NULL);
+INSERT INTO `app_concern` VALUES (19, 116, NULL, 4, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for app_donation
@@ -169,7 +181,7 @@ CREATE TABLE `app_donation`  (
   `create_date` datetime NULL DEFAULT NULL COMMENT '捐赠时间',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '捐赠表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '捐赠表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_donation
@@ -184,15 +196,13 @@ CREATE TABLE `app_head`  (
   `pid` bigint(20) NULL DEFAULT NULL COMMENT 'postid',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of app_head
 -- ----------------------------
-INSERT INTO `app_head` VALUES (1, 6);
-INSERT INTO `app_head` VALUES (2, 8);
-INSERT INTO `app_head` VALUES (3, 9);
-INSERT INTO `app_head` VALUES (4, 12);
+INSERT INTO `app_head` VALUES (1, 16);
+INSERT INTO `app_head` VALUES (2, 17);
 
 -- ----------------------------
 -- Table structure for app_like
@@ -204,17 +214,12 @@ CREATE TABLE `app_like`  (
   `pid` bigint(20) NOT NULL COMMENT '动态id',
   `create_date` datetime NULL DEFAULT NULL COMMENT '点赞时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '点赞表' ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 76 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '点赞表' ROW_FORMAT = FIXED;
 
 -- ----------------------------
 -- Records of app_like
 -- ----------------------------
-INSERT INTO `app_like` VALUES (13, 100, 6, '2023-03-17 16:38:05');
-INSERT INTO `app_like` VALUES (18, 1, 5, '2023-03-18 19:41:21');
-INSERT INTO `app_like` VALUES (22, 100, 7, '2023-03-18 19:58:15');
-INSERT INTO `app_like` VALUES (21, 100, 5, '2023-03-18 19:58:12');
-INSERT INTO `app_like` VALUES (23, 1, 7, '2023-03-19 10:38:53');
-INSERT INTO `app_like` VALUES (20, 1, 10, '2023-03-18 19:41:29');
+INSERT INTO `app_like` VALUES (69, 116, 23, '2023-04-17 10:11:38');
 
 -- ----------------------------
 -- Table structure for app_message
@@ -229,7 +234,7 @@ CREATE TABLE `app_message`  (
   `type_id` int(11) NULL DEFAULT NULL COMMENT '类型id',
   `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '消息表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '消息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_message
@@ -243,10 +248,29 @@ CREATE TABLE `app_message_type`  (
   `id` int(11) NOT NULL COMMENT 'id',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名字',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '信息类型表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '信息类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_message_type
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for app_new_message
+-- ----------------------------
+DROP TABLE IF EXISTS `app_new_message`;
+CREATE TABLE `app_new_message`  (
+  `id` bigint(20) NOT NULL COMMENT '消息id',
+  `uid` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
+  `to_uid` bigint(20) NULL DEFAULT NULL COMMENT '收消息用户id',
+  `content` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+  `pid` bigint(20) NULL DEFAULT NULL COMMENT '帖子id',
+  `type_id` int(11) NULL DEFAULT NULL COMMENT '类型id',
+  `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '消息表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of app_new_message
 -- ----------------------------
 
 -- ----------------------------
@@ -274,21 +298,15 @@ CREATE TABLE `app_post`  (
   `url` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '链接',
   `s1` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '扩展1',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_post
 -- ----------------------------
-INSERT INTO `app_post` VALUES (6, '测试', '<p>DASDA</p>', '/profile/upload/2023/03/10/profile_20230310165750A005.jpg', '/profile/upload/2023/03/10/hh.mp4', NULL, NULL, 100, 1, 4, NULL, NULL, 0, 1, 1, 0, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (5, '测试测试', '<p>啊哈哈的哈</p>', '/profile/upload/2023/03/10/4caa248fedb54959bfb062bb22c1f534_20230310165738A004.png', '/profile/upload/2023/03/10/hh1.mp4', '2023-03-06 00:00:00', '2023-03-06 00:00:00', 100, NULL, NULL, NULL, NULL, 0, 1, 2, 1, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (7, 'DADASFS', '<p><br></p>', '/profile/upload/2023/03/10/profile_20230310165750A005.jpg', '/profile/upload/2023/03/10/hh.mp4', NULL, NULL, 115, NULL, NULL, NULL, NULL, 0, 1, 2, 0, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (8, 'DASDFDGF', '<p>DSSD</p>', '/profile/upload/2023/03/10/4caa248fedb54959bfb062bb22c1f534_20230310165738A004.png', '/profile/upload/2023/03/10/hh1.mp4', NULL, NULL, 100, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (9, 'DASDADVFDF', '<p>DASDA</p>', '/profile/upload/2023/03/10/profile_20230310165750A005.jpg', '/profile/upload/2023/03/10/hh2.mp4', NULL, NULL, 115, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (10, '测试', '<p>DASDA</p>', '/profile/upload/2023/03/10/4caa248fedb54959bfb062bb22c1f534_20230310165738A004.png', '/profile/upload/2023/03/10/hh3.mp4', NULL, NULL, 115, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (11, '测试测试', '<p>啊哈哈的哈</p>', '/profile/upload/2023/03/10/profile_20230310165750A005.jpg', NULL, '2023-03-06 00:00:00', '2023-03-06 00:00:00', 115, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (12, 'DADASFS', '<p><br></p>', '/profile/upload/2023/03/10/profile_20230310165750A005.jpg', NULL, NULL, NULL, 115, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (13, 'DASDFDGF', '<p>DSSD</p>', '/profile/upload/2023/03/10/4caa248fedb54959bfb062bb22c1f534_20230310165738A004.png', NULL, NULL, NULL, 115, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL);
-INSERT INTO `app_post` VALUES (14, 'DASDADVFDF', '<p>DASDA</p>', '/profile/upload/2023/03/10/profile_20230310165750A005.jpg', NULL, NULL, NULL, 115, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, NULL, NULL);
+INSERT INTO `app_post` VALUES (23, '测试', '<p>速度阿萨</p>', '[]', '/profile/upload/2023/03/19/2.mp4', '2023-03-19 17:42:39', '2023-03-01 00:00:00', 1, NULL, 4, NULL, NULL, 0, 1, 2, 1, 13, NULL, NULL);
+INSERT INTO `app_post` VALUES (22, '测试', '<p>打赏</p>', '[]', '/profile/upload/2023/03/19/1.mp4', '2023-03-19 17:42:53', NULL, 1, NULL, 4, NULL, NULL, 0, 1, 1, 0, 0, NULL, NULL);
+INSERT INTO `app_post` VALUES (32, '的撒大', '的撒', '[/profile/upload/2023/04/22/icon_20230422154809A015.jpg, /profile/upload/2023/04/22/2_20230422154809A016.png, /profile/upload/2023/04/22/屏幕截图 2023-03-27 124711_20230422154809A017.png,/profile/upload/2023/04/22/11_20230422154809A018.jpg]', NULL, '2023-04-22 15:48:10', NULL, 100, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL);
+INSERT INTO `app_post` VALUES (31, '的阿萨', '打到我', '[]', '/profile/upload/2023/04/22/mda-mcjm50zbmckqbcwt_20230422154600A007.mp4', '2023-04-22 15:46:01', NULL, 100, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for app_post_type
@@ -299,19 +317,19 @@ CREATE TABLE `app_post_type`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '动态类型id',
   `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态类型表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '动态类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_post_type
 -- ----------------------------
-INSERT INTO `app_post_type` VALUES ('求助', 1, '/profile/upload/2023/02/24/sharpicons_Bee.png');
-INSERT INTO `app_post_type` VALUES ('晒图', 2, '/profile/upload/2023/02/24/sharpicons_Bee.png');
-INSERT INTO `app_post_type` VALUES ('提问', 3, '/profile/upload/2023/02/24/sharpicons_Bee.png');
-INSERT INTO `app_post_type` VALUES ('求助', 4, '/profile/upload/2023/02/24/sharpicons_Bee.png');
-INSERT INTO `app_post_type` VALUES ('晒图', 5, '/profile/upload/2023/02/24/sharpicons_Bee.png');
-INSERT INTO `app_post_type` VALUES ('求助', 6, '/profile/upload/2023/02/24/sharpicons_Bee.png');
-INSERT INTO `app_post_type` VALUES ('晒图', 7, '/profile/upload/2023/02/24/sharpicons_Bee.png');
-INSERT INTO `app_post_type` VALUES ('求助', 8, '/profile/upload/2023/02/24/sharpicons_Bee.png');
+INSERT INTO `app_post_type` VALUES ('求助', 1, '/profile/upload/icon.jpg');
+INSERT INTO `app_post_type` VALUES ('晒图', 2, '/profile/upload/icon.jpg');
+INSERT INTO `app_post_type` VALUES ('提问', 3, '/profile/upload/icon.jpg');
+INSERT INTO `app_post_type` VALUES ('求助', 4, '/profile/upload/icon.jpg');
+INSERT INTO `app_post_type` VALUES ('晒图', 5, '/profile/upload/icon.jpg');
+INSERT INTO `app_post_type` VALUES ('求助', 6, '/profile/upload/icon.jpg');
+INSERT INTO `app_post_type` VALUES ('晒图', 7, '/profile/upload/icon.jpg');
+INSERT INTO `app_post_type` VALUES ('求助', 8, '/profile/upload/icon.jpg');
 
 -- ----------------------------
 -- Table structure for app_topic
@@ -320,13 +338,19 @@ DROP TABLE IF EXISTS `app_topic`;
 CREATE TABLE `app_topic`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '话题id',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '话题名字',
+  `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '话题表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '话题表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_topic
 -- ----------------------------
-INSERT INTO `app_topic` VALUES (1, '哈哈哈');
+INSERT INTO `app_topic` VALUES (1, '哈哈哈', '/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg');
+INSERT INTO `app_topic` VALUES (2, '哈哈哈', '/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg');
+INSERT INTO `app_topic` VALUES (3, '哈哈哈', '/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg');
+INSERT INTO `app_topic` VALUES (4, '哈哈哈', '/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg');
+INSERT INTO `app_topic` VALUES (5, '哈哈哈', '/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg');
+INSERT INTO `app_topic` VALUES (6, '哈哈哈', '/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg');
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -354,7 +378,7 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gen_table
@@ -370,7 +394,7 @@ INSERT INTO `gen_table` VALUES (10, 'app_message', '消息表', NULL, NULL, 'App
 INSERT INTO `gen_table` VALUES (11, 'app_message_type', '信息类型表', NULL, NULL, 'AppMessageType', 'crud', 'com.ruoyi.app', 'app', 'message_type', '信息类型', 'ruoyi', '0', '/', '{\"parentMenuId\":2000}', 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:12', NULL);
 INSERT INTO `gen_table` VALUES (12, 'app_post', '动态表', NULL, NULL, 'AppPost', 'crud', 'com.ruoyi.app', 'app', 'post', '动态', 'ruoyi', '0', '/', '{\"parentMenuId\":2000}', 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:18', NULL);
 INSERT INTO `gen_table` VALUES (14, 'app_topic', '话题表', NULL, NULL, 'AppTopic', 'crud', 'com.ruoyi.app', 'app', 'topic', '话题', 'ruoyi', '0', '/', '{\"parentMenuId\":2000}', 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:39', NULL);
-INSERT INTO `gen_table` VALUES (15, 'user_data', '用户数据扩展表', NULL, NULL, 'UserData', 'crud', 'com.ruoyi.app', 'app', 'user_data', '用户数据扩展', 'ruoyi', '0', '/', '{\"parentMenuId\":2000}', 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:51', NULL);
+INSERT INTO `gen_table` VALUES (15, 'user_data', '用户数据扩展表', NULL, NULL, 'UserData', 'crud', 'com.ruoyi.app', 'system', 'user_data', '用户数据扩展', 'ruoyi', '0', '/', '{\"parentMenuId\":1}', 'admin', '2023-02-28 15:45:58', '', '2023-03-26 13:58:43', NULL);
 INSERT INTO `gen_table` VALUES (16, 'user_type', '用户类型表', NULL, NULL, 'UserType', 'crud', 'com.ruoyi.app', 'app', 'user_type', '用户类型', 'ruoyi', '0', '/', '{\"parentMenuId\":2000}', 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:49:01', NULL);
 INSERT INTO `gen_table` VALUES (17, 'app_animal', '动物信息表', NULL, NULL, 'AppAnimal', 'crud', 'com.ruoyi.app', 'app', 'animal', '动物信息', 'ruoyi', '0', '/', '{\"parentMenuId\":2000}', 'admin', '2023-03-01 09:24:35', '', '2023-03-01 09:25:35', NULL);
 INSERT INTO `gen_table` VALUES (18, 'app_animal_state', '动物状态关联表', NULL, NULL, 'AppAnimalState', 'crud', 'com.ruoyi.app', 'app', 'animal_state', '动物状态关联', 'ruoyi', '0', '/', '{\"parentMenuId\":2000}', 'admin', '2023-03-01 09:24:35', '', '2023-03-01 09:26:21', NULL);
@@ -405,7 +429,7 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -475,12 +499,12 @@ INSERT INTO `gen_table_column` VALUES (77, '12', 'url', '链接', 'tinytext', 'S
 INSERT INTO `gen_table_column` VALUES (78, '12', 's1', '扩展1', 'tinytext', 'String', 's1', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'textarea', '', 19, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:18');
 INSERT INTO `gen_table_column` VALUES (81, '14', 'id', '话题id', 'int(11)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:39');
 INSERT INTO `gen_table_column` VALUES (82, '14', 'title', '话题名字', 'varchar(255)', 'String', 'title', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:39');
-INSERT INTO `gen_table_column` VALUES (83, '15', 'uid', 'user_id', 'bigint(20)', 'Long', 'uid', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 1, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:51');
-INSERT INTO `gen_table_column` VALUES (84, '15', 'desc', '描述', 'varchar(255)', 'String', 'desc', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:51');
-INSERT INTO `gen_table_column` VALUES (85, '15', 'year', '年龄', 'int(2)', 'Integer', 'year', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:51');
-INSERT INTO `gen_table_column` VALUES (86, '15', 'to_uid', '属于某用户', 'int(11)', 'Long', 'toUid', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:51');
-INSERT INTO `gen_table_column` VALUES (87, '15', 's1', '扩展1', 'tinytext', 'String', 's1', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'textarea', '', 5, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:51');
-INSERT INTO `gen_table_column` VALUES (88, '15', 's2', '扩展2', 'tinytext', 'String', 's2', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'textarea', '', 6, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:48:51');
+INSERT INTO `gen_table_column` VALUES (83, '15', 'uid', 'user_id', 'bigint(20)', 'Long', 'uid', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 1, 'admin', '2023-02-28 15:45:58', '', '2023-03-26 13:58:43');
+INSERT INTO `gen_table_column` VALUES (84, '15', 'desc', '描述', 'varchar(255)', 'String', 'desc', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-02-28 15:45:58', '', '2023-03-26 13:58:43');
+INSERT INTO `gen_table_column` VALUES (85, '15', 'year', '年龄', 'int(2)', 'Integer', 'year', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2023-02-28 15:45:58', '', '2023-03-26 13:58:43');
+INSERT INTO `gen_table_column` VALUES (86, '15', 'to_uid', '属于某用户', 'int(11)', 'Long', 'toUid', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2023-02-28 15:45:58', '', '2023-03-26 13:58:43');
+INSERT INTO `gen_table_column` VALUES (87, '15', 's1', '扩展1', 'tinytext', 'String', 's1', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'textarea', '', 5, 'admin', '2023-02-28 15:45:58', '', '2023-03-26 13:58:43');
+INSERT INTO `gen_table_column` VALUES (88, '15', 's2', '扩展2', 'tinytext', 'String', 's2', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'textarea', '', 6, 'admin', '2023-02-28 15:45:58', '', '2023-03-26 13:58:43');
 INSERT INTO `gen_table_column` VALUES (89, '16', 'id', 'id', 'int(11)', 'Long', 'id', '1', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:49:01');
 INSERT INTO `gen_table_column` VALUES (90, '16', 'title', '标题', 'varchar(255)', 'String', 'title', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2023-02-28 15:45:58', '', '2023-02-28 15:49:01');
 INSERT INTO `gen_table_column` VALUES (91, '17', 'id', '动物id', 'bigint(20)', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2023-03-01 09:24:35', '', '2023-03-01 09:25:35');
@@ -515,7 +539,7 @@ CREATE TABLE `qrtz_blob_triggers`  (
   `blob_data` blob NULL COMMENT '存放持久化Trigger对象',
   PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
   CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Blob类型的触发器表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Blob类型的触发器表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_blob_triggers
@@ -530,7 +554,7 @@ CREATE TABLE `qrtz_calendars`  (
   `calendar_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '日历名称',
   `calendar` blob NOT NULL COMMENT '存放持久化calendar对象',
   PRIMARY KEY (`sched_name`, `calendar_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日历信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日历信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_calendars
@@ -548,7 +572,7 @@ CREATE TABLE `qrtz_cron_triggers`  (
   `time_zone_id` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '时区',
   PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
   CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Cron类型的触发器表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Cron类型的触发器表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_cron_triggers
@@ -573,7 +597,7 @@ CREATE TABLE `qrtz_fired_triggers`  (
   `is_nonconcurrent` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否并发',
   `requests_recovery` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否接受恢复执行',
   PRIMARY KEY (`sched_name`, `entry_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '已触发的触发器表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '已触发的触发器表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_fired_triggers
@@ -595,7 +619,7 @@ CREATE TABLE `qrtz_job_details`  (
   `requests_recovery` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '是否接受恢复执行',
   `job_data` blob NULL COMMENT '存放持久化job对象',
   PRIMARY KEY (`sched_name`, `job_name`, `job_group`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '任务详细信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '任务详细信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_job_details
@@ -609,7 +633,7 @@ CREATE TABLE `qrtz_locks`  (
   `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调度名称',
   `lock_name` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '悲观锁名称',
   PRIMARY KEY (`sched_name`, `lock_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '存储的悲观锁信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '存储的悲观锁信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_locks
@@ -623,7 +647,7 @@ CREATE TABLE `qrtz_paused_trigger_grps`  (
   `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调度名称',
   `trigger_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
   PRIMARY KEY (`sched_name`, `trigger_group`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '暂停的触发器表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '暂停的触发器表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_paused_trigger_grps
@@ -639,7 +663,7 @@ CREATE TABLE `qrtz_scheduler_state`  (
   `last_checkin_time` bigint(13) NOT NULL COMMENT '上次检查时间',
   `checkin_interval` bigint(13) NOT NULL COMMENT '检查间隔时间',
   PRIMARY KEY (`sched_name`, `instance_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '调度器状态表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '调度器状态表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_scheduler_state
@@ -658,7 +682,7 @@ CREATE TABLE `qrtz_simple_triggers`  (
   `times_triggered` bigint(10) NOT NULL COMMENT '已经触发的次数',
   PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
   CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '简单触发器的信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '简单触发器的信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_simple_triggers
@@ -685,7 +709,7 @@ CREATE TABLE `qrtz_simprop_triggers`  (
   `bool_prop_2` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Boolean类型的trigger的第二个参数',
   PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
   CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '同步机制的行锁表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '同步机制的行锁表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_simprop_triggers
@@ -715,7 +739,7 @@ CREATE TABLE `qrtz_triggers`  (
   PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
   INDEX `sched_name`(`sched_name`, `job_name`, `job_group`) USING BTREE,
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `job_name`, `job_group`) REFERENCES `qrtz_job_details` (`sched_name`, `job_name`, `job_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '触发器详细信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '触发器详细信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of qrtz_triggers
@@ -737,7 +761,7 @@ CREATE TABLE `sys_config`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`config_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '参数配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '参数配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_config
@@ -746,7 +770,7 @@ INSERT INTO `sys_config` VALUES (1, '主框架页-默认皮肤样式名称', 'sy
 INSERT INTO `sys_config` VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', '2023-02-28 15:42:01', '', NULL, '初始化密码 123456');
 INSERT INTO `sys_config` VALUES (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', '2023-02-28 15:42:01', '', NULL, '深色主题theme-dark，浅色主题theme-light');
 INSERT INTO `sys_config` VALUES (4, '账号自助-验证码开关', 'sys.account.captchaEnabled', 'false', 'Y', 'admin', '2023-02-28 15:42:01', '', NULL, '是否开启验证码功能（true开启，false关闭）');
-INSERT INTO `sys_config` VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'true', 'Y', 'admin', '2023-02-28 15:42:01', 'admin', '2023-03-02 11:44:22', '是否开启注册用户功能（true开启，false关闭）');
+INSERT INTO `sys_config` VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'true', 'Y', 'admin', '2023-02-28 15:42:01', 'admin', '2023-03-26 14:11:43', '是否开启注册用户功能（true开启，false关闭）');
 INSERT INTO `sys_config` VALUES (6, '用户登录-黑名单列表', 'sys.login.blackIPList', '', 'Y', 'admin', '2023-02-28 15:42:01', '', NULL, '设置登录IP黑名单限制，多个匹配项以;分隔，支持匹配（*通配、网段）');
 
 -- ----------------------------
@@ -769,7 +793,7 @@ CREATE TABLE `sys_dept`  (
   `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`dept_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -799,7 +823,7 @@ CREATE TABLE `sys_dict_data`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典数据表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -850,7 +874,7 @@ CREATE TABLE `sys_dict_type`  (
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_id`) USING BTREE,
   UNIQUE INDEX `dict_type`(`dict_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -885,7 +909,7 @@ CREATE TABLE `sys_job`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注信息',
   PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_job
@@ -908,7 +932,7 @@ CREATE TABLE `sys_job_log`  (
   `exception_info` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '异常信息',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`job_log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_job_log
@@ -931,7 +955,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status`) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 254 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 353 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -1090,6 +1114,105 @@ INSERT INTO `sys_logininfor` VALUES (250, 'admin', '192.168.196.105', '内网IP'
 INSERT INTO `sys_logininfor` VALUES (251, 'chen', '192.168.196.105', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-03-18 19:52:58');
 INSERT INTO `sys_logininfor` VALUES (252, 'chen', '192.168.196.105', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-18 19:57:33');
 INSERT INTO `sys_logininfor` VALUES (253, 'admin', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-19 10:38:48');
+INSERT INTO `sys_logininfor` VALUES (254, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-03-19 17:37:46');
+INSERT INTO `sys_logininfor` VALUES (255, 'chen', '172.25.64.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-19 19:37:37');
+INSERT INTO `sys_logininfor` VALUES (256, 'chen', '172.25.224.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-21 16:26:35');
+INSERT INTO `sys_logininfor` VALUES (257, 'chen', '172.25.224.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-24 14:56:43');
+INSERT INTO `sys_logininfor` VALUES (258, 'chen', '172.25.224.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-24 20:01:40');
+INSERT INTO `sys_logininfor` VALUES (259, 'chen', '172.25.160.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-25 16:11:18');
+INSERT INTO `sys_logininfor` VALUES (260, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-03-26 13:57:47');
+INSERT INTO `sys_logininfor` VALUES (261, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '退出成功', '2023-03-26 14:11:17');
+INSERT INTO `sys_logininfor` VALUES (262, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-03-26 14:11:27');
+INSERT INTO `sys_logininfor` VALUES (263, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '注册成功', '2023-03-26 14:12:41');
+INSERT INTO `sys_logininfor` VALUES (264, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '1', '对不起，您的账号：chen123 已停用', '2023-03-26 14:13:13');
+INSERT INTO `sys_logininfor` VALUES (265, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-26 14:14:52');
+INSERT INTO `sys_logininfor` VALUES (266, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-26 14:44:47');
+INSERT INTO `sys_logininfor` VALUES (267, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-27 09:34:32');
+INSERT INTO `sys_logininfor` VALUES (268, 'chen', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-27 09:42:45');
+INSERT INTO `sys_logininfor` VALUES (269, 'chen', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-27 10:27:28');
+INSERT INTO `sys_logininfor` VALUES (270, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-27 10:34:26');
+INSERT INTO `sys_logininfor` VALUES (271, 'chen', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-27 19:06:17');
+INSERT INTO `sys_logininfor` VALUES (272, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-03-27 19:11:47');
+INSERT INTO `sys_logininfor` VALUES (273, 'chen', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-27 19:40:38');
+INSERT INTO `sys_logininfor` VALUES (274, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-27 20:07:30');
+INSERT INTO `sys_logininfor` VALUES (275, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-28 09:59:40');
+INSERT INTO `sys_logininfor` VALUES (276, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-28 21:04:53');
+INSERT INTO `sys_logininfor` VALUES (277, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-29 17:59:03');
+INSERT INTO `sys_logininfor` VALUES (278, 'chen123', '172.25.48.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-03-29 20:57:13');
+INSERT INTO `sys_logininfor` VALUES (279, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-29 21:04:35');
+INSERT INTO `sys_logininfor` VALUES (280, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-29 22:15:01');
+INSERT INTO `sys_logininfor` VALUES (281, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-03-30 09:40:35');
+INSERT INTO `sys_logininfor` VALUES (282, 'chen123', '172.30.16.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-07 10:27:17');
+INSERT INTO `sys_logininfor` VALUES (283, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-13 11:16:47');
+INSERT INTO `sys_logininfor` VALUES (284, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-13 11:35:33');
+INSERT INTO `sys_logininfor` VALUES (285, 'chen123', '172.25.48.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-13 17:24:14');
+INSERT INTO `sys_logininfor` VALUES (286, 'chen123', '172.23.224.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-17 09:17:14');
+INSERT INTO `sys_logininfor` VALUES (287, 'chen123', '172.23.224.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-17 10:24:46');
+INSERT INTO `sys_logininfor` VALUES (288, 'chen123', '172.25.32.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-20 08:53:42');
+INSERT INTO `sys_logininfor` VALUES (289, 'chen123', '172.25.32.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-20 09:07:26');
+INSERT INTO `sys_logininfor` VALUES (290, 'chen123', '172.25.32.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-20 14:19:54');
+INSERT INTO `sys_logininfor` VALUES (291, 'chen123', '172.25.32.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-20 15:05:37');
+INSERT INTO `sys_logininfor` VALUES (292, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-20 15:52:32');
+INSERT INTO `sys_logininfor` VALUES (293, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-20 15:56:07');
+INSERT INTO `sys_logininfor` VALUES (294, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-21 09:53:50');
+INSERT INTO `sys_logininfor` VALUES (295, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-21 12:11:54');
+INSERT INTO `sys_logininfor` VALUES (296, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-21 12:46:51');
+INSERT INTO `sys_logininfor` VALUES (297, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-21 13:51:31');
+INSERT INTO `sys_logininfor` VALUES (298, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-21 15:53:12');
+INSERT INTO `sys_logininfor` VALUES (299, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '用户不存在/密码错误', '2023-04-21 16:06:48');
+INSERT INTO `sys_logininfor` VALUES (300, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '密码输入错误1次', '2023-04-21 16:06:48');
+INSERT INTO `sys_logininfor` VALUES (301, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '密码输入错误2次', '2023-04-21 16:06:52');
+INSERT INTO `sys_logininfor` VALUES (302, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '用户不存在/密码错误', '2023-04-21 16:06:52');
+INSERT INTO `sys_logininfor` VALUES (303, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 16:06:55');
+INSERT INTO `sys_logininfor` VALUES (304, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '密码输入错误1次', '2023-04-21 18:57:58');
+INSERT INTO `sys_logininfor` VALUES (305, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '用户不存在/密码错误', '2023-04-21 18:57:58');
+INSERT INTO `sys_logininfor` VALUES (306, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 18:58:01');
+INSERT INTO `sys_logininfor` VALUES (307, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 20:15:48');
+INSERT INTO `sys_logininfor` VALUES (308, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-21 20:30:43');
+INSERT INTO `sys_logininfor` VALUES (309, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 20:35:22');
+INSERT INTO `sys_logininfor` VALUES (310, 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 20:52:41');
+INSERT INTO `sys_logininfor` VALUES (311, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 21:15:43');
+INSERT INTO `sys_logininfor` VALUES (312, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 21:18:08');
+INSERT INTO `sys_logininfor` VALUES (313, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 21:22:17');
+INSERT INTO `sys_logininfor` VALUES (314, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 21:52:28');
+INSERT INTO `sys_logininfor` VALUES (315, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-21 22:11:59');
+INSERT INTO `sys_logininfor` VALUES (316, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-21 22:23:37');
+INSERT INTO `sys_logininfor` VALUES (317, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 10:52:09');
+INSERT INTO `sys_logininfor` VALUES (318, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 11:57:45');
+INSERT INTO `sys_logininfor` VALUES (319, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 12:33:23');
+INSERT INTO `sys_logininfor` VALUES (320, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '1', '密码输入错误1次', '2023-04-22 12:56:00');
+INSERT INTO `sys_logininfor` VALUES (321, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '1', '用户不存在/密码错误', '2023-04-22 12:56:00');
+INSERT INTO `sys_logininfor` VALUES (322, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 12:56:11');
+INSERT INTO `sys_logininfor` VALUES (323, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 12:57:53');
+INSERT INTO `sys_logininfor` VALUES (324, 'chen', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '1', '密码输入错误1次', '2023-04-22 13:02:57');
+INSERT INTO `sys_logininfor` VALUES (325, 'chen', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '1', '用户不存在/密码错误', '2023-04-22 13:02:57');
+INSERT INTO `sys_logininfor` VALUES (326, 'chen', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 13:03:00');
+INSERT INTO `sys_logininfor` VALUES (327, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '用户不存在/密码错误', '2023-04-22 13:15:21');
+INSERT INTO `sys_logininfor` VALUES (328, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '密码输入错误1次', '2023-04-22 13:15:21');
+INSERT INTO `sys_logininfor` VALUES (329, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-22 13:15:28');
+INSERT INTO `sys_logininfor` VALUES (330, 'chen', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 14:03:30');
+INSERT INTO `sys_logininfor` VALUES (331, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 14:14:03');
+INSERT INTO `sys_logininfor` VALUES (332, 'chen', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '密码输入错误1次', '2023-04-22 15:15:28');
+INSERT INTO `sys_logininfor` VALUES (333, 'chen', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '用户不存在/密码错误', '2023-04-22 15:15:28');
+INSERT INTO `sys_logininfor` VALUES (334, 'chen', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-22 15:15:32');
+INSERT INTO `sys_logininfor` VALUES (335, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 15:56:16');
+INSERT INTO `sys_logininfor` VALUES (336, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 17:54:19');
+INSERT INTO `sys_logininfor` VALUES (337, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 19:10:30');
+INSERT INTO `sys_logininfor` VALUES (338, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 19:35:53');
+INSERT INTO `sys_logininfor` VALUES (339, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-22 21:59:45');
+INSERT INTO `sys_logininfor` VALUES (340, 'chen123', '172.24.176.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-04-22 22:23:12');
+INSERT INTO `sys_logininfor` VALUES (341, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 12:24:46');
+INSERT INTO `sys_logininfor` VALUES (342, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 12:24:46');
+INSERT INTO `sys_logininfor` VALUES (343, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 12:24:46');
+INSERT INTO `sys_logininfor` VALUES (344, 'chen123', '172.24.176.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 12:24:46');
+INSERT INTO `sys_logininfor` VALUES (345, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 12:30:48');
+INSERT INTO `sys_logininfor` VALUES (346, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 13:28:01');
+INSERT INTO `sys_logininfor` VALUES (347, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 13:50:38');
+INSERT INTO `sys_logininfor` VALUES (348, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 13:51:10');
+INSERT INTO `sys_logininfor` VALUES (349, 'chen123', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 13:52:15');
+INSERT INTO `sys_logininfor` VALUES (350, 'chen', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '1', '密码输入错误1次', '2023-04-23 13:57:41');
+INSERT INTO `sys_logininfor` VALUES (351, 'chen', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '1', '用户不存在/密码错误', '2023-04-23 13:57:41');
+INSERT INTO `sys_logininfor` VALUES (352, 'chen', '127.0.0.1', '内网IP', 'Unknown', 'Unknown', '0', '登录成功', '2023-04-23 13:57:46');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1116,7 +1239,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2103 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2103 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -1326,7 +1449,7 @@ CREATE TABLE `sys_notice`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '通知公告表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_notice
@@ -1360,7 +1483,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type`) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status`) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 253 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 452 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1518,6 +1641,205 @@ INSERT INTO `sys_oper_log` VALUES (249, '关注', 1, 'com.ruoyi.app.controller.A
 INSERT INTO `sys_oper_log` VALUES (250, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen', NULL, '/app/concern', '192.168.196.105', '内网IP', '{\"id\":8,\"toUid\":100,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-18 20:01:41', 13);
 INSERT INTO `sys_oper_log` VALUES (251, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen', NULL, '/app/concern', '192.168.196.105', '内网IP', '{\"toUid\":100,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-18 20:01:42', 12);
 INSERT INTO `sys_oper_log` VALUES (252, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'admin', NULL, '/app/like', '127.0.0.1', '内网IP', '{\"createDate\":\"2023-03-19\",\"id\":23,\"pid\":7,\"uid\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-19 10:38:53', 35);
+INSERT INTO `sys_oper_log` VALUES (253, '动态', 3, 'com.ruoyi.app.controller.AppPostController.remove()', 'DELETE', 1, 'admin', NULL, '/app/post/5,7,10,6,8,9,11,12,13,14', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-19 17:38:07', 8);
+INSERT INTO `sys_oper_log` VALUES (254, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'admin', NULL, '/app/post', '127.0.0.1', '内网IP', '{\"content\":\"<p>速度阿萨</p>\",\"createDate\":\"2023-03-19\",\"id\":15,\"image\":\"/profile/upload/2023/03/19/11_20230319174211A002.jpg\",\"title\":\"测试\",\"uid\":1,\"updateDate\":\"2023-03-01\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-19 17:42:39', 17);
+INSERT INTO `sys_oper_log` VALUES (255, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'admin', NULL, '/app/post', '127.0.0.1', '内网IP', '{\"content\":\"<p>打赏</p>\",\"createDate\":\"2023-03-19\",\"id\":16,\"image\":\"/profile/upload/2023/03/19/qdwa_20230319174248A004.jpg\",\"title\":\"测试\",\"uid\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-19 17:42:52', 2);
+INSERT INTO `sys_oper_log` VALUES (256, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.64.1', '内网IP', '{\"createDate\":\"2023-03-19\",\"id\":24,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-19 19:37:47', 18);
+INSERT INTO `sys_oper_log` VALUES (257, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":25,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:26:48', 23);
+INSERT INTO `sys_oper_log` VALUES (258, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:27:58', 10);
+INSERT INTO `sys_oper_log` VALUES (259, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":26,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:28:00', 10);
+INSERT INTO `sys_oper_log` VALUES (260, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:28:02', 8);
+INSERT INTO `sys_oper_log` VALUES (261, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":27,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:28:03', 11);
+INSERT INTO `sys_oper_log` VALUES (262, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:28:06', 20);
+INSERT INTO `sys_oper_log` VALUES (263, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":28,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:28:15', 14);
+INSERT INTO `sys_oper_log` VALUES (264, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:28:20', 11);
+INSERT INTO `sys_oper_log` VALUES (265, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":4,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:28:56', 9);
+INSERT INTO `sys_oper_log` VALUES (266, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:28:59', 8);
+INSERT INTO `sys_oper_log` VALUES (267, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":29,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:29:01', 7);
+INSERT INTO `sys_oper_log` VALUES (268, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:29:03', 6);
+INSERT INTO `sys_oper_log` VALUES (269, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen', NULL, '/app/concern', '172.25.224.1', '内网IP', '{\"toUid\":1,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:29:06', 7);
+INSERT INTO `sys_oper_log` VALUES (270, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen', NULL, '/app/concern', '172.25.224.1', '内网IP', '{\"id\":9,\"toUid\":1,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:29:08', 13);
+INSERT INTO `sys_oper_log` VALUES (271, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:42:31', 18);
+INSERT INTO `sys_oper_log` VALUES (272, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":30,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:42:32', 7);
+INSERT INTO `sys_oper_log` VALUES (273, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:42:33', 7);
+INSERT INTO `sys_oper_log` VALUES (274, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":31,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:42:34', 10);
+INSERT INTO `sys_oper_log` VALUES (275, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":32,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:42:35', 9);
+INSERT INTO `sys_oper_log` VALUES (276, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:42:37', 15);
+INSERT INTO `sys_oper_log` VALUES (277, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":33,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:42:40', 6);
+INSERT INTO `sys_oper_log` VALUES (278, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:42:41', 14);
+INSERT INTO `sys_oper_log` VALUES (279, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":34,\"pid\":19,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:42:48', 6);
+INSERT INTO `sys_oper_log` VALUES (280, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:43:10', 6);
+INSERT INTO `sys_oper_log` VALUES (281, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":35,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:43:11', 6);
+INSERT INTO `sys_oper_log` VALUES (282, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:43:12', 6);
+INSERT INTO `sys_oper_log` VALUES (283, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":36,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:43:31', 6);
+INSERT INTO `sys_oper_log` VALUES (284, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:43:32', 7);
+INSERT INTO `sys_oper_log` VALUES (285, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":37,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:43:32', 6);
+INSERT INTO `sys_oper_log` VALUES (286, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:43:33', 9);
+INSERT INTO `sys_oper_log` VALUES (287, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":5,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:43:34', 10);
+INSERT INTO `sys_oper_log` VALUES (288, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:43:35', 5);
+INSERT INTO `sys_oper_log` VALUES (289, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":6,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:43:36', 6);
+INSERT INTO `sys_oper_log` VALUES (290, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:43:36', 6);
+INSERT INTO `sys_oper_log` VALUES (291, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":38,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:43:42', 10);
+INSERT INTO `sys_oper_log` VALUES (292, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:43:43', 4);
+INSERT INTO `sys_oper_log` VALUES (293, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":39,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:46:25', 11);
+INSERT INTO `sys_oper_log` VALUES (294, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:46:26', 13);
+INSERT INTO `sys_oper_log` VALUES (295, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":40,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:46:26', 5);
+INSERT INTO `sys_oper_log` VALUES (296, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:46:27', 14);
+INSERT INTO `sys_oper_log` VALUES (297, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":41,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:46:37', 5);
+INSERT INTO `sys_oper_log` VALUES (298, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":42,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:46:39', 6);
+INSERT INTO `sys_oper_log` VALUES (299, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":43,\"pid\":16,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:47:01', 8);
+INSERT INTO `sys_oper_log` VALUES (300, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":16,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:47:02', 5);
+INSERT INTO `sys_oper_log` VALUES (301, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":44,\"pid\":16,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:47:03', 7);
+INSERT INTO `sys_oper_log` VALUES (302, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":16,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:47:03', 5);
+INSERT INTO `sys_oper_log` VALUES (303, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:58:46', 17);
+INSERT INTO `sys_oper_log` VALUES (304, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":45,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:58:47', 6);
+INSERT INTO `sys_oper_log` VALUES (305, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:58:48', 7);
+INSERT INTO `sys_oper_log` VALUES (306, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":46,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:58:49', 6);
+INSERT INTO `sys_oper_log` VALUES (307, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:58:50', 8);
+INSERT INTO `sys_oper_log` VALUES (308, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-21\",\"id\":47,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-21 16:58:50', 7);
+INSERT INTO `sys_oper_log` VALUES (309, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-21 16:58:51', 11);
+INSERT INTO `sys_oper_log` VALUES (310, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 14:56:47', 22);
+INSERT INTO `sys_oper_log` VALUES (311, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":48,\"pid\":17,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 14:56:47', 15);
+INSERT INTO `sys_oper_log` VALUES (312, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":49,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 14:56:51', 9);
+INSERT INTO `sys_oper_log` VALUES (313, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 14:56:51', 12);
+INSERT INTO `sys_oper_log` VALUES (314, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":50,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 14:56:52', 12);
+INSERT INTO `sys_oper_log` VALUES (315, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 14:56:53', 6);
+INSERT INTO `sys_oper_log` VALUES (316, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":7,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 14:56:58', 16);
+INSERT INTO `sys_oper_log` VALUES (317, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 14:56:59', 8);
+INSERT INTO `sys_oper_log` VALUES (318, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":8,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 14:57:06', 8);
+INSERT INTO `sys_oper_log` VALUES (319, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":19,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:21:18', 25);
+INSERT INTO `sys_oper_log` VALUES (320, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":51,\"pid\":19,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:21:19', 8);
+INSERT INTO `sys_oper_log` VALUES (321, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":17,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:21:20', 7);
+INSERT INTO `sys_oper_log` VALUES (322, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":52,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:21:31', 7);
+INSERT INTO `sys_oper_log` VALUES (323, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:21:32', 9);
+INSERT INTO `sys_oper_log` VALUES (324, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":53,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:21:33', 7);
+INSERT INTO `sys_oper_log` VALUES (325, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:21:33', 6);
+INSERT INTO `sys_oper_log` VALUES (326, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":54,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:21:34', 9);
+INSERT INTO `sys_oper_log` VALUES (327, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:21:37', 7);
+INSERT INTO `sys_oper_log` VALUES (328, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":55,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:21:38', 6);
+INSERT INTO `sys_oper_log` VALUES (329, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":56,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:21:39', 6);
+INSERT INTO `sys_oper_log` VALUES (330, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":9,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:21:40', 8);
+INSERT INTO `sys_oper_log` VALUES (331, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:21:41', 5);
+INSERT INTO `sys_oper_log` VALUES (332, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen', NULL, '/app/collection', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":10,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:21:41', 6);
+INSERT INTO `sys_oper_log` VALUES (333, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:22:30', 6);
+INSERT INTO `sys_oper_log` VALUES (334, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":57,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:22:31', 5);
+INSERT INTO `sys_oper_log` VALUES (335, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":20,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:22:31', 5);
+INSERT INTO `sys_oper_log` VALUES (336, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":58,\"pid\":20,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:22:56', 5);
+INSERT INTO `sys_oper_log` VALUES (337, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:28:42', 10);
+INSERT INTO `sys_oper_log` VALUES (338, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":59,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:28:43', 6);
+INSERT INTO `sys_oper_log` VALUES (339, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"pid\":18,\"uid\":100}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-24 15:28:43', 5);
+INSERT INTO `sys_oper_log` VALUES (340, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen', NULL, '/app/like', '172.25.224.1', '内网IP', '{\"createDate\":\"2023-03-24\",\"id\":60,\"pid\":18,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-24 15:28:44', 9);
+INSERT INTO `sys_oper_log` VALUES (341, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', NULL, '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"user_data\",\"className\":\"UserData\",\"columns\":[{\"capJavaField\":\"Uid\",\"columnComment\":\"user_id\",\"columnId\":83,\"columnName\":\"uid\",\"columnType\":\"bigint(20)\",\"createBy\":\"admin\",\"createTime\":\"2023-02-28 15:45:58\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"uid\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":1,\"superColumn\":false,\"tableId\":15,\"updateBy\":\"\",\"updateTime\":\"2023-02-28 15:48:51\",\"usableColumn\":false},{\"capJavaField\":\"Desc\",\"columnComment\":\"描述\",\"columnId\":84,\"columnName\":\"desc\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2023-02-28 15:45:58\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"javaField\":\"desc\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":false,\"sort\":2,\"superColumn\":false,\"tableId\":15,\"updateBy\":\"\",\"updateTime\":\"2023-02-28 15:48:51\",\"usableColumn\":false},{\"capJavaField\":\"Year\",\"columnComment\":\"年龄\",\"columnId\":85,\"columnName\":\"year\",\"columnType\":\"int(2)\",\"createBy\":\"admin\",\"createTime\":\"2023-02-28 15:45:58\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"javaField\":\"year\",\"javaType\":\"Integer\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":false,\"sort\":3,\"superColumn\":false,\"tableId\":15,\"updateBy\":\"\",\"updateTime\":\"2023-02-28 15:48:51\",\"usableColumn\":false},{\"capJavaField\":\"ToUid\",\"columnComment\":\"属于某用户\",\"columnId\":86,\"columnName\":\"to_uid\",\"columnType\":\"int(11)\",\"createBy\":\"admin\",\"createTime\":\"2023-02-28 15:45:58\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\"', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-26 13:58:43', 29);
+INSERT INTO `sys_oper_log` VALUES (342, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', NULL, '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"user_data\"}', NULL, 0, NULL, '2023-03-26 13:58:49', 97);
+INSERT INTO `sys_oper_log` VALUES (343, '参数管理', 2, 'com.ruoyi.web.controller.system.SysConfigController.edit()', 'PUT', 1, 'admin', NULL, '/system/config', '127.0.0.1', '内网IP', '{\"configId\":5,\"configKey\":\"sys.account.registerUser\",\"configName\":\"账号自助-是否开启用户注册功能\",\"configType\":\"Y\",\"configValue\":\"true\",\"createBy\":\"admin\",\"createTime\":\"2023-02-28 15:42:01\",\"params\":{},\"remark\":\"是否开启注册用户功能（true开启，false关闭）\",\"updateBy\":\"admin\",\"updateTime\":\"2023-03-02 11:44:22\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-26 14:11:43', 14);
+INSERT INTO `sys_oper_log` VALUES (344, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.25.48.1', '内网IP', '{\"id\":10,\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-29 17:59:03', 13);
+INSERT INTO `sys_oper_log` VALUES (345, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.25.48.1', '内网IP', '{\"createDate\":\"2023-03-29\",\"id\":61,\"pid\":18,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-29 17:59:11', 27);
+INSERT INTO `sys_oper_log` VALUES (346, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.25.48.1', '内网IP', '{\"createDate\":\"2023-03-29\",\"id\":62,\"pid\":25,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-29 20:58:49', 7);
+INSERT INTO `sys_oper_log` VALUES (347, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.25.48.1', '内网IP', '{\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-03-30 09:49:37', 10);
+INSERT INTO `sys_oper_log` VALUES (348, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.25.48.1', '内网IP', '{\"id\":11,\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-03-30 09:49:38', 6);
+INSERT INTO `sys_oper_log` VALUES (349, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"pid\":25,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-07 10:27:56', 25);
+INSERT INTO `sys_oper_log` VALUES (350, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"createDate\":\"2023-04-07\",\"id\":63,\"pid\":25,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-07 10:27:57', 25);
+INSERT INTO `sys_oper_log` VALUES (351, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"pid\":25,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-07 10:28:00', 8);
+INSERT INTO `sys_oper_log` VALUES (352, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"createDate\":\"2023-04-07\",\"id\":64,\"pid\":25,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-07 10:28:02', 8);
+INSERT INTO `sys_oper_log` VALUES (353, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"pid\":25,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-07 10:28:11', 9);
+INSERT INTO `sys_oper_log` VALUES (354, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"createDate\":\"2023-04-07\",\"id\":65,\"pid\":25,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-07 10:28:14', 8);
+INSERT INTO `sys_oper_log` VALUES (355, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"pid\":25,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-07 10:28:44', 8);
+INSERT INTO `sys_oper_log` VALUES (356, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"createDate\":\"2023-04-07\",\"id\":66,\"pid\":25,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-07 10:28:46', 10);
+INSERT INTO `sys_oper_log` VALUES (357, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.30.16.1', '内网IP', '{\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-07 10:28:49', 8);
+INSERT INTO `sys_oper_log` VALUES (358, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.30.16.1', '内网IP', '{\"id\":12,\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-07 10:28:50', 8);
+INSERT INTO `sys_oper_log` VALUES (359, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"pid\":18,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-07 10:28:56', 8);
+INSERT INTO `sys_oper_log` VALUES (360, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"createDate\":\"2023-04-07\",\"id\":67,\"pid\":18,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-07 10:28:57', 10);
+INSERT INTO `sys_oper_log` VALUES (361, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"createDate\":\"2023-04-07\",\"id\":68,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-07 10:29:00', 8);
+INSERT INTO `sys_oper_log` VALUES (362, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.30.16.1', '内网IP', '{\"pid\":23,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-07 10:29:00', 7);
+INSERT INTO `sys_oper_log` VALUES (363, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.25.48.1', '内网IP', '{\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-13 17:27:29', 18);
+INSERT INTO `sys_oper_log` VALUES (364, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.25.48.1', '内网IP', '{\"id\":13,\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-13 17:27:30', 7);
+INSERT INTO `sys_oper_log` VALUES (365, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.23.224.1', '内网IP', '{\"createDate\":\"2023-04-17\",\"id\":69,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-17 10:11:37', 17);
+INSERT INTO `sys_oper_log` VALUES (366, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', NULL, 1, '\r\n### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppCommentsMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppCommentsMapper.selectAppCommentsById-Inline\r\n### The error occurred while setting parameters\r\n### SQL: select             ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,             aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,             su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark         from app_comments ac                  left join app_animal aa on ac.aid = aa.id                  left join sys_user su on ac.uid = su.user_id               where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\n; Column \'id\' in where clause is ambiguous; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous', '2023-04-20 15:49:26', 87);
+INSERT INTO `sys_oper_log` VALUES (367, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', NULL, 1, '\r\n### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppCommentsMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppCommentsMapper.selectAppCommentsById-Inline\r\n### The error occurred while setting parameters\r\n### SQL: select             ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,             aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,             su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark         from app_comments ac                  left join app_animal aa on ac.aid = aa.id                  left join sys_user su on ac.uid = su.user_id               where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\n; Column \'id\' in where clause is ambiguous; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous', '2023-04-20 15:49:26', 4);
+INSERT INTO `sys_oper_log` VALUES (368, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', NULL, 1, '\r\n### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppCommentsMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppCommentsMapper.selectAppCommentsById-Inline\r\n### The error occurred while setting parameters\r\n### SQL: select             ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,             aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,             su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark         from app_comments ac                  left join app_animal aa on ac.aid = aa.id                  left join sys_user su on ac.uid = su.user_id               where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\n; Column \'id\' in where clause is ambiguous; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous', '2023-04-20 15:49:27', 4);
+INSERT INTO `sys_oper_log` VALUES (369, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', NULL, 1, '\r\n### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppCommentsMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppCommentsMapper.selectAppCommentsById-Inline\r\n### The error occurred while setting parameters\r\n### SQL: select             ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,             aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,             su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark         from app_comments ac                  left join app_animal aa on ac.aid = aa.id                  left join sys_user su on ac.uid = su.user_id               where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\n; Column \'id\' in where clause is ambiguous; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous', '2023-04-20 15:49:29', 7);
+INSERT INTO `sys_oper_log` VALUES (370, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', NULL, 1, '\r\n### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppCommentsMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppCommentsMapper.selectAppCommentsById-Inline\r\n### The error occurred while setting parameters\r\n### SQL: select             ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,             aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,             su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark         from app_comments ac                  left join app_animal aa on ac.aid = aa.id                  left join sys_user su on ac.uid = su.user_id               where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\n; Column \'id\' in where clause is ambiguous; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous', '2023-04-20 15:49:41', 3);
+INSERT INTO `sys_oper_log` VALUES (371, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', NULL, 1, '\r\n### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppCommentsMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppCommentsMapper.selectAppCommentsById-Inline\r\n### The error occurred while setting parameters\r\n### SQL: select             ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,             aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,             su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark         from app_comments ac                  left join app_animal aa on ac.aid = aa.id                  left join sys_user su on ac.uid = su.user_id               where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\n; Column \'id\' in where clause is ambiguous; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous', '2023-04-20 15:50:30', 41);
+INSERT INTO `sys_oper_log` VALUES (372, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '127.0.0.1', '内网IP', '{\"cid\":2,\"uid\":116}', NULL, 1, '\r\n### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppCommentsMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppCommentsMapper.selectAppCommentsById-Inline\r\n### The error occurred while setting parameters\r\n### SQL: select             ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,             aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,             su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark         from app_comments ac                  left join app_animal aa on ac.aid = aa.id                  left join sys_user su on ac.uid = su.user_id               where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\n; Column \'id\' in where clause is ambiguous; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous', '2023-04-20 15:58:27', 49);
+INSERT INTO `sys_oper_log` VALUES (373, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '127.0.0.1', '内网IP', '{\"cid\":2,\"uid\":116}', NULL, 1, '\r\n### Error querying database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppCommentsMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppCommentsMapper.selectAppCommentsById-Inline\r\n### The error occurred while setting parameters\r\n### SQL: select             ac.id, ac.to_id, ac.pid, ac.content, ac.image, ac.uid, ac.aid, ac.like_number, ac.create_date,             aa.id aa_id, aa.sid aa_sid, aa.name aa_name, aa.sex aa_sex, aa.icon aa_icon, aa.create_date aa_create_date, aa.year aa_year, aa.s1 aa_s1, aa.s2 aa_s2,             su.user_id su_user_id,  su.nick_name su_nick_name,  su.sex su_sex, su.avatar su_avatar,su.remark su_remark         from app_comments ac                  left join app_animal aa on ac.aid = aa.id                  left join sys_user su on ac.uid = su.user_id               where id = ?\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous\n; Column \'id\' in where clause is ambiguous; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column \'id\' in where clause is ambiguous', '2023-04-20 15:58:37', 4);
+INSERT INTO `sys_oper_log` VALUES (374, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '127.0.0.1', '内网IP', '{\"cid\":2,\"id\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:00:56', 30);
+INSERT INTO `sys_oper_log` VALUES (375, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '127.0.0.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-20 16:00:58', 8);
+INSERT INTO `sys_oper_log` VALUES (376, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '127.0.0.1', '内网IP', '{\"cid\":2,\"id\":2,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:00:59', 11);
+INSERT INTO `sys_oper_log` VALUES (377, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-20 16:01:07', 6);
+INSERT INTO `sys_oper_log` VALUES (378, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"id\":3,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:01:09', 7);
+INSERT INTO `sys_oper_log` VALUES (379, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-20 16:01:09', 5);
+INSERT INTO `sys_oper_log` VALUES (380, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"id\":4,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:03:59', 9);
+INSERT INTO `sys_oper_log` VALUES (381, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-20 16:03:59', 6);
+INSERT INTO `sys_oper_log` VALUES (382, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"id\":5,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:04:00', 5);
+INSERT INTO `sys_oper_log` VALUES (383, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-20 16:04:01', 5);
+INSERT INTO `sys_oper_log` VALUES (384, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"id\":6,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:04:01', 11);
+INSERT INTO `sys_oper_log` VALUES (385, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-20 16:04:02', 6);
+INSERT INTO `sys_oper_log` VALUES (386, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"id\":7,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:05:54', 28);
+INSERT INTO `sys_oper_log` VALUES (387, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-20 16:05:59', 9);
+INSERT INTO `sys_oper_log` VALUES (388, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"id\":8,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:06:06', 9);
+INSERT INTO `sys_oper_log` VALUES (389, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-20 16:17:22', 16);
+INSERT INTO `sys_oper_log` VALUES (390, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.25.32.1', '内网IP', '{\"cid\":2,\"id\":9,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-20 16:17:22', 8);
+INSERT INTO `sys_oper_log` VALUES (391, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.24.176.1', '内网IP', '{\"cid\":2,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 09:55:02', 16);
+INSERT INTO `sys_oper_log` VALUES (392, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.24.176.1', '内网IP', '{\"cid\":2,\"id\":10,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 09:55:03', 14);
+INSERT INTO `sys_oper_log` VALUES (393, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":11,\"pid\":22,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 09:57:21', 16);
+INSERT INTO `sys_oper_log` VALUES (394, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"pid\":22,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 09:57:22', 9);
+INSERT INTO `sys_oper_log` VALUES (395, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":70,\"pid\":22,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:11:54', 11);
+INSERT INTO `sys_oper_log` VALUES (396, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"pid\":22,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:11:55', 6);
+INSERT INTO `sys_oper_log` VALUES (397, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":12,\"pid\":22,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:12:04', 9);
+INSERT INTO `sys_oper_log` VALUES (398, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"pid\":22,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:12:05', 7);
+INSERT INTO `sys_oper_log` VALUES (399, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":71,\"pid\":22,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:21:40', 8);
+INSERT INTO `sys_oper_log` VALUES (400, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"pid\":22,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:21:42', 8);
+INSERT INTO `sys_oper_log` VALUES (401, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":72,\"pid\":22,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:21:42', 7);
+INSERT INTO `sys_oper_log` VALUES (402, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"pid\":22,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:21:43', 5);
+INSERT INTO `sys_oper_log` VALUES (403, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":73,\"pid\":22,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:21:43', 7);
+INSERT INTO `sys_oper_log` VALUES (404, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"pid\":22,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:21:44', 7);
+INSERT INTO `sys_oper_log` VALUES (405, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"pid\":18,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:21:51', 7);
+INSERT INTO `sys_oper_log` VALUES (406, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":74,\"pid\":18,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:21:52', 7);
+INSERT INTO `sys_oper_log` VALUES (407, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"pid\":18,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:21:52', 6);
+INSERT INTO `sys_oper_log` VALUES (408, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":13,\"pid\":18,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:21:53', 7);
+INSERT INTO `sys_oper_log` VALUES (409, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":14,\"pid\":21,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:22:01', 7);
+INSERT INTO `sys_oper_log` VALUES (410, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"pid\":21,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:22:08', 6);
+INSERT INTO `sys_oper_log` VALUES (411, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":15,\"pid\":21,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:22:11', 8);
+INSERT INTO `sys_oper_log` VALUES (412, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-21\",\"id\":75,\"pid\":18,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 12:24:21', 7);
+INSERT INTO `sys_oper_log` VALUES (413, '点赞', 1, 'com.ruoyi.app.controller.AppLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/like', '172.24.176.1', '内网IP', '{\"pid\":18,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:24:22', 6);
+INSERT INTO `sys_oper_log` VALUES (414, '收藏', 1, 'com.ruoyi.app.controller.AppCollectionController.add()', 'POST', 1, 'chen123', NULL, '/app/collection', '172.24.176.1', '内网IP', '{\"pid\":18,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 12:34:38', 5);
+INSERT INTO `sys_oper_log` VALUES (415, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"id\":14,\"toAid\":4,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 17:00:55', 16);
+INSERT INTO `sys_oper_log` VALUES (416, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"toAid\":4,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 17:00:57', 6);
+INSERT INTO `sys_oper_log` VALUES (417, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"id\":15,\"toAid\":4,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 17:01:04', 2);
+INSERT INTO `sys_oper_log` VALUES (418, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"toAid\":4,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 17:03:23', 3);
+INSERT INTO `sys_oper_log` VALUES (419, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"id\":16,\"toAid\":4,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 17:03:24', 3);
+INSERT INTO `sys_oper_log` VALUES (420, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"id\":17,\"toAid\":5,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 17:03:27', 3);
+INSERT INTO `sys_oper_log` VALUES (421, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"toAid\":5,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 17:03:30', 3);
+INSERT INTO `sys_oper_log` VALUES (422, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 17:03:35', 4);
+INSERT INTO `sys_oper_log` VALUES (423, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"id\":18,\"toUid\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 17:03:38', 4);
+INSERT INTO `sys_oper_log` VALUES (424, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"发顺丰发\"}', NULL, 1, '', '2023-04-21 21:58:23', 28);
+INSERT INTO `sys_oper_log` VALUES (425, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"的阿迪斯\",\"createDate\":\"2023-04-21\",\"id\":15,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:02:53', 20);
+INSERT INTO `sys_oper_log` VALUES (426, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"发生的\",\"createDate\":\"2023-04-21\",\"id\":16,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:04:26', 6);
+INSERT INTO `sys_oper_log` VALUES (427, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"的撒旦\",\"createDate\":\"2023-04-21\",\"id\":17,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:08:11', 7);
+INSERT INTO `sys_oper_log` VALUES (428, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"发士大夫\",\"createDate\":\"2023-04-21\",\"id\":18,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:10:16', 4);
+INSERT INTO `sys_oper_log` VALUES (429, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"的阿萨\",\"createDate\":\"2023-04-21\",\"id\":19,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:12:13', 6);
+INSERT INTO `sys_oper_log` VALUES (430, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"大大大\",\"createDate\":\"2023-04-21\",\"id\":20,\"image\":\"/profile/upload/2023/04/21/1_20230421222141A006.jpg\",\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:21:49', 5);
+INSERT INTO `sys_oper_log` VALUES (431, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.24.176.1', '内网IP', '{\"cid\":20,\"id\":11,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:23:48', 14);
+INSERT INTO `sys_oper_log` VALUES (432, '评论点赞', 1, 'com.ruoyi.app.controller.AppCommentsLikeController.add()', 'POST', 1, 'chen123', NULL, '/app/comments_like', '172.24.176.1', '内网IP', '{\"cid\":20,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-21 22:23:49', 13);
+INSERT INTO `sys_oper_log` VALUES (433, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"大阿斯顿啊\",\"createDate\":\"2023-04-21\",\"id\":21,\"image\":\"/profile/upload/2023/04/21/1_20230421222357A007.jpg\",\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:24:00', 6);
+INSERT INTO `sys_oper_log` VALUES (434, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"阿达阿达\",\"createDate\":\"2023-04-21\",\"id\":22,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:25:47', 6);
+INSERT INTO `sys_oper_log` VALUES (435, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"打撒啊的\",\"createDate\":\"2023-04-21\",\"id\":23,\"image\":\"/profile/upload/2023/04/21/1_20230421222557A008.jpg\",\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:25:58', 4);
+INSERT INTO `sys_oper_log` VALUES (436, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"哈哈哈哈\",\"createDate\":\"2023-04-21\",\"id\":24,\"image\":\"/profile/upload/2023/04/21/1_20230421223358A009.jpg\",\"pid\":23,\"toId\":21,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:34:00', 5);
+INSERT INTO `sys_oper_log` VALUES (437, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"大苏打啊的\",\"createDate\":\"2023-04-21\",\"id\":25,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:39:42', 5);
+INSERT INTO `sys_oper_log` VALUES (438, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"撒旦\",\"createDate\":\"2023-04-21\",\"id\":26,\"pid\":23,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:40:27', 5);
+INSERT INTO `sys_oper_log` VALUES (439, '评论', 1, 'com.ruoyi.app.controller.AppCommentsController.add()', 'POST', 1, 'chen123', NULL, '/app/comments', '172.24.176.1', '内网IP', '{\"content\":\"打赏大\",\"createDate\":\"2023-04-21\",\"id\":27,\"image\":\"/profile/upload/2023/04/21/1_20230421224129A010.jpg\",\"pid\":23,\"toId\":26,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-21 22:41:30', 5);
+INSERT INTO `sys_oper_log` VALUES (440, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'chen123', NULL, '/app/post', '172.24.176.1', '内网IP', '{\"aid\":4,\"content\":\"大苏打啊的\",\"createDate\":\"2023-04-22\",\"id\":27,\"image\":\"[]\",\"title\":\"哈哈哈\",\"typeId\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 14:43:28', 17);
+INSERT INTO `sys_oper_log` VALUES (441, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'chen123', NULL, '/app/post', '172.24.176.1', '内网IP', '{\"content\":\"的阿松大\",\"createDate\":\"2023-04-22\",\"id\":28,\"image\":\"[]\",\"title\":\"打赏\",\"typeId\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 14:52:20', 3);
+INSERT INTO `sys_oper_log` VALUES (442, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'chen123', NULL, '/app/post', '172.24.176.1', '内网IP', '{\"content\":\"撒旦a\",\"createDate\":\"2023-04-22\",\"id\":29,\"image\":\"[/profile/upload/2023/04/22/1_20230422150651A001.jpg, /profile/upload/2023/04/22/1_20230422150651A002.jpg, /profile/upload/2023/04/22/1_20230422150651A003.jpg]\",\"title\":\" 打赏\",\"typeId\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 15:06:51', 7);
+INSERT INTO `sys_oper_log` VALUES (443, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'chen123', NULL, '/app/post', '172.24.176.1', '内网IP', '{\"content\":\"大\",\"createDate\":\"2023-04-22\",\"id\":30,\"image\":\"[\\\"/profile/upload/2023/04/22/1_20230422150818A004.jpg\\\"]\",\"title\":\"大是的\",\"typeId\":1,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 15:08:18', 1);
+INSERT INTO `sys_oper_log` VALUES (444, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'chen', NULL, '/app/post', '172.24.176.1', '内网IP', '{\"content\":\"打到我\",\"createDate\":\"2023-04-22\",\"id\":31,\"image\":\"[]\",\"title\":\"的阿萨\",\"typeId\":1,\"uid\":100,\"video\":\"/profile/upload/2023/04/22/mda-mcjm50zbmckqbcwt_20230422154600A007.mp4\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 15:46:00', 3);
+INSERT INTO `sys_oper_log` VALUES (445, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'chen', NULL, '/app/post', '172.24.176.1', '内网IP', '{\"content\":\"打到我\",\"createDate\":\"2023-04-22\",\"image\":\"[/profile/upload/2023/04/22/icon_20230422154701A009.jpg, /profile/upload/2023/04/22/qdwa_20230422154701A010.jpg, /profile/upload/2023/04/22/屏幕截图 2023-03-27 124711_20230422154701A011.png, /profile/upload/2023/04/22/11_20230422154701A012.jpg, /profile/upload/2023/04/22/2_20230422154701A013.png, /profile/upload/2023/04/22/屏幕截图 2023-03-25 190052_20230422154701A014.png]\",\"title\":\"的阿萨\",\"typeId\":1,\"uid\":100,\"video\":\"/profile/upload/2023/04/22/mda-mcjm50zbmckqbcwt_20230422154701A008.mp4\"}', NULL, 1, '\r\n### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'image\' at row 1\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppPostMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppPostMapper.insertAppPost-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into app_post          ( title,             content,             image,             video,             create_date,                          uid,                                                                              type_id )           values ( ?,             ?,             ?,             ?,             ?,                          ?,                                                                              ? )\r\n### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'image\' at row 1\n; Data truncation: Data too long for column \'image\' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column \'image\' at row 1', '2023-04-22 15:47:01', 66);
+INSERT INTO `sys_oper_log` VALUES (446, '动态', 1, 'com.ruoyi.app.controller.AppPostController.add()', 'POST', 1, 'chen', NULL, '/app/post', '172.24.176.1', '内网IP', '{\"content\":\"的撒\",\"createDate\":\"2023-04-22\",\"id\":32,\"image\":\"[/profile/upload/2023/04/22/icon_20230422154809A015.jpg, /profile/upload/2023/04/22/2_20230422154809A016.png, /profile/upload/2023/04/22/屏幕截图 2023-03-27 124711_20230422154809A017.png, /profile/upload/2023/04/22/11_20230422154809A018.jpg]\",\"title\":\"的撒大\",\"typeId\":1,\"uid\":100}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 15:48:09', 3);
+INSERT INTO `sys_oper_log` VALUES (447, '动物信息', 1, 'com.ruoyi.app.controller.AppAnimalController.add()', 'POST', 1, 'chen123', NULL, '/app/animal', '172.24.176.1', '内网IP', '{\"icon\":\"/profile/upload/2023/04/22/屏幕截图 2023-03-25 190104_20230422211112A001.png\",\"name\":\"小杜\",\"sex\":0,\"sid\":1,\"year\":3}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'create_date\' doesn\'t have a default value\r\n### The error may exist in file [F:\\Projects\\Java\\take-it-home-web\\ruoyi-app\\target\\classes\\mapper\\app\\AppAnimalMapper.xml]\r\n### The error may involve com.ruoyi.app.mapper.AppAnimalMapper.insertAppAnimal-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into app_animal          ( sid,             name,             sex,             icon,                          year )           values ( ?,             ?,             ?,             ?,                          ? )\r\n### Cause: java.sql.SQLException: Field \'create_date\' doesn\'t have a default value\n; Field \'create_date\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'create_date\' doesn\'t have a default value', '2023-04-22 21:11:12', 44);
+INSERT INTO `sys_oper_log` VALUES (448, '动物信息', 1, 'com.ruoyi.app.controller.AppAnimalController.add()', 'POST', 1, 'chen123', NULL, '/app/animal', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-22\",\"icon\":\"/profile/upload/2023/04/22/屏幕截图 2023-03-25 190104_20230422211202A001.png\",\"id\":6,\"name\":\"小杜\",\"sex\":0,\"sid\":1,\"year\":3}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 21:12:02', 22);
+INSERT INTO `sys_oper_log` VALUES (449, '动物信息', 1, 'com.ruoyi.app.controller.AppAnimalController.add()', 'POST', 1, 'chen123', NULL, '/app/animal', '172.24.176.1', '内网IP', '{\"createDate\":\"2023-04-22\",\"icon\":\"/profile/upload/2023/04/22/屏幕截图 2023-03-25 190052_20230422211637A001.png\",\"id\":7,\"name\":\"粉丝的\",\"sex\":0,\"sid\":1,\"year\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 21:16:37', 18);
+INSERT INTO `sys_oper_log` VALUES (450, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"toAid\":4,\"uid\":116}', '{\"msg\":\"操作失败\",\"code\":500}', 0, NULL, '2023-04-22 22:31:16', 19);
+INSERT INTO `sys_oper_log` VALUES (451, '关注', 1, 'com.ruoyi.app.controller.AppConcernController.add()', 'POST', 1, 'chen123', NULL, '/app/concern', '172.24.176.1', '内网IP', '{\"id\":19,\"toAid\":4,\"uid\":116}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2023-04-22 22:31:17', 8);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1535,7 +1857,7 @@ CREATE TABLE `sys_post`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`post_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '岗位信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '岗位信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_post
@@ -1565,7 +1887,7 @@ CREATE TABLE `sys_role`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -1581,7 +1903,7 @@ CREATE TABLE `sys_role_dept`  (
   `role_id` bigint(20) NOT NULL COMMENT '角色ID',
   `dept_id` bigint(20) NOT NULL COMMENT '部门ID',
   PRIMARY KEY (`role_id`, `dept_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_dept
@@ -1595,7 +1917,7 @@ CREATE TABLE `sys_role_menu`  (
   `role_id` bigint(20) NOT NULL COMMENT '角色ID',
   `menu_id` bigint(20) NOT NULL COMMENT '菜单ID',
   PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_menu
@@ -1685,14 +2007,15 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 110, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/upload/avatar.png', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-03-19 10:38:49', 'admin', '2023-02-28 15:41:58', '', '2023-03-19 10:38:48', '管理员');
-INSERT INTO `sys_user` VALUES (100, 111, 'chen', 'chen', '00', '', '', '0', '/profile/upload/avatar.png', '$2a$10$vetw9Hf5..UWSlrwa6Q2F.AkaaKn0h7Uc/ludJ/W4l5.PR7rTVOXC', '0', '0', '192.168.196.105', '2023-03-18 19:57:34', 'admin', '2023-02-28 15:59:41', '', '2023-03-18 19:57:33', '普通用户');
-INSERT INTO `sys_user` VALUES (115, 111, '17554222337', '用户48HgMChzwv', '00', '', '17554222337', '0', '/profile/upload/avatar.png', '$2a$10$Y8a5/Dmct0uv9PPRmM1J1Og.e.iUw6XLX47crKg5y45XOYP6PJRIu', '0', '0', '127.0.0.1', '2023-03-14 19:13:40', '', '2023-03-02 15:08:48', '', '2023-03-14 19:13:39', 'code');
+INSERT INTO `sys_user` VALUES (1, 110, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '/profile/upload/icon.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-04-21 20:52:42', 'admin', '2023-02-28 15:41:58', '', '2023-04-21 20:52:41', '管理员');
+INSERT INTO `sys_user` VALUES (100, 111, 'chen', 'chen', '00', '', '', '0', '/profile/upload/icon.jpg', '$2a$10$vetw9Hf5..UWSlrwa6Q2F.AkaaKn0h7Uc/ludJ/W4l5.PR7rTVOXC', '0', '0', '127.0.0.1', '2023-04-23 13:57:47', 'admin', '2023-02-28 15:59:41', '', '2023-04-23 13:57:46', '普通用户');
+INSERT INTO `sys_user` VALUES (115, 111, '17554222337', '用户48HgMChzwv', '00', '', '17554222337', '0', '/profile/upload/icon.jpg', '$2a$10$Y8a5/Dmct0uv9PPRmM1J1Og.e.iUw6XLX47crKg5y45XOYP6PJRIu', '0', '0', '127.0.0.1', '2023-03-14 19:13:40', '', '2023-03-02 15:08:48', '', '2023-03-14 19:13:39', 'code');
+INSERT INTO `sys_user` VALUES (116, 111, 'chen123', '用户H2N7G8qP2i', '00', '', 'chen123', '0', '', '$2a$10$yI6wurmKr.w1wsyQRd81mubr.18XIsnueSRi3G/ePepesz7ZvIFre', '0', '0', '127.0.0.1', '2023-04-23 13:52:16', '', '2023-03-26 14:12:41', '', '2023-04-23 13:52:15', 'code');
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -1702,7 +2025,7 @@ CREATE TABLE `sys_user_post`  (
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `post_id` bigint(20) NOT NULL COMMENT '岗位ID',
   PRIMARY KEY (`user_id`, `post_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户与岗位关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户与岗位关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_post
@@ -1717,7 +2040,7 @@ CREATE TABLE `sys_user_role`  (
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `role_id` bigint(20) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`user_id`, `role_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role
@@ -1725,6 +2048,7 @@ CREATE TABLE `sys_user_role`  (
 INSERT INTO `sys_user_role` VALUES (1, 1);
 INSERT INTO `sys_user_role` VALUES (100, 100);
 INSERT INTO `sys_user_role` VALUES (115, 100);
+INSERT INTO `sys_user_role` VALUES (116, 100);
 
 -- ----------------------------
 -- Table structure for user_code
@@ -1735,7 +2059,7 @@ CREATE TABLE `user_code`  (
   `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
   `code` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '验证码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_code
@@ -1752,11 +2076,15 @@ CREATE TABLE `user_data`  (
   `to_uid` int(11) NULL DEFAULT NULL COMMENT '属于某用户',
   `s1` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '扩展1',
   `s2` tinytext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '扩展2'
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户数据扩展表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户数据扩展表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_data
 -- ----------------------------
+INSERT INTO `user_data` VALUES (116, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_data` VALUES (1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_data` VALUES (100, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_data` VALUES (115, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for user_type
@@ -1767,7 +2095,7 @@ CREATE TABLE `user_type`  (
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户类型表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_type

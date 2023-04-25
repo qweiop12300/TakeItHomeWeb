@@ -41,7 +41,48 @@ public class AppConcern
     @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date createDate;
 
-    public void setId(Long id) 
+    private SysUserE sysUserE;
+
+    private SysUserE toUserE;
+
+    private AppTopic appTopic;
+
+    private AppAnimal appAnimal;
+
+
+    public SysUserE getToUserE() {
+        return toUserE;
+    }
+
+    public void setToUserE(SysUserE toUserE) {
+        this.toUserE = toUserE;
+    }
+
+    public SysUserE getSysUserE() {
+        return sysUserE;
+    }
+
+    public void setSysUserE(SysUserE sysUserE) {
+        this.sysUserE = sysUserE;
+    }
+
+    public AppTopic getAppTopic() {
+        return appTopic;
+    }
+
+    public void setAppTopic(AppTopic appTopic) {
+        this.appTopic = appTopic;
+    }
+
+    public AppAnimal getAppAnimal() {
+        return appAnimal;
+    }
+
+    public void setAppAnimal(AppAnimal appAnimal) {
+        this.appAnimal = appAnimal;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }

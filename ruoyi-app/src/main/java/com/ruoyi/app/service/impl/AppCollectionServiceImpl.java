@@ -3,7 +3,9 @@ package com.ruoyi.app.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.app.domain.AppMessage;
 import com.ruoyi.app.domain.AppPost;
+import com.ruoyi.app.mapper.AppMessageMapper;
 import com.ruoyi.app.mapper.AppPostMapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class AppCollectionServiceImpl implements IAppCollectionService
 
     @Autowired
     private AppPostMapper appPostMapper;
+
+    @Autowired
+    private AppMessageMapper appMessageMapper;
 
     /**
      * 查询收藏
@@ -67,6 +72,9 @@ public class AppCollectionServiceImpl implements IAppCollectionService
             appCollection.setCreateDate(new Date());
             appPost.setCollectionNumber(appPost.getCollectionNumber()+1);
             appPostMapper.updateAppPost(appPost);
+
+            appMessageMapper.insertNewAppMessage(new AppMessage(appCollection.getUid(),appPost.getUid(),"收藏", appPost.getId(),2L,new Date()));
+
             return appCollectionMapper.insertAppCollection(appCollection);
         }else{
             AppCollection appCollection1 = list.get(0);

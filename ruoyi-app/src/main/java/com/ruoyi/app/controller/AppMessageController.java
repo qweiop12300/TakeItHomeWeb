@@ -2,6 +2,9 @@ package com.ruoyi.app.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.app.domain.SysUserE;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +49,15 @@ public class AppMessageController extends BaseController
         return getDataTable(list);
     }
 
+    @PreAuthorize("@ss.hasPermi('app:message:list')")
+    @GetMapping("/userList")
+    public TableDataInfo listUser()
+    {
+        startPage();
+        List<SysUserE> list = appMessageService.selectUserList(SecurityUtils.getUserId());
+        return getDataTable(list);
+    }
+
     /**
      * 导出消息列表
      */
@@ -77,8 +89,10 @@ public class AppMessageController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody AppMessage appMessage)
     {
-        return toAjax(appMessageService.insertAppMessage(appMessage));
+        return toAjax(appMessageService.insertNewAppMessage(appMessage));
     }
+
+
 
     /**
      * 修改消息

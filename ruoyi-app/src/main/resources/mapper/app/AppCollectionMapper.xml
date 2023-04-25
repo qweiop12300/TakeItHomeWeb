@@ -9,24 +9,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="uid"    column="uid"    />
         <result property="pid"    column="pid"    />
         <result property="createDate"    column="create_date"    />
+        <association property="appPost" columnPrefix="ap_" resultMap="com.ruoyi.app.mapper.AppPostMapper.AppPostResult"/>
     </resultMap>
 
     <sql id="selectAppCollectionVo">
-        select id, uid, pid, create_date from app_collection
+        select ac.id, ac.uid, ac.pid, ac.create_date,
+               ap.id ap_id, ap.title ap_title
+        from app_collection ac
+                 left join app_post ap on ap.id = ac.pid
+
     </sql>
 
     <select id="selectAppCollectionList" parameterType="AppCollection" resultMap="AppCollectionResult">
         <include refid="selectAppCollectionVo"/>
         <where>  
-            <if test="uid != null "> and uid = #{uid}</if>
-            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="uid != null "> and ac.uid = #{uid}</if>
+            <if test="pid != null "> and ac.pid = #{pid}</if>
             <if test="createDate != null "> and create_date = #{createDate}</if>
         </where>
     </select>
     
     <select id="selectAppCollectionById" parameterType="Long" resultMap="AppCollectionResult">
         <include refid="selectAppCollectionVo"/>
-        where id = #{id}
+        where ac.id = #{id}
     </select>
         
     <insert id="insertAppCollection" parameterType="AppCollection" useGeneratedKeys="true" keyProperty="id">

@@ -29,7 +29,8 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/app/like")
-public class AppLikeController extends BaseController
+public class
+AppLikeController extends BaseController
 {
     @Autowired
     private IAppLikeService appLikeService;

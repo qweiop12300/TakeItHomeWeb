@@ -12,27 +12,78 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="pid"    column="pid"    />
         <result property="typeId"    column="type_id"    />
         <result property="createDate"    column="create_date"    />
+        <result property="isShow"    column="is_show"    />
+        <association property="toUserE" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.SysUserResult" columnPrefix="to_"/>
+        <association property="userE" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.SysUserResult" columnPrefix="u_"/>
     </resultMap>
 
     <sql id="selectAppMessageVo">
-        select id, uid, to_uid, content, pid, type_id, create_date from app_message
+        select am.id, am.uid, am.to_uid, am.content, am.pid, am.type_id, am.create_date,am.is_show,
+               tosu.user_id to_user_id,  tosu.nick_name to_nick_name,  tosu.sex to_sex, tosu.avatar to_avatar,tosu.remark to_remark,
+               usu.user_id u_user_id,  usu.nick_name u_nick_name,  usu.sex u_sex, usu.avatar u_avatar,usu.remark u_remark
+        from app_message am
+                 left join sys_user usu on usu.user_id = am.uid
+                 left join sys_user tosu on tosu.user_id = am.to_uid
+    </sql>
+
+    <sql id="selectNewAppMessageVo">
+        select am.id, am.uid, am.to_uid, am.content, am.pid, am.type_id, am.create_date,am.is_show,
+               tosu.user_id to_user_id,  tosu.nick_name to_nick_name,  tosu.sex to_sex, tosu.avatar to_avatar,tosu.remark to_remark,
+               usu.user_id u_user_id,  usu.nick_name u_nick_name,  usu.sex u_sex, usu.avatar u_avatar,usu.remark u_remark
+        from app_new_message am
+                 left join sys_user usu on usu.user_id = am.uid
+                 left join sys_user tosu on tosu.user_id = am.to_uid
+    </sql>
+
+    <sql id="selectUserList">
+
     </sql>
 
     <select id="selectAppMessageList" parameterType="AppMessage" resultMap="AppMessageResult">
         <include refid="selectAppMessageVo"/>
         <where>  
-            <if test="uid != null "> and uid = #{uid}</if>
-            <if test="toUid != null "> and to_uid = #{toUid}</if>
-            <if test="content != null  and content != ''"> and content = #{content}</if>
-            <if test="pid != null "> and pid = #{pid}</if>
-            <if test="typeId != null "> and type_id = #{typeId}</if>
-            <if test="createDate != null "> and create_date = #{createDate}</if>
+            <if test="uid != null "> and am.uid = #{uid}</if>
+            <if test="toUid != null "> and am.to_uid = #{toUid}</if>
+            <if test="content != null  and content != ''"> and am.content = #{content}</if>
+            <if test="pid != null "> and am.pid = #{pid}</if>
+            <if test="typeId != null "> and am.type_id = #{typeId}</if>
+            <if test="createDate != null "> and am.create_date = #{createDate}</if>
+            <if test="isShow != null "> and am.is_show = #{isShow}</if>
+        </where>
+    </select>
+
+    <select id="selectUserList" resultMap="com.ruoyi.app.mapper.AppAnimalStateMapper.SysUserResult" >
+        select usu.user_id,  usu.nick_name ,  usu.sex , usu.avatar ,usu.remark
+        from (
+                 select uid
+                 from app_message
+                 where type_id=4 and to_uid=#{userId}
+                 group by uid
+                 UNION
+                 select to_uid
+                 from app_message
+                 where type_id=4 and uid=#{userId}
+                 group by to_uid
+             ) list
+                 left join sys_user usu on usu.user_id=list.uid
+    </select>
+
+    <select id="selectNewAppMessageList" parameterType="AppMessage" resultMap="AppMessageResult">
+        <include refid="selectNewAppMessageVo"/>
+        <where>
+            <if test="uid != null "> and am.uid = #{uid}</if>
+            <if test="toUid != null "> and am.to_uid = #{toUid}</if>
+            <if test="content != null  and content != ''"> and am.content = #{content}</if>
+            <if test="pid != null "> and am.pid = #{pid}</if>
+            <if test="typeId != null "> and am.type_id = #{typeId}</if>
+            <if test="createDate != null "> and am.create_date = #{createDate}</if>
+            <if test="isShow != null "> and am.is_show = #{isShow}</if>
         </where>
     </select>
     
     <select id="selectAppMessageById" parameterType="Long" resultMap="AppMessageResult">
         <include refid="selectAppMessageVo"/>
-        where id = #{id}
+        where am.id = #{id}
     </select>
         
     <insert id="insertAppMessage" parameterType="AppMessage">
@@ -45,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="pid != null">pid,</if>
             <if test="typeId != null">type_id,</if>
             <if test="createDate != null">create_date,</if>
+            <if test="isShow != null">is_show,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -54,7 +106,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="pid != null">#{pid},</if>
             <if test="typeId != null">#{typeId},</if>
             <if test="createDate != null">#{createDate},</if>
+            <if test="isShow != null">#{isShow},</if>
          </trim>
+    </insert>
+
+    <insert id="insertNewAppMessage" parameterType="AppMessage">
+        insert into app_new_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="uid != null">uid,</if>
+            <if test="toUid != null">to_uid,</if>
+            <if test="content != null">content,</if>
+            <if test="pid != null">pid,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="isShow != null">is_show,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="toUid != null">#{toUid},</if>
+            <if test="content != null">#{content},</if>
+            <if test="pid != null">#{pid},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="isShow != null">#{isShow},</if>
+        </trim>
     </insert>
 
     <update id="updateAppMessage" parameterType="AppMessage">
@@ -66,16 +143,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="pid != null">pid = #{pid},</if>
             <if test="typeId != null">type_id = #{typeId},</if>
             <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="isShow != null">is_show = #{isShow},</if>
         </trim>
         where id = #{id}
     </update>
 
     <delete id="deleteAppMessageById" parameterType="Long">
-        delete from app_message where id = #{id}
+        delete from app_new_message where id = #{id}
     </delete>
 
     <delete id="deleteAppMessageByIds" parameterType="String">
-        delete from app_message where id in 
+        delete from app_new_message where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

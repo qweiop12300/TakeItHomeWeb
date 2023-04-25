@@ -94,6 +94,11 @@ public class SysUserController extends BaseController
         util.importTemplateExcel(response, "用户数据");
     }
 
+    @GetMapping("/info")
+    public AjaxResult getInfo(){
+        return getInfo(SecurityUtils.getUserId());
+    }
+
     /**
      * 根据用户编号获取详细信息
      */
@@ -112,6 +117,21 @@ public class SysUserController extends BaseController
             ajax.put(AjaxResult.DATA_TAG, sysUser);
             ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
+        }
+        return ajax;
+    }
+
+    @GetMapping(value = "/v2/{userId}")
+    public AjaxResult getUserInfo(@PathVariable(value = "userId", required = false) Long userId){
+        AjaxResult ajax = AjaxResult.success();
+        if (StringUtils.isNotNull(userId))
+        {
+            SysUser sysUser = userService.selectUserById(userId);
+            sysUser.setUserName("");
+            sysUser.setPassword("");
+            sysUser.setPhonenumber("");
+            sysUser.setEmail("");
+            ajax.put(AjaxResult.DATA_TAG, sysUser);
         }
         return ajax;
     }

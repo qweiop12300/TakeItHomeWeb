@@ -9,24 +9,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="uid"    column="uid"    />
         <result property="pid"    column="pid"    />
         <result property="createDate"    column="create_date"    />
+        <association property="appPost" columnPrefix="ap_" resultMap="com.ruoyi.app.mapper.AppPostMapper.AppPostResult"/>
     </resultMap>
 
     <sql id="selectAppLikeVo">
-        select id, uid, pid, create_date from app_like
+        select al.id, al.uid, al.pid, al.create_date,
+               ap.id ap_id, ap.title ap_title
+        from app_like al
+                                                  left join app_post ap on ap.id = al.pid
     </sql>
 
     <select id="selectAppLikeList" parameterType="AppLike" resultMap="AppLikeResult">
         <include refid="selectAppLikeVo"/>
         <where>  
-            <if test="uid != null "> and uid = #{uid}</if>
-            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="uid != null "> and al.uid = #{uid}</if>
+            <if test="pid != null "> and al.pid = #{pid}</if>
             <if test="createDate != null "> and create_date = #{createDate}</if>
         </where>
     </select>
     
     <select id="selectAppLikeById" parameterType="Long" resultMap="AppLikeResult">
         <include refid="selectAppLikeVo"/>
-        where id = #{id}
+        where al.id = #{id}
     </select>
         
     <insert id="insertAppLike" parameterType="AppLike" useGeneratedKeys="true" keyProperty="id">

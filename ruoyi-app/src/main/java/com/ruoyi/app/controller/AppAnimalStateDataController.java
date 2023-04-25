@@ -37,7 +37,6 @@ public class AppAnimalStateDataController extends BaseController
     /**
      * 查询动物状态信息列表
      */
-    @PreAuthorize("@ss.hasPermi('app:animal_state_data:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppAnimalStateData appAnimalStateData)
     {

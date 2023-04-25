@@ -22,7 +22,17 @@ public class AppTopic
     @Excel(name = "话题名字")
     private String title;
 
-    public void setId(Long id) 
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }

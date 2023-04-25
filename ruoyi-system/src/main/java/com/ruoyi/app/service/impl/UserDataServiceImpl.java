@@ -2,18 +2,17 @@ package com.ruoyi.app.service.impl;
 
 import java.util.List;
 
-import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.core.domain.entity.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.app.mapper.UserDataMapper;
-import com.ruoyi.app.domain.UserData;
 import com.ruoyi.app.service.IUserDataService;
 
 /**
  * 用户数据扩展Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-02-28
+ * @date 2023-03-26
  */
 @Service
 public class UserDataServiceImpl implements IUserDataService 
@@ -54,7 +53,6 @@ public class UserDataServiceImpl implements IUserDataService
     @Override
     public int insertUserData(UserData userData)
     {
-        userData.setUid(SecurityUtils.getUserId());
         return userDataMapper.insertUserData(userData);
     }
 
@@ -67,7 +65,6 @@ public class UserDataServiceImpl implements IUserDataService
     @Override
     public int updateUserData(UserData userData)
     {
-        userData.setUid(SecurityUtils.getUserId());
         return userDataMapper.updateUserData(userData);
     }
 
@@ -92,6 +89,6 @@ public class UserDataServiceImpl implements IUserDataService
     @Override
     public int deleteUserDataByUid(Long uid)
     {
-        return userDataMapper.deleteUserDataByUid(SecurityUtils.getUserId());
+        return userDataMapper.deleteUserDataByUid(uid);
     }
 }

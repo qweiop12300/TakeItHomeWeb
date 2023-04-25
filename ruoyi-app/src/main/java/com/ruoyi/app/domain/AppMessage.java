@@ -41,11 +41,54 @@ public class AppMessage
     private Long typeId;
 
     /** 创建时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 
-    public void setId(Long id) 
+    private SysUserE userE;
+
+    private SysUserE toUserE;
+
+
+    public SysUserE getUserE() {
+        return userE;
+    }
+
+    public void setUserE(SysUserE userE) {
+        this.userE = userE;
+    }
+
+    public SysUserE getToUserE() {
+        return toUserE;
+    }
+
+    public void setToUserE(SysUserE toUserE) {
+        this.toUserE = toUserE;
+    }
+
+    public AppMessage(Long uid, Long toUid, String content, Long pid, Long typeId, Date createDate) {
+        this.uid = uid;
+        this.toUid = toUid;
+        this.content = content;
+        this.pid = pid;
+        this.typeId = typeId;
+        this.createDate = createDate;
+    }
+
+    public AppMessage() {
+    }
+
+    public Integer isShow;
+
+    public Integer getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(Integer isShow) {
+        this.isShow = isShow;
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }

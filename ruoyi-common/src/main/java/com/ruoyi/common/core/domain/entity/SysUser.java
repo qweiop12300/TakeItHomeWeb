@@ -77,6 +77,8 @@ public class SysUser extends BaseEntity
     })
     private SysDept dept;
 
+    private UserData userData;
+
     /** 角色对象 */
     private List<SysRole> roles;
 
@@ -93,6 +95,15 @@ public class SysUser extends BaseEntity
     {
 
     }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
+
 
     public SysUser(Long userId)
     {

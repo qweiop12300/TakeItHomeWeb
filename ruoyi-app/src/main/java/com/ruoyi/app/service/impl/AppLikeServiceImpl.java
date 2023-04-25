@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.app.domain.AppConcern;
+import com.ruoyi.app.domain.AppMessage;
 import com.ruoyi.app.domain.AppPost;
+import com.ruoyi.app.mapper.AppMessageMapper;
 import com.ruoyi.app.mapper.AppPostMapper;
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,10 @@ public class AppLikeServiceImpl implements IAppLikeService
 
     @Autowired
     private AppPostMapper appPostMapper;
+
+
+    @Autowired
+    private AppMessageMapper appMessageMapper;
 
     /**
      * 查询点赞
@@ -68,6 +74,8 @@ public class AppLikeServiceImpl implements IAppLikeService
             appLike.setCreateDate(new Date());
             appPost.setLikeNumber(appPost.getLikeNumber()+1);
             appPostMapper.updateAppPost(appPost);
+
+            appMessageMapper.insertNewAppMessage(new AppMessage(appLike.getUid(),appPost.getUid(),"点赞", appPost.getId(),0L,new Date()));
             return appLikeMapper.insertAppLike(appLike);
         }else {
             appPost.setLikeNumber(appPost.getLikeNumber()-1);

@@ -1,5 +1,6 @@
 package com.ruoyi.app.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.app.domain.AppAnimalState;
@@ -68,6 +69,7 @@ public class AppAnimalServiceImpl implements IAppAnimalService
         }else {
             appAnimalState.setUid(SecurityUtils.getUserId());
         }
+        appAnimal.setCreateDate(new Date());
         int res = appAnimalMapper.insertAppAnimal(appAnimal);
         appAnimalState.setAid(appAnimal.getId());
         appAnimalStateMapper.insertAppAnimalState(appAnimalState);
